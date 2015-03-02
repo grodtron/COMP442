@@ -38,16 +38,22 @@ public class Parser {
 		
 		// TODO - skip errors
 		
+		System.out.println("   " + tree.symbol);
+		System.out.flush();
+		
 		if(tree.symbol.isTerminal){
 			if(tree.symbol == symbol){
 				
 				System.out.println(token);
+				System.out.flush();
 				
 				tree.setToken(token);
 				nextToken();
 			}else{
 				// Big Error!!
+				System.err.println(token);
 				System.err.println("ERROR: unexpected token " + symbol + " expected " + tree.symbol);
+				System.err.flush();
 				nextToken();
 			}
 		}else{
@@ -78,6 +84,8 @@ public class Parser {
 			}
 			
 			System.err.println("ERROR: no rule matches! ( current symbol is " + tree.symbol + " looking for " + symbol);
+			System.err.flush();
+
 		}		
 	}
 	

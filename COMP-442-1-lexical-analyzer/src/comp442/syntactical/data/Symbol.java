@@ -11,6 +11,7 @@ public enum Symbol {
 	prog(false),
 	classDecl(false),
 	classBodyVar(false),
+	classBodyVarPrime(false),
 	classBodyFunc(false),
 	progBody(false),
 	funcDefs(false),

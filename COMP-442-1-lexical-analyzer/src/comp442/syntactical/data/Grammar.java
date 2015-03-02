@@ -31,6 +31,11 @@ public class Grammar {
 		});
 		p.put(classBodyVar, new Symbol[][] {
 			new Symbol[] {
+				type, tok_id, classBodyVarPrime,
+			}
+		});
+		p.put(classBodyVarPrime, new Symbol[][] {
+			new Symbol[] {
 				varDecl, classBodyVar,
 			}, new Symbol[] {
 				classBodyFunc,
@@ -38,26 +43,26 @@ public class Grammar {
 		});
 		p.put(classBodyFunc, new Symbol[][] {
 			new Symbol[] {
-				funcDef, classBodyFunc,
+				funcDef, type, tok_id, classBodyFunc,
 			}, new Symbol[] {
 				tok_close_brace, tok_semicolon
 			}
 		});
 		p.put(progBody, new Symbol[][] {
 			new Symbol[] {
-				tok_program, funcBody, tok_semicolon, funcDefs,
+				tok_program, funcBody, tok_semicolon, type, funcDefs,
 			}
 		});
 		p.put(funcDefs, new Symbol[][] {
 			new Symbol[] {
-				funcDef, funcDefs,
+				funcDef, type, tok_id, funcDefs,
 			}, new Symbol[] {
 				EPSILON
 			}
 		});
 		p.put(funcHead, new Symbol[][] {
 			new Symbol[] {
-				type, tok_id, tok_open_paren, fParams, tok_close_paren
+				tok_open_paren, fParams, tok_close_paren
 			}
 		});
 		p.put(funcDef, new Symbol[][] {
@@ -72,7 +77,18 @@ public class Grammar {
 		});
 		p.put(funcBodyVar, new Symbol[][] {
 			new Symbol[] {
-				varDecl, funcBodyVar,
+				tok_id, funcBodyVarPrime
+			},
+			new Symbol[] {
+				tok_int, tok_id, varDecl, funcBodyVar,
+			},
+			new Symbol[] {
+				tok_float, tok_id, varDecl, funcBodyVar,
+			}
+		},
+		p.put(funcBodyVarPrime, new Symbol[][] {
+			new Symbol[] {
+				tok_id, varDecl, funcBodyVar,
 			}, new Symbol[] {
 				funcBodyStmt,
 			}
@@ -86,7 +102,7 @@ public class Grammar {
 		});
 		p.put(varDecl, new Symbol[][] {
 			new Symbol[] {
-				type, tok_id, varDeclArray,
+				varDeclArray,
 			}
 		});
 		p.put(varDeclArray, new Symbol[][] {
@@ -96,10 +112,8 @@ public class Grammar {
 				tok_semicolon
 			}
 		});
-		p.put(statement, new Symbol[][] {
+		p.put(keywordStatement, new Symbol[][] {
 			new Symbol[] {
-				assignStat, tok_semicolon
-			}, new Symbol[] {
 				tok_if, tok_open_paren, expr, tok_close_paren, tok_then, statBlock, tok_else, statBlock, tok_semicolon
 			}, new Symbol[] {
 				tok_for, tok_open_paren, type, tok_id, assignOp, expr, tok_semicolon, relExpr, tok_semicolon, assignStat, tok_close_paren, statBlock, tok_semicolon
@@ -111,9 +125,9 @@ public class Grammar {
 				tok_return, tok_open_paren, expr, tok_close_paren, tok_semicolon
 			}
 		});
-		p.put(assignStat, new Symbol[][] {
+		p.put(assignStatement, new Symbol[][] {
 			new Symbol[] {
-				variable, assignOp, expr,
+				variable, assignOp, expr, tok_semicolon
 			}
 		});
 		p.put(statBlock, new Symbol[][] {
