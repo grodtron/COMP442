@@ -1,11 +1,97 @@
 package comp442.syntactical.data;
+import static comp442.syntactical.data.Symbol.EPSILON;
+import static comp442.syntactical.data.Symbol.aParams;
+import static comp442.syntactical.data.Symbol.aParamsTail;
+import static comp442.syntactical.data.Symbol.aParamsTailStar;
+import static comp442.syntactical.data.Symbol.addOp;
+import static comp442.syntactical.data.Symbol.arithExpr;
+import static comp442.syntactical.data.Symbol.arithExprPrime;
+import static comp442.syntactical.data.Symbol.arraySize;
+import static comp442.syntactical.data.Symbol.arraySizeStar;
+import static comp442.syntactical.data.Symbol.assignExpr;
+import static comp442.syntactical.data.Symbol.assignOp;
+import static comp442.syntactical.data.Symbol.assignStat;
+import static comp442.syntactical.data.Symbol.classBodyFunc;
+import static comp442.syntactical.data.Symbol.classBodyVar;
+import static comp442.syntactical.data.Symbol.classBodyVarPrime;
+import static comp442.syntactical.data.Symbol.classDecl;
+import static comp442.syntactical.data.Symbol.controlStat;
+import static comp442.syntactical.data.Symbol.expr;
+import static comp442.syntactical.data.Symbol.exprPrime;
+import static comp442.syntactical.data.Symbol.fParams;
+import static comp442.syntactical.data.Symbol.fParamsArraySz;
+import static comp442.syntactical.data.Symbol.fParamsTail;
+import static comp442.syntactical.data.Symbol.fParamsTailStar;
+import static comp442.syntactical.data.Symbol.factor;
+import static comp442.syntactical.data.Symbol.factorIdNest;
+import static comp442.syntactical.data.Symbol.factorIdNestPrime;
+import static comp442.syntactical.data.Symbol.factorIdNestPrimePrime;
+import static comp442.syntactical.data.Symbol.funcBody;
+import static comp442.syntactical.data.Symbol.funcBodyStmt;
+import static comp442.syntactical.data.Symbol.funcBodyVar;
+import static comp442.syntactical.data.Symbol.funcBodyVarPrime;
+import static comp442.syntactical.data.Symbol.funcDefs;
+import static comp442.syntactical.data.Symbol.indice;
+import static comp442.syntactical.data.Symbol.indices;
+import static comp442.syntactical.data.Symbol.multOp;
+import static comp442.syntactical.data.Symbol.prog;
+import static comp442.syntactical.data.Symbol.progBody;
+import static comp442.syntactical.data.Symbol.relExpr;
+import static comp442.syntactical.data.Symbol.relOp;
+import static comp442.syntactical.data.Symbol.sign;
+import static comp442.syntactical.data.Symbol.statBlock;
+import static comp442.syntactical.data.Symbol.statBlockStmts;
+import static comp442.syntactical.data.Symbol.term;
+import static comp442.syntactical.data.Symbol.termPrime;
+import static comp442.syntactical.data.Symbol.tok_and;
+import static comp442.syntactical.data.Symbol.tok_assignment;
+import static comp442.syntactical.data.Symbol.tok_class;
+import static comp442.syntactical.data.Symbol.tok_close_brace;
+import static comp442.syntactical.data.Symbol.tok_close_paren;
+import static comp442.syntactical.data.Symbol.tok_close_square;
+import static comp442.syntactical.data.Symbol.tok_comma;
+import static comp442.syntactical.data.Symbol.tok_diamond;
+import static comp442.syntactical.data.Symbol.tok_dot;
+import static comp442.syntactical.data.Symbol.tok_else;
+import static comp442.syntactical.data.Symbol.tok_equals;
+import static comp442.syntactical.data.Symbol.tok_float;
+import static comp442.syntactical.data.Symbol.tok_float_literal;
+import static comp442.syntactical.data.Symbol.tok_for;
+import static comp442.syntactical.data.Symbol.tok_get;
+import static comp442.syntactical.data.Symbol.tok_greater_than;
+import static comp442.syntactical.data.Symbol.tok_greater_than_equals;
+import static comp442.syntactical.data.Symbol.tok_id;
+import static comp442.syntactical.data.Symbol.tok_if;
+import static comp442.syntactical.data.Symbol.tok_int;
+import static comp442.syntactical.data.Symbol.tok_int_literal;
+import static comp442.syntactical.data.Symbol.tok_less_than;
+import static comp442.syntactical.data.Symbol.tok_less_than_equals;
+import static comp442.syntactical.data.Symbol.tok_minus;
+import static comp442.syntactical.data.Symbol.tok_not;
+import static comp442.syntactical.data.Symbol.tok_open_brace;
+import static comp442.syntactical.data.Symbol.tok_open_paren;
+import static comp442.syntactical.data.Symbol.tok_open_square;
+import static comp442.syntactical.data.Symbol.tok_or;
+import static comp442.syntactical.data.Symbol.tok_plus;
+import static comp442.syntactical.data.Symbol.tok_program;
+import static comp442.syntactical.data.Symbol.tok_put;
+import static comp442.syntactical.data.Symbol.tok_return;
+import static comp442.syntactical.data.Symbol.tok_semicolon;
+import static comp442.syntactical.data.Symbol.tok_slash;
+import static comp442.syntactical.data.Symbol.tok_star;
+import static comp442.syntactical.data.Symbol.tok_then;
+import static comp442.syntactical.data.Symbol.type;
+import static comp442.syntactical.data.Symbol.varDeclArray;
+import static comp442.syntactical.data.Symbol.variable;
+import static comp442.syntactical.data.Symbol.variablePrime;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
-
-import static comp442.syntactical.data.Symbol.*;
+import java.util.Map.Entry;
 
 public class Grammar {
 
@@ -32,7 +118,10 @@ public class Grammar {
 		p.put(classBodyVar, new Symbol[][] {
 			new Symbol[] {
 				type, tok_id, classBodyVarPrime,
-			}
+			},
+			new Symbol[] {
+				classBodyVarPrime,
+			},		
 		});
 		p.put(classBodyVarPrime, new Symbol[][] {
 			new Symbol[] {
@@ -361,27 +450,49 @@ public class Grammar {
 		});
 		
 		productions = Collections.unmodifiableMap(p);
-		
 	}
 	
-	private static void printAmbiguities(){
-		for(Symbol s : Symbol.nonterminals){
-			Symbol [][] productions = Grammar.productions.get(s);
-			for(int i = 0; i < productions.length; ++i){
-				for(int j = 0; j < i; ++j){
-					Set<Symbol> intersection = new HashSet<Symbol>(First.get(productions[i]));
-					intersection.retainAll(First.get(productions[j]));
-					if(intersection.size() > 0){
-						System.out.println("Ambiguity in " + s + " for productions " + i + " and " + j);
-						System.out.println(" symbols: " + intersection);
-					}
-				}
+	private static String toHtmlString(Symbol[] rule){
+		StringBuilder s = new StringBuilder();
+		s.append(rule[0].toHtmlString());
+		for(int i = 1; i < rule.length; ++i){
+			s.append(' ');
+			s.append(rule[i].toHtmlString());
+		}
+		return s.toString();
+	}
+	
+	public static void exportCsv(File f) throws FileNotFoundException{
+		PrintWriter out = new PrintWriter(f);
+		
+		out.write("<html><head>"
+				+ "<style>"
+				+ "body {"
+				+ "	font-family:monospace;"
+				+ "}"
+				+ "</style>"
+				+ "</head><body><table>");
+		for(Entry<Symbol, Symbol[][]> rules : Grammar.productions.entrySet()){
+			out.write("<tr>");
+			Symbol lhs  = rules.getKey();
+			Symbol [][] rhss = rules.getValue();
+			out.print("<td>" + lhs.toHtmlString() + "</td>");
+			out.print("<td>::=</td>");
+			out.print("<td>" + toHtmlString(rhss[0]) + "</td>");
+			out.write("</tr>");
+			for(int i = 1 ; i < rhss.length; ++i){				
+				out.print("<tr><td></td><td>|</td><td>");
+				out.print(toHtmlString(rhss[i]));
+				out.write("</td></tr>");
 			}
 		}
+		out.write("</table></body></html>");
+		
+		out.flush();
+		out.close();
 	}
 	
-	public static void main(String[] args) {
-		printAmbiguities();
+	public static void main(String[] args) throws FileNotFoundException {
+		exportCsv(new File("grammar.html"));
 	}
-	
 }

@@ -1,0 +1,99 @@
+"relOp","::=",<b>==</b>
+"","|",<b><></b>
+"","|",<b><</b>
+"","|",<b>></b>
+"","|",<b><=</b>
+"","|",<b>>=</b>
+"classDecl","::=",<b>class</b> <b>id</b> <b>{</b> classBodyVar
+"exprPrime","::=",relOp expr
+"","|",addOp expr
+"","|",<b>&#949;</b>
+"aParamsTail","::=",<b>,</b> expr
+"varDeclArray","::=",arraySize varDeclArray
+"","|",<b>;</b>
+"funcBodyVar","::=",<b>int</b> <b>id</b> varDeclArray funcBodyVar
+"","|",<b>float</b> <b>id</b> varDeclArray funcBodyVar
+"","|",<b>id</b> funcBodyVarPrime
+"","|",controlStat funcBodyStmt
+"","|",<b>}</b>
+"term","::=",factor termPrime
+"addOp","::=",<b>+</b>
+"","|",<b>-</b>
+"","|",<b>or</b>
+"termPrime","::=",multOp factor termPrime
+"","|",<b>&#949;</b>
+"classBodyVar","::=",type <b>id</b> classBodyVarPrime
+"fParams","::=",type <b>id</b> fParamsArraySz
+"","|",<b>&#949;</b>
+"aParamsTailStar","::=",aParamsTail aParamsTailStar
+"","|",<b>&#949;</b>
+"aParams","::=",expr aParamsTailStar
+"","|",<b>&#949;</b>
+"controlStat","::=",<b>if</b> <b>(</b> expr <b>)</b> <b>then</b> statBlock <b>else</b> statBlock <b>;</b>
+"","|",<b>for</b> <b>(</b> type <b>id</b> assignOp expr <b>;</b> relExpr <b>;</b> variable assignExpr <b>)</b> statBlock <b>;</b>
+"","|",<b>get</b> <b>(</b> variable <b>)</b> <b>;</b>
+"","|",<b>put</b> <b>(</b> expr <b>)</b> <b>;</b>
+"","|",<b>return</b> <b>(</b> expr <b>)</b> <b>;</b>
+"funcBody","::=",<b>{</b> funcBodyVar
+"fParamsTailStar","::=",fParamsTail fParamsTailStar
+"","|",<b>&#949;</b>
+"arithExpr","::=",term arithExprPrime
+"prog","::=",classDecl prog
+"","|",progBody
+"statBlockStmts","::=",variable assignStat statBlockStmts
+"","|",controlStat statBlockStmts
+"","|",<b>}</b>
+"progBody","::=",<b>program</b> funcBody <b>;</b> type <b>id</b> funcDefs
+"assignExpr","::=",assignOp expr
+"arithExprPrime","::=",addOp arithExpr
+"","|",<b>&#949;</b>
+"factorIdNest","::=",<b>id</b> factorIdNestPrime
+"factorIdNestPrimePrime","::=",<b>.</b> factorIdNest
+"","|",<b>&#949;</b>
+"classBodyFunc","::=",<b>(</b> fParams <b>)</b> funcBody <b>;</b> type <b>id</b> classBodyFunc
+"","|",<b>}</b> <b>;</b>
+"funcBodyVarPrime","::=",<b>id</b> varDeclArray funcBodyVar
+"","|",indices variablePrime assignStat funcBodyStmt
+"factor","::=",factorIdNest
+"","|",<b><int></b>
+"","|",<b><float></b>
+"","|",<b>(</b> arithExpr <b>)</b>
+"","|",<b>not</b> factor
+"","|",sign factor
+"arraySizeStar","::=",arraySize arraySizeStar
+"","|",<b>&#949;</b>
+"factorIdNestPrime","::=",indices factorIdNestPrimePrime
+"","|",<b>(</b> aParams <b>)</b>
+"variable","::=",<b>id</b> indices variablePrime
+"arraySize","::=",<b>[</b> <b><int></b> <b>]</b>
+"funcBodyStmt","::=",variable assignStat funcBodyStmt
+"","|",controlStat funcBodyStmt
+"","|",<b>}</b>
+"assignOp","::=",<b>=</b>
+"statBlock","::=",<b>{</b> statBlockStmts
+"","|",variable assignStat
+"","|",controlStat
+"","|",<b>&#949;</b>
+"fParamsArraySz","::=",arraySize fParamsArraySz
+"","|",fParamsTailStar
+"funcDefs","::=",<b>(</b> fParams <b>)</b> funcBody <b>;</b> type <b>id</b> funcDefs
+"","|",<b>&#949;</b>
+"relExpr","::=",arithExpr relOp arithExpr
+"expr","::=",term exprPrime
+"variablePrime","::=",<b>.</b> variable
+"","|",<b>&#949;</b>
+"indice","::=",<b>[</b> arithExpr <b>]</b>
+"sign","::=",<b>+</b>
+"","|",<b>-</b>
+"fParamsTail","::=",<b>,</b> type <b>id</b> arraySizeStar
+"assignStat","::=",assignExpr <b>;</b>
+"indices","::=",indice indices
+"","|",<b>&#949;</b>
+"classBodyVarPrime","::=",varDeclArray classBodyVar
+"","|",classBodyFunc
+"multOp","::=",<b>*</b>
+"","|",<b>/</b>
+"","|",<b>and</b>
+"type","::=",<b>int</b>
+"","|",<b>float</b>
+"","|",<b>id</b>

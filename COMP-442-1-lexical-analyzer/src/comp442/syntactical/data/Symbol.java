@@ -148,10 +148,66 @@ public enum Symbol {
 	}
 	public static Symbol fromToken(Token t) {
 		if(t == null){
-			return EPSILON;
+			return END_MARKER;
 		}else{
 			// TODO dirty hack
 			return Symbol.valueOf(t.token.name());
+		}
+	}
+	
+	private String terminalToString(){
+		switch(this){
+		case END_MARKER: 				return "$";
+		case EPSILON:    	 			return "&#949;";
+		case tok_and:    	 			return "and";
+		case tok_assignment: 			return "=";
+		case tok_class:      			return "class";
+		case tok_close_brace:			return "}";
+		case tok_close_paren:			return ")";
+		case tok_close_square:			return "]";
+		case tok_comma:					return ",";
+		case tok_diamond:				return "<>";
+		case tok_dot:					return ".";
+		case tok_else:					return "else";
+		case tok_equals:				return "==";
+		case tok_float:					return "float";
+		case tok_float_literal:			return "<float>";
+		case tok_for:					return "for";
+		case tok_get:					return "get";
+		case tok_greater_than:			return ">";
+		case tok_greater_than_equals:	return ">=";
+		case tok_id:					return "id";
+		case tok_if:					return "if";
+		case tok_int:					return "int";
+		case tok_int_literal:			return "<int>";
+		case tok_less_than:				return "<";
+		case tok_less_than_equals:		return "<=";
+		case tok_minus:					return "-";
+		case tok_not:					return "not";
+		case tok_open_brace:			return "{";
+		case tok_open_paren:			return "(";
+		case tok_open_square:			return "[";
+		case tok_or:					return "or";
+		case tok_plus:					return "+";
+		case tok_program:				return "program";
+		case tok_put:					return "put";
+		case tok_return:				return "return";
+		case tok_semicolon:				return ";";
+		case tok_slash:					return "/";
+		case tok_star:					return "*";
+		case tok_then:					return "then";
+		default:						return "NONTERMINAL";
+		}
+	}
+	
+	public String toHtmlString(){
+		if(isTerminal){
+			return "<b>" + terminalToString()
+							.replace("<", "&lt;")
+							.replace(">", "&gt;") +
+					"</b>";
+		}else{
+			return name();
 		}
 	}
 
