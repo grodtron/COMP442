@@ -40,6 +40,10 @@ public class First {
 	public static Set<Symbol> get(Symbol s){
 		return _firsts.get(s);
 	}
+
+	public static Set<Symbol> get(Symbol s []){
+		return get(s[0]);
+	}
 	
 	public static void main(String[] args) {
 		for(Symbol s : Symbol.nonterminals){

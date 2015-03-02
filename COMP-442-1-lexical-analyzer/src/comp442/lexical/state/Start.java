@@ -55,7 +55,7 @@ public class Start extends State {
 					"class",
 					"int", "float",
 					"get", "put",
-					"return"}
+					"return", "program"}
 			){
 				if(Matcher.matchesReservedWord(input, word)){
 					return new GotReservedWord(word, input.getLineNumber());

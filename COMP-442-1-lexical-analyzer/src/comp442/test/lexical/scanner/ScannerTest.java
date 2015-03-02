@@ -348,17 +348,11 @@ public class ScannerTest {
 		};
 		
 		for(int i = 0; i < expected.length; ++i){
-			try{
-				Token tok = s.getNext();
+			Token tok = s.getNext();
 
-				assertEquals(expected[i][0], tok.token);
-				assertEquals(expected[i][1], tok.lexeme);
-				assertEquals(expected[i][2], tok.lineno);				
-			}catch(InvalidCharacterException e){
-				assertEquals(expected[i][0], e.getClass());
-				assertEquals(expected[i][1], "" + e.character);
-				assertEquals(expected[i][2], e.lineNumber);
-			}
+			assertEquals(expected[i][0], tok.token);
+			assertEquals(expected[i][1], tok.lexeme);
+			assertEquals(expected[i][2], tok.lineno);				
 		}
 		
 		Token tok = s.getNext();

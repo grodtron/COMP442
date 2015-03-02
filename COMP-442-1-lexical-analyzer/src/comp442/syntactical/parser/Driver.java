@@ -1,4 +1,4 @@
-package comp442.lexical;
+package comp442.syntactical.parser;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Properties;
 
-import comp442.lexical.token.Token;
+import comp442.lexical.Scanner;
 
 public class Driver {
 
@@ -44,13 +44,10 @@ public class Driver {
 		}
 		
 		Scanner s = new Scanner(input);
+
+		Parser p  = new Parser(s);
 		
-		Token t = null;
-		
-		do{
-			t = s.getNext();
-			if (!s.done()) output.println(t);
-		}while(! s.done());
+		p.parse();
 		
 		output.close();
 

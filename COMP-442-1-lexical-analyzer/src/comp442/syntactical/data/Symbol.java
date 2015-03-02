@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import comp442.lexical.token.Token;
+
 public enum Symbol {
 	
 	prog(false),
@@ -141,6 +143,14 @@ public enum Symbol {
 	public final boolean isTerminal;
 	Symbol(boolean isTerminal){
 		this.isTerminal = isTerminal;
+	}
+	public static Symbol fromToken(Token t) {
+		if(t == null){
+			return EPSILON;
+		}else{
+			// TODO dirty hack
+			return Symbol.valueOf(t.token.name());
+		}
 	}
 
 }

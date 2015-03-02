@@ -21,6 +21,8 @@ public enum TokenType {
 	
 	tok_return,
 	
+	tok_program,
+	
 	// identifier
 	tok_id,
 	

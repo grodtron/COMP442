@@ -1,7 +1,9 @@
 package comp442.syntactical.data;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import static comp442.syntactical.data.Symbol.*;
 
@@ -179,9 +181,9 @@ public class Grammar {
 			}, new Symbol[] {
 				factorIdNest,
 			}, new Symbol[] {
-				tok_int
+				tok_int_literal
 			}, new Symbol[] {
-				tok_float
+				tok_float_literal
 			}, new Symbol[] {
 				tok_open_paren, arithExpr, tok_close_paren
 			}, new Symbol[] {
@@ -230,7 +232,7 @@ public class Grammar {
 		});
 		p.put(arraySize, new Symbol[][] {
 			new Symbol[] {
-				tok_open_square, tok_int, tok_close_square
+				tok_open_square, tok_int_literal, tok_close_square
 			}
 		});
 		p.put(type, new Symbol[][] {
@@ -337,5 +339,24 @@ public class Grammar {
 		
 	}
 	
+	private static void printAmbiguities(){
+		for(Symbol s : Symbol.nonterminals){
+			Symbol [][] productions = Grammar.productions.get(s);
+			for(int i = 0; i < productions.length; ++i){
+				for(int j = 0; j < i; ++j){
+					Set<Symbol> intersection = new HashSet<Symbol>(First.get(productions[i]));
+					intersection.retainAll(First.get(productions[j]));
+					if(intersection.size() > 0){
+						System.out.println("Ambiguity in " + s + " for productions " + i + " and " + j);
+						System.out.println(" symbols: " + intersection);
+					}
+				}
+			}
+		}
+	}
+	
+	public static void main(String[] args) {
+		printAmbiguities();
+	}
 	
 }

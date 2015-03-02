@@ -30,9 +30,19 @@ public class Scanner {
 		this.state = new Start();
 	}
 	
-	public Token getNext() throws IOException, InvalidCharacterException{
+	public Token getNext() {
+		
 		do {
-			state = state.process(input);
+			try {
+				state = state.process(input);
+			} catch (InvalidCharacterException e) {
+				System.err.println("Invalid character '" + e.character + "' encountered on line " + e.lineNumber);
+				continue;
+			} catch (IOException e) {
+				System.err.println("Error while scanning input (" + e + ")");
+				System.exit(1);
+			}
+
 		}while(! state.nextTokenReady() && ! state.done() );
 		
 		return state.getToken();

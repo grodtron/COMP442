@@ -71,6 +71,10 @@ public class Follow {
 	public static Set<Symbol> get(Symbol s) {
 		return _follows.get(s);
 	}
+
+	public static Set<Symbol> get(Symbol s []) {
+		return get(s[0]);
+	}
 	
 	public static void main(String[] args) {
 		for(Symbol s : Symbol.nonterminals){
