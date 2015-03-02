@@ -1,0 +1,19 @@
+// hello world example
+
+/**
+ * Print "hello world"
+ */
+int main()
+{
+  int length = 12;
+  int string [length] = { 104, 101, 108,
+        				  108, 111, 32,
+  					      119, 111, 114,
+  					      108, 100, 10 };
+
+  for(int i = 0; i < length; i = i + 1){
+  	put(string[i]);  
+  }
+  
+  return 0;
+}

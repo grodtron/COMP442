@@ -1,0 +1,2 @@
+input  = samples/hello-world.code
+output = samples/hello-world.tokens

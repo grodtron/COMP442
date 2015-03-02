@@ -1,0 +1,117 @@
+package symbols;
+
+public enum Symbol {
+	
+	prog(false),
+	classDecl(false),
+	classBodyVar(false),
+	classBodyFunc(false),
+	progBody(false),
+	funcDefs(false),
+	funcHead(false),
+	funcDef(false),
+	funcBody(false),
+	funcBodyVar(false),
+	funcBodyStmt(false),
+	varDecl(false),
+	varDeclArray(false),
+	statement(false),
+	assignStat(false),
+	statBlock(false),
+	statBlockStmts(false),
+	expr(false),
+	relExpr(false),
+	arithExpr(false),
+	arithExprPrime(false),
+	sign(false),
+	term(false),
+	termPrime(false),
+	factor(false),
+	factorIdNest(false),
+	idNest(false),
+	idNestIndices(false),
+	indice(false),
+	arraySize(false),
+	type(false),
+	fParams(false),
+	fParamsArraySz(false),
+	fParamsTailStar(false),
+	fParamsTail(false),
+	arraySizeStar(false),
+	aParams(false),
+	aParamsTailStar(false),
+	aParamsTail(false),
+	assignOp(false),
+	relOp(false),
+	addOp(false),
+	multOp(false),
+	
+	/////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////
+	
+	// reserved words
+	tok_and(true),
+	tok_or(true),
+	tok_not(true),
+	
+	tok_if(true),
+	tok_else(true),
+	tok_then(true),
+	tok_for(true),
+	
+	tok_class(true),
+	
+	tok_int(true),
+	tok_float(true),
+	
+	tok_get(true),
+	tok_put(true),
+	
+	tok_return(true),
+
+	tok_program(true),
+	
+	// identifier
+	tok_id(true),
+	
+	//
+	tok_int_literal(true),
+	
+	//
+	tok_float_literal(true),
+	
+	//
+	tok_equals(true),
+	tok_assignment(true),
+	tok_greater_than_equals(true),
+	tok_greater_than(true),
+	tok_less_than_equals(true),
+	tok_less_than(true),
+	tok_diamond(true),
+	tok_plus(true),
+	tok_minus(true),
+	tok_star(true),
+	tok_semicolon(true),
+	tok_comma(true),
+	tok_dot(true),
+	tok_slash(true),
+	
+	//
+	tok_open_paren(true),
+	tok_open_brace(true),
+	tok_open_square(true),
+	tok_close_paren(true),
+	tok_close_brace(true),
+	tok_close_square(true),
+	
+	
+	EPSILON(true),
+	;
+	
+	public final boolean isTerminal;
+	Symbol(boolean isTerminal){
+		this.isTerminal = isTerminal;
+	}
+
+}
