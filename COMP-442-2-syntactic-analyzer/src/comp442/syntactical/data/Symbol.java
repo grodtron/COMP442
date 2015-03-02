@@ -1,4 +1,8 @@
-package symbols;
+package comp442.syntactical.data;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 public enum Symbol {
 	
@@ -28,6 +32,8 @@ public enum Symbol {
 	termPrime(false),
 	factor(false),
 	factorIdNest(false),
+	variable(false),
+	variableIndice(false),
 	idNest(false),
 	idNestIndices(false),
 	indice(false),
@@ -108,6 +114,28 @@ public enum Symbol {
 	
 	EPSILON(true),
 	;
+		
+	private final static Set<Symbol> _terminals;
+	private final static Set<Symbol> _nonterminals;
+	
+	public final static Set<Symbol> terminals;
+	public final static Set<Symbol> nonterminals;
+	
+	static {
+		_terminals    = new HashSet<Symbol>();
+		_nonterminals = new HashSet<Symbol>();
+		
+		for(Symbol s : Symbol.values()){
+			if(s.isTerminal){
+				_terminals.add(s);
+			}else{
+				_nonterminals.add(s);
+			}
+		}
+		
+		terminals     = Collections.unmodifiableSet(_terminals);
+		nonterminals  = Collections.unmodifiableSet(_nonterminals);
+	}
 	
 	public final boolean isTerminal;
 	Symbol(boolean isTerminal){
