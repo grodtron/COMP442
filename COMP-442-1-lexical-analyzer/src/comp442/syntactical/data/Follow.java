@@ -5,6 +5,7 @@ import static comp442.syntactical.data.Symbol.EPSILON;
 import static comp442.syntactical.data.Symbol.prog;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -69,7 +70,11 @@ public class Follow {
 	}
 
 	public static Set<Symbol> get(Symbol s) {
-		return _follows.get(s);
+		if(s.isTerminal){
+			return Collections.emptySet();
+		}else{
+			return _follows.get(s);
+		}
 	}
 
 	public static Set<Symbol> get(Symbol s []) {
