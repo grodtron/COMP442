@@ -113,6 +113,7 @@ public enum Symbol {
 	
 	
 	EPSILON(true),
+	END_MARKER(true),
 	;
 		
 	private final static Set<Symbol> _terminals;
