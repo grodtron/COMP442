@@ -134,10 +134,19 @@ public class Grammar {
 		});
 		p.put(expr, new Symbol[][] {
 			new Symbol[] {
-				arithExpr,
-			}, new Symbol[] {
-				relExpr,
+				term, exprPrime
 			}
+		});
+		p.put(exprPrime, new Symbol[][] {
+			new Symbol[] {
+				relOp, expr
+			},
+			new Symbol[] {
+				addOp, expr
+			},
+			new Symbol[] {
+				EPSILON
+			},
 		});
 		p.put(relExpr, new Symbol[][] {
 			new Symbol[] {
@@ -151,7 +160,7 @@ public class Grammar {
 		});
 		p.put(arithExprPrime, new Symbol[][] {
 			new Symbol[] {
-				addOp, term, arithExprPrime,
+				addOp, arithExpr,
 			}, new Symbol[] {
 				EPSILON
 			}
@@ -177,8 +186,6 @@ public class Grammar {
 		});
 		p.put(factor, new Symbol[][] {
 			new Symbol[] {
-				variable,
-			}, new Symbol[] {
 				factorIdNest,
 			}, new Symbol[] {
 				tok_int_literal
@@ -194,35 +201,40 @@ public class Grammar {
 		});
 		p.put(factorIdNest, new Symbol[][] {
 			new Symbol[] {
-				idNest, factorIdNest,
-			}, new Symbol[] {
-				tok_id, tok_open_paren, aParams, tok_close_paren
+				tok_id, factorIdNestPrime,
 			}
 		});
-		p.put(variable, new Symbol[][] {
+		p.put(factorIdNestPrime, new Symbol[][] {
 			new Symbol[] {
-				idNest, variable
+				indices, factorIdNestPrimePrime,
 			}, new Symbol[] {
-				tok_id, variableIndice
+				tok_open_paren, aParams, tok_close_paren
 			}
 		});
-		p.put(variableIndice, new Symbol[][] {
+		p.put(factorIdNestPrimePrime, new Symbol[][] {
 			new Symbol[] {
-				indice, variableIndice
+				tok_dot, factorIdNest,
 			}, new Symbol[] {
 				EPSILON
 			}
 		});
-		p.put(idNest, new Symbol[][] {
+		p.put(variable, new Symbol[][] {
 			new Symbol[] {
-				tok_id, idNestIndices,
+				tok_id, indices, variablePrime
 			}
 		});
-		p.put(idNestIndices, new Symbol[][] {
+		p.put(variablePrime, new Symbol[][] {
 			new Symbol[] {
-				indice, idNestIndices,
+				tok_dot, variable
 			}, new Symbol[] {
-				tok_dot
+				EPSILON
+			}
+		});
+		p.put(indices, new Symbol[][] {
+			new Symbol[] {
+				indice, indices
+			}, new Symbol[] {
+				EPSILON
 			}
 		});
 		p.put(indice, new Symbol[][] {
