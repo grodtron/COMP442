@@ -11,9 +11,9 @@ import static comp442.syntactical.data.Symbol.arraySizeStar;
 import static comp442.syntactical.data.Symbol.assignExpr;
 import static comp442.syntactical.data.Symbol.assignOp;
 import static comp442.syntactical.data.Symbol.assignStat;
+import static comp442.syntactical.data.Symbol.classBody;
 import static comp442.syntactical.data.Symbol.classBodyFunc;
 import static comp442.syntactical.data.Symbol.classBodyFuncPrime;
-import static comp442.syntactical.data.Symbol.classBody;
 import static comp442.syntactical.data.Symbol.classBodyPrime;
 import static comp442.syntactical.data.Symbol.classBodyVar;
 import static comp442.syntactical.data.Symbol.classDecl;
@@ -94,7 +94,6 @@ import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class Grammar {
 
@@ -496,10 +495,11 @@ public class Grammar {
 				+ "}"
 				+ "</style>"
 				+ "</head><body><table>");
-		for(Entry<Symbol, Symbol[][]> rules : Grammar.productions.entrySet()){
+		for(Symbol lhs : Symbol.values()){
+			if (lhs.isTerminal) continue;
+			
 			out.write("<tr>");
-			Symbol lhs  = rules.getKey();
-			Symbol [][] rhss = rules.getValue();
+			Symbol [][] rhss = Grammar.productions.get(lhs);
 			out.print("<td>" + lhs.toHtmlString() + "</td>");
 			out.print("<td>::=</td>");
 			out.print("<td>" + toHtmlString(rhss[0]) + "</td>");

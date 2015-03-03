@@ -4,6 +4,7 @@
 *.error
 *.output
 *.derivation
+*.html
 
 *.class
 

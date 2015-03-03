@@ -174,7 +174,7 @@ public enum Symbol {
 		case tok_else:					return "else";
 		case tok_equals:				return "==";
 		case tok_float:					return "float";
-		case tok_float_literal:			return "<float>";
+		case tok_float_literal:			return "float_literal";
 		case tok_for:					return "for";
 		case tok_get:					return "get";
 		case tok_greater_than:			return ">";
@@ -182,7 +182,7 @@ public enum Symbol {
 		case tok_id:					return "id";
 		case tok_if:					return "if";
 		case tok_int:					return "int";
-		case tok_int_literal:			return "<int>";
+		case tok_int_literal:			return "int_literal";
 		case tok_less_than:				return "<";
 		case tok_less_than_equals:		return "<=";
 		case tok_minus:					return "-";
@@ -210,7 +210,7 @@ public enum Symbol {
 							.replace(">", "&gt;") +
 					"</b>";
 		}else{
-			return name();
+			return "&lt;" + name() + "&gt;";
 		}
 	}
 
