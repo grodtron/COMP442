@@ -1,0 +1,15 @@
+#include <stdio.h>
+ 
+program
+{
+   int first, second, add, subtract, multiply;
+   float divide;
+  
+   add        = first + second;
+   subtract = first - second;
+   multiply = first * second;
+   divide     = first / (float)second;   //typecasting
+ 
+ 
+   return 0;
+}

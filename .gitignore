@@ -1,7 +1,9 @@
 .metadata/
 .recommenders/
 *.zip
-
+*.error
+*.output
+*.derivation
 
 *.class
 

@@ -16,13 +16,13 @@ import org.junit.runners.Parameterized.Parameters;
 import comp442.syntactical.parser.Parser;
 
 @RunWith(Parameterized.class)
-public class CorrectCode {
+public class IncorrectCode {
 
 	@Parameters(name="{0}")
 	public static Collection<Object[]> data(){
 		List<Object[]> result = new ArrayList<Object[]>();
 		
-		String dirName = "samples/correct-code";
+		String dirName = "samples/incorrect-code";
 		
 		File dir = new File(dirName);
 		File[] directoryListing = dir.listFiles();
@@ -41,7 +41,7 @@ public class CorrectCode {
 	
 	private final Parser p;
 	
-	public CorrectCode(File f) throws FileNotFoundException{
+	public IncorrectCode(File f) throws FileNotFoundException{
 		p = new Parser(f);
 	}
 	

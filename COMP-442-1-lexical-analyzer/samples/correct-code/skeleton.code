@@ -6,6 +6,6 @@ program {
 
 };
 // funcDef
-int get() {
+int test() {
 
 };

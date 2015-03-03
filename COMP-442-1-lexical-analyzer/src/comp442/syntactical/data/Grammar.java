@@ -12,8 +12,10 @@ import static comp442.syntactical.data.Symbol.assignExpr;
 import static comp442.syntactical.data.Symbol.assignOp;
 import static comp442.syntactical.data.Symbol.assignStat;
 import static comp442.syntactical.data.Symbol.classBodyFunc;
+import static comp442.syntactical.data.Symbol.classBodyFuncPrime;
+import static comp442.syntactical.data.Symbol.classBody;
+import static comp442.syntactical.data.Symbol.classBodyPrime;
 import static comp442.syntactical.data.Symbol.classBodyVar;
-import static comp442.syntactical.data.Symbol.classBodyVarPrime;
 import static comp442.syntactical.data.Symbol.classDecl;
 import static comp442.syntactical.data.Symbol.controlStat;
 import static comp442.syntactical.data.Symbol.expr;
@@ -31,6 +33,7 @@ import static comp442.syntactical.data.Symbol.funcBodyStmt;
 import static comp442.syntactical.data.Symbol.funcBodyVar;
 import static comp442.syntactical.data.Symbol.funcBodyVarPrime;
 import static comp442.syntactical.data.Symbol.funcDefs;
+import static comp442.syntactical.data.Symbol.funcDefsPrime;
 import static comp442.syntactical.data.Symbol.indice;
 import static comp442.syntactical.data.Symbol.indices;
 import static comp442.syntactical.data.Symbol.multOp;
@@ -112,39 +115,60 @@ public class Grammar {
 		});
 		p.put(classDecl, new Symbol[][] {
 			new Symbol[] {
-				tok_class, tok_id, tok_open_brace, classBodyVar,
+				tok_class, tok_id, tok_open_brace, classBody,
 			}
+		});
+		p.put(classBody, new Symbol[][] {
+			new Symbol[] {
+				type, tok_id, classBodyPrime,
+			},
+			new Symbol[] {
+				tok_close_brace, tok_semicolon,
+			},		
+		});
+		p.put(classBodyPrime, new Symbol[][] {
+			new Symbol[] {
+				classBodyVar,
+			},
+			new Symbol[] {
+				classBodyFunc,
+			},		
 		});
 		p.put(classBodyVar, new Symbol[][] {
 			new Symbol[] {
-				type, tok_id, classBodyVarPrime,
-			},
-			new Symbol[] {
-				classBodyVarPrime,
-			},		
-		});
-		p.put(classBodyVarPrime, new Symbol[][] {
-			new Symbol[] {
-				varDeclArray, classBodyVar,
+				varDeclArray, classBody,
 			}, new Symbol[] {
-				classBodyFunc,
+				classBody,
 			}
 		});
 		p.put(classBodyFunc, new Symbol[][] {
 			new Symbol[] {
-				tok_open_paren, fParams, tok_close_paren, funcBody, tok_semicolon, type, tok_id, classBodyFunc,
-			}, new Symbol[] {
-				tok_close_brace, tok_semicolon
+				tok_open_paren, fParams, tok_close_paren, funcBody, tok_semicolon, classBodyFuncPrime,
 			}
 		});
+		p.put(classBodyFuncPrime, new Symbol[][] {
+			new Symbol[] {
+				type, tok_id, classBodyFunc,
+			}, new Symbol[] {
+				tok_close_brace, tok_semicolon,
+			}
+		});
+		
 		p.put(progBody, new Symbol[][] {
 			new Symbol[] {
-				tok_program, funcBody, tok_semicolon, type, tok_id, funcDefs,
+				tok_program, funcBody, tok_semicolon, funcDefsPrime,
 			}
 		});
 		p.put(funcDefs, new Symbol[][] {
 			new Symbol[] {
-				tok_open_paren, fParams, tok_close_paren, funcBody, tok_semicolon, type, tok_id, funcDefs,
+				tok_open_paren, fParams, tok_close_paren, funcBody, tok_semicolon, funcDefsPrime,
+			}, new Symbol[] {
+				funcDefsPrime
+			}
+		});
+		p.put(funcDefsPrime, new Symbol[][] {
+			new Symbol[] {
+				type, tok_id, funcDefs,
 			}, new Symbol[] {
 				EPSILON
 			}
@@ -462,7 +486,7 @@ public class Grammar {
 		return s.toString();
 	}
 	
-	public static void exportCsv(File f) throws FileNotFoundException{
+	public static void exportHtml(File f) throws FileNotFoundException{
 		PrintWriter out = new PrintWriter(f);
 		
 		out.write("<html><head>"
@@ -493,6 +517,6 @@ public class Grammar {
 	}
 	
 	public static void main(String[] args) throws FileNotFoundException {
-		exportCsv(new File("grammar.html"));
+		exportHtml(new File("grammar.html"));
 	}
 }

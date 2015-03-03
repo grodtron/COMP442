@@ -1,11 +1,15 @@
 package comp442.syntactical.parser;
 
+import static comp442.syntactical.data.Symbol.tok_close_brace;
+import static comp442.syntactical.data.Symbol.tok_open_brace;
+import static comp442.syntactical.data.Symbol.tok_semicolon;
+
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import comp442.lexical.token.Token;
 import comp442.syntactical.data.Symbol;
-import static comp442.syntactical.data.Symbol.*;
 
 public class ParseTree {
 
@@ -57,13 +61,18 @@ public class ParseTree {
 	private static class DerivationPrinter implements Visitor {
 
 		private int indentation = 0;
+		private PrintStream output;
 		
+		public DerivationPrinter(PrintStream output) {
+			this.output = output;
+		}
+
 		@Override
 		public void visit(ParseTree tree) {
 			for(int i = 0; i < indentation; ++i){
-				System.out.print(' ');
+				output.print(' ');
 			}
-			System.out.println(tree.symbol);
+			output.println(tree.symbol);
 		}
 
 		@Override
@@ -77,14 +86,20 @@ public class ParseTree {
 		}
 	}
 	
-	public void printSelf(){
-		this.acceptVisitor(new DerivationPrinter());
+	public void printSelf(PrintStream derivation){
+		this.acceptVisitor(new DerivationPrinter(derivation));
 	}
 	
 	private static class CodePrinter implements Visitor {
 
 		int indentation = 0;
 		
+		private PrintStream output;
+		
+		public CodePrinter(PrintStream output) {
+			this.output = output;
+		}
+
 		@Override
 		public void visit(ParseTree tree) {
 			if(tree.symbol.isTerminal && tree.token != null){
@@ -95,35 +110,29 @@ public class ParseTree {
 					--indentation;
 				}
 				
-				System.out.print(tree.token.lexeme);
-				if(tree.symbol == tok_semicolon || tree.symbol == tok_open_brace || tree.symbol == tok_close_brace){
-					System.out.print("\n");
+				output.print(tree.token.lexeme);
+				if(tree.symbol == tok_semicolon || tree.symbol == tok_open_brace){
+					output.print("\n");
 					for(int i = 0; i < indentation; ++i){
-						System.out.print("  ");
+						output.print("  ");
 					}
 				}else{
-					System.out.print(" ");
+					output.print(" ");
 				}
 				
 			}
 		}
 
 		@Override
-		public void pop() {
-			// TODO Auto-generated method stub
-			
-		}
+		public void pop() {}
 
 		@Override
-		public void push() {
-			// TODO Auto-generated method stub
-			
-		}
+		public void push() {}
 		
 	}
 	
-	public void printParsedCode(){
-		this.acceptVisitor(new CodePrinter());
+	public void printParsedCode(PrintStream output){
+		this.acceptVisitor(new CodePrinter(output));
 	}
 	
 }

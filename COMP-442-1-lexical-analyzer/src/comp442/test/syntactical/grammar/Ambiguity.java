@@ -65,7 +65,7 @@ public class Ambiguity {
 		
 		intersectA.retainAll(intersectB);
 		
-		assertEquals(intersectA, Collections.emptySet());
+		assertEquals(Collections.emptySet(), intersectA);
 	}
 
 }
