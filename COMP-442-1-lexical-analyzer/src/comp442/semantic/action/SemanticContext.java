@@ -4,7 +4,7 @@ import comp442.semantic.SymbolTable;
 import comp442.semantic.symboltable.entries.FunctionEntry;
 import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
 
-/*package*/ final class SemanticContext {
+public final class SemanticContext {
 
 	/*package*/final static SemanticContext instance;
 	
@@ -28,7 +28,14 @@ import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
 		storedId = null;
 	}
 	
-	
+	public static void reset(){
+		instance.init();
+	}
+
+	public static void printSelf() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 	

@@ -26,5 +26,7 @@ public class SymbolTable {
 	public SymbolTable getParent() {
 		return parent;
 	}
+
+	
 	
 }

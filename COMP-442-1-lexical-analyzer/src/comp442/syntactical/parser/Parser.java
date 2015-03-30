@@ -12,7 +12,7 @@ import java.util.Set;
 
 import comp442.lexical.Scanner;
 import comp442.lexical.token.Token;
-import comp442.semantic.action.ReinitializeAction;
+import comp442.semantic.action.SemanticContext;
 import comp442.syntactical.data.First;
 import comp442.syntactical.data.Follow;
 import comp442.syntactical.data.Grammar;
@@ -43,7 +43,7 @@ public class Parser {
 		
 		nErrors = 0;
 		
-		(new ReinitializeAction()).execute(null);
+		SemanticContext.reset();
 		
 	}
 
@@ -55,6 +55,8 @@ public class Parser {
 		
 		tree.printSelf(derivation);
 		tree.printParsedCode(output);
+		
+		SemanticContext.printSelf();
 		
 		error.close();
 		output.close();

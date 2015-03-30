@@ -10,8 +10,11 @@ import java.util.List;
 
 import comp442.lexical.token.Token;
 import comp442.syntactical.data.Symbol;
+import comp442.utils.Visitable;
+import comp442.utils.Visitor;
+import comp442.utils.VisitorAcceptor;
 
-public class ParseTree {
+public class ParseTree implements Visitable<ParseTree>{
 
 	public final Symbol symbol;
 	
@@ -20,10 +23,13 @@ public class ParseTree {
 	
 	private Token token;
 	
+	private VisitorAcceptor<ParseTree> visitorAcceptor;
+	
 	public ParseTree(Symbol s){
 		symbol = s;
 		children = new ArrayList<ParseTree>();
 		parent = this;
+		visitorAcceptor = new VisitorAcceptor<ParseTree>(this, children);
 	}
 
 	public void addChild(ParseTree childTree) {
@@ -43,22 +49,13 @@ public class ParseTree {
 		return token;
 	}
 	
-	public static interface Visitor {
-		public void visit(ParseTree tree);
-		public void pop();
-		public void push();
+	@Override
+	public void acceptVisitor(Visitor<ParseTree> visitor) {
+		visitorAcceptor.acceptVisitor(visitor);
 	}
+
 	
-	public void acceptVisitor(Visitor v){
-		v.visit(this);
-		v.push();
-		for(ParseTree child : children){
-			child.acceptVisitor(v);
-		}
-		v.pop();
-	}
-	
-	private static class DerivationPrinter implements Visitor {
+	private static class DerivationPrinter implements Visitor<ParseTree> {
 
 		private int indentation = 0;
 		private PrintStream output;
@@ -68,11 +65,11 @@ public class ParseTree {
 		}
 
 		@Override
-		public void visit(ParseTree tree) {
+		public void visit(Visitable<ParseTree> tree) {
 			for(int i = 0; i < indentation; ++i){
 				output.print(' ');
 			}
-			output.println(tree.symbol);
+			output.println(tree.get().symbol);
 		}
 
 		@Override
@@ -90,7 +87,7 @@ public class ParseTree {
 		this.acceptVisitor(new DerivationPrinter(derivation));
 	}
 	
-	private static class CodePrinter implements Visitor {
+	private static class CodePrinter implements Visitor<ParseTree> {
 
 		int indentation = 0;
 		
@@ -101,17 +98,17 @@ public class ParseTree {
 		}
 
 		@Override
-		public void visit(ParseTree tree) {
-			if(tree.symbol.isTerminal() && tree.token != null){
+		public void visit(Visitable<ParseTree> tree) {
+			if(tree.get().symbol.isTerminal() && tree.get().token != null){
 				
-				if(tree.symbol == tok_open_brace){
+				if(tree.get().symbol == tok_open_brace){
 					++indentation;
-				}else if(tree.symbol == tok_close_brace){
+				}else if(tree.get().symbol == tok_close_brace){
 					--indentation;
 				}
 				
-				output.print(tree.token.lexeme);
-				if(tree.symbol == tok_semicolon || tree.symbol == tok_open_brace){
+				output.print(tree.get().token.lexeme);
+				if(tree.get().symbol == tok_semicolon || tree.get().symbol == tok_open_brace){
 					output.print("\n");
 					for(int i = 0; i < indentation; ++i){
 						output.print("  ");
@@ -133,6 +130,11 @@ public class ParseTree {
 	
 	public void printParsedCode(PrintStream output){
 		this.acceptVisitor(new CodePrinter(output));
+	}
+
+	@Override
+	public ParseTree get() {
+		return this;
 	}
 	
 }
