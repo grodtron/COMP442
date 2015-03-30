@@ -40,7 +40,7 @@ public class Follow {
 					// We iterate the whole production
 					for(int i = 0; i < rhs.length; ++i){
 						// For each non-terminal we encounter
-						if(! rhs[i].isTerminal){
+						if( rhs[i].isNonterminal()){
 							// We add to its Follows set, the First set of the symbol immediately following it
 							// As well as the first set of each additional symbol after, if all the symbols between
 							// them are nullable.
@@ -70,7 +70,7 @@ public class Follow {
 	}
 
 	public static Set<Symbol> get(Symbol s) {
-		if(s.isTerminal){
+		if(s.isTerminal()){
 			return Collections.emptySet();
 		}else{
 			return _follows.get(s);
@@ -78,7 +78,12 @@ public class Follow {
 	}
 
 	public static Set<Symbol> get(Symbol s []) {
-		return get(s[0]);
+		for(int i = 0; i < s.length; ++i){
+			if(! s[i].isSemanticAction()){
+				return get(s[i]);
+			}
+		}
+		throw new RuntimeException("Should not deal with sets of ONLY semantic actions");
 	}
 	
 	public static void main(String[] args) {

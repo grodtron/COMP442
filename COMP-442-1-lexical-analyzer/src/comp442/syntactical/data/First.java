@@ -17,7 +17,12 @@ public class First {
 		}else{
 			Set<Symbol> f = new HashSet<Symbol>();
 			for(Symbol[] p : Grammar.productions.get(s)){
-				f.addAll(makeFirsts(p[0]));
+				for(int i = 0; i < p.length; ++i){
+					if(! p[i].isSemanticAction()){
+						f.addAll(makeFirsts(p[i]));
+						break;
+					}
+				}
 			}
 			_firsts.put(s, f);
 			return f;
@@ -32,6 +37,10 @@ public class First {
 			_firsts.put(s, Collections.singleton(s));
 		}
 		
+		for(Symbol s : Symbol.semanticActions){
+			_firsts.put(s, Collections.<Symbol>emptySet());
+		}
+		
 		for(Symbol s : Symbol.nonterminals){
 			makeFirsts(s);
 		}
@@ -42,7 +51,12 @@ public class First {
 	}
 
 	public static Set<Symbol> get(Symbol s []){
-		return get(s[0]);
+		for(int i = 0; i < s.length; ++i){
+			if(! s[i].isSemanticAction()){
+				return get(s[i]);
+			}
+		}
+		throw new RuntimeException("Should not deal with sets of ONLY semantic actions");
 	}
 	
 	public static void main(String[] args) {

@@ -52,7 +52,7 @@ public class LeftRecursion {
 	}
 
 	private boolean hasLeftRecursion(Symbol n, Symbol[] production) {
-		if(production.length == 0 || production[0].isTerminal){
+		if(production.length == 0 || production[0].isTerminal()){
 			return false;
 		}else if(production[0] == n){
 			return true;

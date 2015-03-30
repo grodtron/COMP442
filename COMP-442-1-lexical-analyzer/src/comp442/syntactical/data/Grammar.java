@@ -1,92 +1,5 @@
 package comp442.syntactical.data;
-import static comp442.syntactical.data.Symbol.EPSILON;
-import static comp442.syntactical.data.Symbol.aParams;
-import static comp442.syntactical.data.Symbol.aParamsTail;
-import static comp442.syntactical.data.Symbol.aParamsTailStar;
-import static comp442.syntactical.data.Symbol.addOp;
-import static comp442.syntactical.data.Symbol.arithExpr;
-import static comp442.syntactical.data.Symbol.arithExprPrime;
-import static comp442.syntactical.data.Symbol.arraySize;
-import static comp442.syntactical.data.Symbol.arraySizeStar;
-import static comp442.syntactical.data.Symbol.assignExpr;
-import static comp442.syntactical.data.Symbol.assignOp;
-import static comp442.syntactical.data.Symbol.assignStat;
-import static comp442.syntactical.data.Symbol.classBody;
-import static comp442.syntactical.data.Symbol.classBodyFunc;
-import static comp442.syntactical.data.Symbol.classBodyFuncPrime;
-import static comp442.syntactical.data.Symbol.classBodyPrime;
-import static comp442.syntactical.data.Symbol.classBodyVar;
-import static comp442.syntactical.data.Symbol.classDecl;
-import static comp442.syntactical.data.Symbol.controlStat;
-import static comp442.syntactical.data.Symbol.expr;
-import static comp442.syntactical.data.Symbol.exprPrime;
-import static comp442.syntactical.data.Symbol.fParams;
-import static comp442.syntactical.data.Symbol.fParamsArraySz;
-import static comp442.syntactical.data.Symbol.fParamsTail;
-import static comp442.syntactical.data.Symbol.fParamsTailStar;
-import static comp442.syntactical.data.Symbol.factor;
-import static comp442.syntactical.data.Symbol.factorIdNest;
-import static comp442.syntactical.data.Symbol.factorIdNestPrime;
-import static comp442.syntactical.data.Symbol.factorIdNestPrimePrime;
-import static comp442.syntactical.data.Symbol.funcBody;
-import static comp442.syntactical.data.Symbol.funcBodyStmt;
-import static comp442.syntactical.data.Symbol.funcBodyVar;
-import static comp442.syntactical.data.Symbol.funcBodyVarPrime;
-import static comp442.syntactical.data.Symbol.funcDefs;
-import static comp442.syntactical.data.Symbol.funcDefsPrime;
-import static comp442.syntactical.data.Symbol.indice;
-import static comp442.syntactical.data.Symbol.indices;
-import static comp442.syntactical.data.Symbol.multOp;
-import static comp442.syntactical.data.Symbol.prog;
-import static comp442.syntactical.data.Symbol.progBody;
-import static comp442.syntactical.data.Symbol.relExpr;
-import static comp442.syntactical.data.Symbol.relOp;
-import static comp442.syntactical.data.Symbol.sign;
-import static comp442.syntactical.data.Symbol.statBlock;
-import static comp442.syntactical.data.Symbol.statBlockStmts;
-import static comp442.syntactical.data.Symbol.term;
-import static comp442.syntactical.data.Symbol.termPrime;
-import static comp442.syntactical.data.Symbol.tok_and;
-import static comp442.syntactical.data.Symbol.tok_assignment;
-import static comp442.syntactical.data.Symbol.tok_class;
-import static comp442.syntactical.data.Symbol.tok_close_brace;
-import static comp442.syntactical.data.Symbol.tok_close_paren;
-import static comp442.syntactical.data.Symbol.tok_close_square;
-import static comp442.syntactical.data.Symbol.tok_comma;
-import static comp442.syntactical.data.Symbol.tok_diamond;
-import static comp442.syntactical.data.Symbol.tok_dot;
-import static comp442.syntactical.data.Symbol.tok_else;
-import static comp442.syntactical.data.Symbol.tok_equals;
-import static comp442.syntactical.data.Symbol.tok_float;
-import static comp442.syntactical.data.Symbol.tok_float_literal;
-import static comp442.syntactical.data.Symbol.tok_for;
-import static comp442.syntactical.data.Symbol.tok_get;
-import static comp442.syntactical.data.Symbol.tok_greater_than;
-import static comp442.syntactical.data.Symbol.tok_greater_than_equals;
-import static comp442.syntactical.data.Symbol.tok_id;
-import static comp442.syntactical.data.Symbol.tok_if;
-import static comp442.syntactical.data.Symbol.tok_int;
-import static comp442.syntactical.data.Symbol.tok_int_literal;
-import static comp442.syntactical.data.Symbol.tok_less_than;
-import static comp442.syntactical.data.Symbol.tok_less_than_equals;
-import static comp442.syntactical.data.Symbol.tok_minus;
-import static comp442.syntactical.data.Symbol.tok_not;
-import static comp442.syntactical.data.Symbol.tok_open_brace;
-import static comp442.syntactical.data.Symbol.tok_open_paren;
-import static comp442.syntactical.data.Symbol.tok_open_square;
-import static comp442.syntactical.data.Symbol.tok_or;
-import static comp442.syntactical.data.Symbol.tok_plus;
-import static comp442.syntactical.data.Symbol.tok_program;
-import static comp442.syntactical.data.Symbol.tok_put;
-import static comp442.syntactical.data.Symbol.tok_return;
-import static comp442.syntactical.data.Symbol.tok_semicolon;
-import static comp442.syntactical.data.Symbol.tok_slash;
-import static comp442.syntactical.data.Symbol.tok_star;
-import static comp442.syntactical.data.Symbol.tok_then;
-import static comp442.syntactical.data.Symbol.type;
-import static comp442.syntactical.data.Symbol.varDeclArray;
-import static comp442.syntactical.data.Symbol.variable;
-import static comp442.syntactical.data.Symbol.variablePrime;
+import static comp442.syntactical.data.Symbol.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -114,15 +27,15 @@ public class Grammar {
 		});
 		p.put(classDecl, new Symbol[][] {
 			new Symbol[] {
-				tok_class, tok_id, tok_open_brace, classBody,
+				tok_class, tok_id, sem_CreateClassScope, tok_open_brace, classBody,
 			}
 		});
 		p.put(classBody, new Symbol[][] {
 			new Symbol[] {
-				type, tok_id, classBodyPrime,
+				type, sem_StoreType, tok_id, sem_StoreId, classBodyPrime,
 			},
 			new Symbol[] {
-				tok_close_brace, tok_semicolon,
+				tok_close_brace, tok_semicolon, sem_EndScope
 			},		
 		});
 		p.put(classBodyPrime, new Symbol[][] {
@@ -135,21 +48,20 @@ public class Grammar {
 		});
 		p.put(classBodyVar, new Symbol[][] {
 			new Symbol[] {
-				varDeclArray, classBody,
-			}, new Symbol[] {
-				classBody,
-			}
+				varDeclArray, sem_CreateVariable, classBody,
+			}/*, new Symbol[] {
+				classBody, // TODO I think this is wrong, it allows no semicolon
+			}*/
 		});
 		p.put(classBodyFunc, new Symbol[][] {
 			new Symbol[] {
-				tok_open_paren, fParams, tok_close_paren, funcBody, tok_semicolon, classBodyFuncPrime,
 			}
 		});
 		p.put(classBodyFuncPrime, new Symbol[][] {
 			new Symbol[] {
 				type, tok_id, classBodyFunc,
 			}, new Symbol[] {
-				tok_close_brace, tok_semicolon,
+				tok_close_brace, tok_semicolon, sem_EndScope
 			}
 		});
 		
@@ -369,7 +281,7 @@ public class Grammar {
 		});
 		p.put(arraySize, new Symbol[][] {
 			new Symbol[] {
-				tok_open_square, tok_int_literal, tok_close_square
+				tok_open_square, tok_int_literal, sem_StoreDimension, tok_close_square
 			}
 		});
 		p.put(type, new Symbol[][] {
@@ -383,7 +295,7 @@ public class Grammar {
 		});
 		p.put(fParams, new Symbol[][] {
 			new Symbol[] {
-				type, tok_id, fParamsArraySz,
+				type, sem_StoreType, tok_id, sem_StoreId, fParamsArraySz,
 			}, new Symbol[] {
 				EPSILON
 			}
@@ -392,7 +304,7 @@ public class Grammar {
 			new Symbol[] {
 				arraySize, fParamsArraySz,
 			}, new Symbol[] {
-				fParamsTailStar,
+				sem_AddFunctionParameter, fParamsTailStar,
 			}
 		});
 		p.put(fParamsTailStar, new Symbol[][] {
@@ -404,7 +316,7 @@ public class Grammar {
 		});
 		p.put(fParamsTail, new Symbol[][] {
 			new Symbol[] {
-				tok_comma, type, tok_id, arraySizeStar,
+				tok_comma, type, sem_StoreType, tok_id, sem_StoreId, arraySizeStar, sem_AddFunctionParameter
 			}
 		});
 		p.put(arraySizeStar, new Symbol[][] {
@@ -496,7 +408,7 @@ public class Grammar {
 				+ "</style>"
 				+ "</head><body><table>");
 		for(Symbol lhs : Symbol.values()){
-			if (lhs.isTerminal) continue;
+			if (lhs.isTerminal()) continue;
 			
 			out.write("<tr>");
 			Symbol [][] rhss = Grammar.productions.get(lhs);

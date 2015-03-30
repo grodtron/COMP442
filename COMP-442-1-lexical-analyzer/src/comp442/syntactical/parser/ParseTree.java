@@ -102,7 +102,7 @@ public class ParseTree {
 
 		@Override
 		public void visit(ParseTree tree) {
-			if(tree.symbol.isTerminal && tree.token != null){
+			if(tree.symbol.isTerminal() && tree.token != null){
 				
 				if(tree.symbol == tok_open_brace){
 					++indentation;

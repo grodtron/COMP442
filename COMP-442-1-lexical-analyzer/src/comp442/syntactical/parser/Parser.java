@@ -12,6 +12,7 @@ import java.util.Set;
 
 import comp442.lexical.Scanner;
 import comp442.lexical.token.Token;
+import comp442.semantic.action.ReinitializeAction;
 import comp442.syntactical.data.First;
 import comp442.syntactical.data.Follow;
 import comp442.syntactical.data.Grammar;
@@ -21,6 +22,7 @@ public class Parser {
 
 	private Scanner scanner;
 	private Token token;
+	private Token previousToken;
 	private Symbol symbol;
 	
 	private int nErrors;
@@ -40,6 +42,9 @@ public class Parser {
 		derivation = new PrintStream(new File(baseName + ".derivation"));
 		
 		nErrors = 0;
+		
+		(new ReinitializeAction()).execute(null);
+		
 	}
 
 		
@@ -57,22 +62,18 @@ public class Parser {
 	}
 	
 	private void nextToken(){
-		token  = scanner.getNext();
-		symbol = Symbol.fromToken(token);	
+		previousToken = token;
+		token         = scanner.getNext();
+		symbol        = Symbol.fromToken(token);	
 	}
 	
 	private boolean parse(ParseTree tree){
 		
-		System.out.println("  " + tree.symbol + " -> " + tree.getParent().symbol + "  ("+symbol+")");
-		System.out.flush();
-
 		skipErrors(tree);
 		
-		if(tree.symbol.isTerminal){
+		if(tree.symbol.isTerminal()){
 			if(tree.symbol == symbol){
 				
-				System.out.println("matched: " + token);
-				System.out.flush();
 				tree.setToken(token);
 				nextToken();
 				return true;
@@ -94,9 +95,13 @@ public class Parser {
 				)){
 					// This rule matches !
 					for(Symbol child : production){
-						ParseTree childTree = new ParseTree(child);
-						tree.addChild(childTree);
-						parse(childTree);
+						if(child.isSemanticAction()){
+							child.action.execute(previousToken);
+						}else{
+							ParseTree childTree = new ParseTree(child);
+							tree.addChild(childTree);
+							parse(childTree);
+						}
 					}
 					return true;
 				}
@@ -109,7 +114,6 @@ public class Parser {
 			}
 			
 			if(nullable){
-				System.out.println("epsilon'd");
 				tree.addChild(new ParseTree(EPSILON));
 				return true;
 			}else{

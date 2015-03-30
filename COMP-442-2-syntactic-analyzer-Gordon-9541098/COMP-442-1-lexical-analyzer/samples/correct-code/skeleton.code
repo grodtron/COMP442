@@ -1,0 +1,11 @@
+// classDecl
+class Test {
+};
+// progBody
+program {
+
+};
+// funcDef
+int test() {
+
+};

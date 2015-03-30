@@ -5,150 +5,198 @@ import java.util.HashSet;
 import java.util.Set;
 
 import comp442.lexical.token.Token;
+import comp442.semantic.action.AddFunctionParameterAction;
+import comp442.semantic.action.CreateClassAction;
+import comp442.semantic.action.CreateFunctionAction;
+import comp442.semantic.action.CreateVariableAction;
+import comp442.semantic.action.EndScopeAction;
+import comp442.semantic.action.NullAction;
+import comp442.semantic.action.SemanticAction;
+import comp442.semantic.action.StartFunctionAction;
+import comp442.semantic.action.StoreDimensionAction;
+import comp442.semantic.action.StoreIdAction;
+import comp442.semantic.action.StoreTypeAction;
 
 public enum Symbol {
 	
-	prog(false),
-	classDecl(false),
-	classBody(false),
-	classBodyPrime(false),
-	classBodyVar(false),
-	classBodyFunc(false),
-	classBodyFuncPrime(false),
-	progBody(false),
-	funcDefs(false),
-	funcDefsPrime(false),
-	funcBody(false),
-	funcBodyVar(false),
-	funcBodyVarPrime(false),
-	funcBodyStmt(false),
-	varDeclArray(false),
-	controlStat(false),
-	assignStat(false),
-	assignExpr(false),
-	statBlock(false),
-	statBlockStmts(false),
-	expr(false),
-	exprPrime(false),
-	relExpr(false),
-	arithExpr(false),
-	arithExprPrime(false),
-	sign(false),
-	term(false),
-	termPrime(false),
-	factor(false),
-	factorIdNest(false),
-	factorIdNestPrime(false),
-	factorIdNestPrimePrime(false),
-	variable(false),
-	variablePrime(false),
-	indice(false),
-	indices(false),
-	arraySize(false),
-	type(false),
-	fParams(false),
-	fParamsArraySz(false),
-	fParamsTailStar(false),
-	fParamsTail(false),
-	arraySizeStar(false),
-	aParams(false),
-	aParamsTailStar(false),
-	aParamsTail(false),
-	assignOp(false),
-	relOp(false),
-	addOp(false),
-	multOp(false),
+	prog(Type.Nonterminal),
+	classDecl(Type.Nonterminal),
+	classBody(Type.Nonterminal),
+	classBodyPrime(Type.Nonterminal),
+	classBodyVar(Type.Nonterminal),
+	classBodyFunc(Type.Nonterminal),
+	classBodyFuncPrime(Type.Nonterminal),
+	progBody(Type.Nonterminal),
+	funcDefs(Type.Nonterminal),
+	funcDefsPrime(Type.Nonterminal),
+	funcBody(Type.Nonterminal),
+	funcBodyVar(Type.Nonterminal),
+	funcBodyVarPrime(Type.Nonterminal),
+	funcBodyStmt(Type.Nonterminal),
+	varDeclArray(Type.Nonterminal),
+	controlStat(Type.Nonterminal),
+	assignStat(Type.Nonterminal),
+	assignExpr(Type.Nonterminal),
+	statBlock(Type.Nonterminal),
+	statBlockStmts(Type.Nonterminal),
+	expr(Type.Nonterminal),
+	exprPrime(Type.Nonterminal),
+	relExpr(Type.Nonterminal),
+	arithExpr(Type.Nonterminal),
+	arithExprPrime(Type.Nonterminal),
+	sign(Type.Nonterminal),
+	term(Type.Nonterminal),
+	termPrime(Type.Nonterminal),
+	factor(Type.Nonterminal),
+	factorIdNest(Type.Nonterminal),
+	factorIdNestPrime(Type.Nonterminal),
+	factorIdNestPrimePrime(Type.Nonterminal),
+	variable(Type.Nonterminal),
+	variablePrime(Type.Nonterminal),
+	indice(Type.Nonterminal),
+	indices(Type.Nonterminal),
+	arraySize(Type.Nonterminal),
+	type(Type.Nonterminal),
+	fParams(Type.Nonterminal),
+	fParamsArraySz(Type.Nonterminal),
+	fParamsTailStar(Type.Nonterminal),
+	fParamsTail(Type.Nonterminal),
+	arraySizeStar(Type.Nonterminal),
+	aParams(Type.Nonterminal),
+	aParamsTailStar(Type.Nonterminal),
+	aParamsTail(Type.Nonterminal),
+	assignOp(Type.Nonterminal),
+	relOp(Type.Nonterminal),
+	addOp(Type.Nonterminal),
+	multOp(Type.Nonterminal),
 	
 	/////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////
 	
 	// reserved words
-	tok_and(true),
-	tok_or(true),
-	tok_not(true),
+	tok_and(Type.Terminal),
+	tok_or(Type.Terminal),
+	tok_not(Type.Terminal),
 	
-	tok_if(true),
-	tok_else(true),
-	tok_then(true),
-	tok_for(true),
+	tok_if(Type.Terminal),
+	tok_else(Type.Terminal),
+	tok_then(Type.Terminal),
+	tok_for(Type.Terminal),
 	
-	tok_class(true),
+	tok_class(Type.Terminal),
 	
-	tok_int(true),
-	tok_float(true),
+	tok_int(Type.Terminal),
+	tok_float(Type.Terminal),
 	
-	tok_get(true),
-	tok_put(true),
+	tok_get(Type.Terminal),
+	tok_put(Type.Terminal),
 	
-	tok_return(true),
+	tok_return(Type.Terminal),
 
-	tok_program(true),
+	tok_program(Type.Terminal),
 	
 	// identifier
-	tok_id(true),
+	tok_id(Type.Terminal),
 	
 	//
-	tok_int_literal(true),
+	tok_int_literal(Type.Terminal),
 	
 	//
-	tok_float_literal(true),
+	tok_float_literal(Type.Terminal),
 	
 	//
-	tok_equals(true),
-	tok_assignment(true),
-	tok_greater_than_equals(true),
-	tok_greater_than(true),
-	tok_less_than_equals(true),
-	tok_less_than(true),
-	tok_diamond(true),
-	tok_plus(true),
-	tok_minus(true),
-	tok_star(true),
-	tok_semicolon(true),
-	tok_comma(true),
-	tok_dot(true),
-	tok_slash(true),
+	tok_equals(Type.Terminal),
+	tok_assignment(Type.Terminal),
+	tok_greater_than_equals(Type.Terminal),
+	tok_greater_than(Type.Terminal),
+	tok_less_than_equals(Type.Terminal),
+	tok_less_than(Type.Terminal),
+	tok_diamond(Type.Terminal),
+	tok_plus(Type.Terminal),
+	tok_minus(Type.Terminal),
+	tok_star(Type.Terminal),
+	tok_semicolon(Type.Terminal),
+	tok_comma(Type.Terminal),
+	tok_dot(Type.Terminal),
+	tok_slash(Type.Terminal),
 	
 	//
-	tok_open_paren(true),
-	tok_open_brace(true),
-	tok_open_square(true),
-	tok_close_paren(true),
-	tok_close_brace(true),
-	tok_close_square(true),
+	tok_open_paren(Type.Terminal),
+	tok_open_brace(Type.Terminal),
+	tok_open_square(Type.Terminal),
+	tok_close_paren(Type.Terminal),
+	tok_close_brace(Type.Terminal),
+	tok_close_square(Type.Terminal),
 	
 	
-	EPSILON(true),
-	END_MARKER(true),
+	EPSILON(Type.Terminal),
+	END_MARKER(Type.Terminal),
+	
+	sem_CreateClassScope(new CreateClassAction()),
+	sem_StartFunction(new StartFunctionAction()),
+	sem_AddFunctionParameter(new AddFunctionParameterAction()),
+	sem_CreateFunction(new CreateFunctionAction()),
+	sem_StoreType(new StoreTypeAction()),
+	sem_StoreId(new StoreIdAction()),
+	sem_StoreDimension(new StoreDimensionAction()),
+	sem_CreateVariable(new CreateVariableAction()),
+	sem_EndScope(new EndScopeAction()),
 	;
-		
+
+	public static enum Type {
+		Terminal,
+		Nonterminal,
+		SemanticAction
+	};
+	
+	
 	private final static Set<Symbol> _terminals;
 	private final static Set<Symbol> _nonterminals;
+	private final static Set<Symbol> _semanticActions;
 	
 	public final static Set<Symbol> terminals;
 	public final static Set<Symbol> nonterminals;
+	public final static Set<Symbol> semanticActions;
 	
 	static {
 		_terminals    = new HashSet<Symbol>();
 		_nonterminals = new HashSet<Symbol>();
+		_semanticActions = new HashSet<Symbol>();
 		
 		for(Symbol s : Symbol.values()){
-			if(s.isTerminal){
-				_terminals.add(s);
-			}else{
-				_nonterminals.add(s);
+			switch(s.symbolType){
+				case Terminal:
+					_terminals.add(s);
+					break;
+				case Nonterminal:
+					_nonterminals.add(s);
+					break;
+				case SemanticAction:
+					_semanticActions.add(s);
+					break;
+				default:
+					break;
 			}
 		}
 		
-		terminals     = Collections.unmodifiableSet(_terminals);
-		nonterminals  = Collections.unmodifiableSet(_nonterminals);
+		terminals       = Collections.unmodifiableSet(_terminals);
+		nonterminals    = Collections.unmodifiableSet(_nonterminals);
+		semanticActions = Collections.unmodifiableSet(_semanticActions);
 	}
 	
-	public final boolean isTerminal;
-	Symbol(boolean isTerminal){
-		this.isTerminal = isTerminal;
+	public final Type symbolType;
+	public final SemanticAction action;
+	Symbol(Type type){
+		this.action = NullAction.instance;
+		this.symbolType = type;
 	}
+	
+	Symbol(SemanticAction action){
+		this.action = action;
+		this.symbolType = Type.SemanticAction;
+	}
+		
 	public static Symbol fromToken(Token t) {
 		if(t == null){
 			return END_MARKER;
@@ -204,7 +252,7 @@ public enum Symbol {
 	}
 	
 	public String toHtmlString(){
-		if(isTerminal){
+		if(symbolType == Type.Terminal){
 			return "<b>" + terminalToString()
 							.replace("<", "&lt;")
 							.replace(">", "&gt;") +
@@ -212,6 +260,18 @@ public enum Symbol {
 		}else{
 			return "&lt;" + name() + "&gt;";
 		}
+	}
+
+	public boolean isTerminal() {
+		return symbolType == Type.Terminal;
+	}
+
+	public boolean isNonterminal() {
+		return symbolType == Type.Nonterminal;
+	}
+
+	public boolean isSemanticAction() {
+		return symbolType == Type.SemanticAction;
 	}
 
 }

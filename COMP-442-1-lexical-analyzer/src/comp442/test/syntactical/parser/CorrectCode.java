@@ -47,7 +47,11 @@ public class CorrectCode {
 	
 	@Test
 	public void test_parsesCorrectly() {
+		try{
 		p.parse();
+		}catch(Throwable e){
+			System.out.println(e);
+		}
 		assertEquals(0, p.getNErrors());
 	}
 

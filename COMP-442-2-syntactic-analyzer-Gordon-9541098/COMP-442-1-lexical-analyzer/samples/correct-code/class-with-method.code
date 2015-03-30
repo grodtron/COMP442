@@ -1,0 +1,8 @@
+class Utility {
+  	int var1 ;
+  	int func1 ( int parm ) {
+	};
+};
+
+program {
+};
