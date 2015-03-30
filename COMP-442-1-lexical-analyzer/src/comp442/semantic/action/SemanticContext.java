@@ -2,6 +2,7 @@ package comp442.semantic.action;
 
 import comp442.semantic.SymbolTable;
 import comp442.semantic.symboltable.entries.FunctionEntry;
+import comp442.semantic.symboltable.entries.SymbolTableEntry;
 import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
 
 public final class SemanticContext {
@@ -11,7 +12,6 @@ public final class SemanticContext {
 	static {
 		instance = new SemanticContext();
 	}
-	
 	
 	public SymbolTable currentSymbolTable;
 	public SymbolTableEntryType storedType;
@@ -34,6 +34,10 @@ public final class SemanticContext {
 
 	public static String printableString() {
 		return instance.currentSymbolTable.toString();
+	}
+
+	public static SymbolTableEntry find(String name) {
+		return instance.currentSymbolTable.find(name);
 	}
 	
 

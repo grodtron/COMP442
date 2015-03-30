@@ -29,7 +29,7 @@ public class CreateClassAction implements SemanticAction {
 			throw new RuntimeException("precedingToken must be an id for " + getClass().getName());
 		}
 		
-		if(context.currentSymbolTable.find(name) == null){
+		if( ! context.currentSymbolTable.exists(name)){
 			// Create a new symbol table for the new Class
 			SymbolTable table = new SymbolTable(context.currentSymbolTable);
 			// Create a new Symbol table entry for the new class

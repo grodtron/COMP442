@@ -16,8 +16,21 @@ public class SymbolTable {
 		this.entries = new HashMap<String, SymbolTableEntry>();
 	}
 
-	public SymbolTableEntry find(String name) {
-		return entries.get(name);
+	public boolean exists(String name) {
+		return entries.get(name) != null;
+	}
+	
+	public SymbolTableEntry find(String name){
+		SymbolTableEntry e = entries.get(name);
+		if(e != null){
+			return e;
+		}else{
+			if(parent != null){
+				return parent.find(name);
+			}else{
+				return null;
+			}
+		}
 	}
 
 	public void add(SymbolTableEntry entry) {
