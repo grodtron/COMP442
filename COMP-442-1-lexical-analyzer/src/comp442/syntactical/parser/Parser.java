@@ -56,7 +56,9 @@ public class Parser {
 		tree.printSelf(derivation);
 		tree.printParsedCode(output);
 		
-		SemanticContext.printSelf();
+		
+		System.out.println("-------------------------------------");
+		System.out.println(SemanticContext.printableString());
 		
 		error.close();
 		output.close();

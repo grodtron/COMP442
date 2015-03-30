@@ -8,9 +8,4 @@ public class ParameterEntry extends SymbolTableEntry {
 		super(name, Kind.Parameter, type, null);
 	}
 	
-	@Override
-	public String toString(){
-		return getName() + " " + getKind() + " " + getType(); 
-	}
-
 }

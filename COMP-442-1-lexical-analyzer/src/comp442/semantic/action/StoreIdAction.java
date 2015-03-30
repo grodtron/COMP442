@@ -9,7 +9,6 @@ public class StoreIdAction implements SemanticAction {
 	@Override
 	public void execute(Token precedingToken) {
 		context.storedId = precedingToken.lexeme;
-		System.out.println(" stored ID " + context.storedId);
 	}
 
 }

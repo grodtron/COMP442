@@ -10,7 +10,6 @@ public class StoreTypeAction implements SemanticAction {
 	@Override
 	public void execute(Token precedingToken) {
 		context.storedType = new PlainType(precedingToken.lexeme);
-		System.out.println(" stored type " + context.storedType);
 	}
 
 }

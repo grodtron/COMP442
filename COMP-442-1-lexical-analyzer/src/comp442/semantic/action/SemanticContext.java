@@ -32,9 +32,8 @@ public final class SemanticContext {
 		instance.init();
 	}
 
-	public static void printSelf() {
-		// TODO Auto-generated method stub
-		
+	public static String printableString() {
+		return instance.currentSymbolTable.toString();
 	}
 	
 

@@ -10,7 +10,6 @@ public class CreateVariableAction implements SemanticAction {
 	
 	@Override
 	public void execute(Token precedingToken) {
-
 		SymbolTableEntry entry = new VariableEntry(context.storedId, context.storedType);
 		context.currentSymbolTable.add(entry);
 		System.out.println(" Added entry: " + entry);

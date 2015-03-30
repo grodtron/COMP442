@@ -49,9 +49,7 @@ public class Grammar {
 		p.put(classBodyVar, new Symbol[][] {
 			new Symbol[] {
 				varDeclArray, sem_CreateVariable, classBody,
-			}/*, new Symbol[] {
-				classBody, // TODO I think this is wrong, it allows no semicolon
-			}*/
+			}
 		});
 		p.put(classBodyFunc, new Symbol[][] {
 			new Symbol[] {
@@ -60,27 +58,27 @@ public class Grammar {
 		});
 		p.put(classBodyFuncPrime, new Symbol[][] {
 			new Symbol[] {
-				type, tok_id, classBodyFunc,
+				type, sem_StoreType, tok_id, sem_StoreId, classBodyFunc,
 			}, new Symbol[] {
-				tok_close_brace, tok_semicolon, sem_EndScope
+				tok_close_brace, tok_semicolon, sem_EndScope /* end class scope */
 			}
 		});
 		
 		p.put(progBody, new Symbol[][] {
 			new Symbol[] {
-				tok_program, funcBody, tok_semicolon, funcDefsPrime,
+				tok_program, sem_StoreId, sem_StoreType, sem_StartFunction, sem_CreateFunction, funcBody, tok_semicolon, funcDefsPrime,
 			}
 		});
 		p.put(funcDefs, new Symbol[][] {
 			new Symbol[] {
-				tok_open_paren, fParams, tok_close_paren, funcBody, tok_semicolon, funcDefsPrime,
+				tok_open_paren, sem_StartFunction, fParams, tok_close_paren, sem_CreateFunction, funcBody, tok_semicolon, funcDefsPrime,
 			}, new Symbol[] {
 				funcDefsPrime
 			}
 		});
 		p.put(funcDefsPrime, new Symbol[][] {
 			new Symbol[] {
-				type, tok_id, funcDefs,
+				type, sem_StoreType, tok_id, sem_StoreId, funcDefs,
 			}, new Symbol[] {
 				EPSILON
 			}
@@ -92,20 +90,20 @@ public class Grammar {
 		});
 		p.put(funcBodyVar, new Symbol[][] {
 			new Symbol[] {
-				tok_int, tok_id, varDeclArray, funcBodyVar,
+				tok_int, sem_StoreType, tok_id, sem_StoreId, varDeclArray, sem_CreateVariable, funcBodyVar,
 			}, new Symbol[] {
-				tok_float, tok_id, varDeclArray, funcBodyVar,
+				tok_float, sem_StoreType, tok_id, sem_StoreId, varDeclArray, sem_CreateVariable, funcBodyVar,
 			}, new Symbol[] {
 				tok_id, funcBodyVarPrime
 			}, new Symbol[] {
 				controlStat, funcBodyStmt,
 			}, new Symbol[] {
-				tok_close_brace
+				tok_close_brace, sem_EndScope,
 			}
 		});
 		p.put(funcBodyVarPrime, new Symbol[][] {
 			new Symbol[] {
-				tok_id, varDeclArray, funcBodyVar,
+				sem_StoreType, tok_id, sem_StoreId, varDeclArray, sem_CreateVariable, funcBodyVar,
 			}, new Symbol[] {
 				indices, variablePrime, assignStat, funcBodyStmt,
 			}
@@ -116,7 +114,7 @@ public class Grammar {
 			}, new Symbol[] {
 				controlStat, funcBodyStmt,
 			}, new Symbol[] {
-				tok_close_brace
+				tok_close_brace, sem_EndScope
 			}
 		});
 		p.put(varDeclArray, new Symbol[][] {
