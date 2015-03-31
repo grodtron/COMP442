@@ -2,6 +2,7 @@ package comp442.semantic.action;
 
 import comp442.lexical.token.Token;
 import comp442.lexical.token.TokenType;
+import comp442.logging.Log;
 import comp442.semantic.SymbolTable;
 import comp442.semantic.symboltable.entries.ClassEntry;
 import comp442.semantic.symboltable.entries.SymbolTableEntry;
@@ -41,8 +42,8 @@ public class CreateClassAction implements SemanticAction {
 			
 			System.out.println("Created new scope for class " + name);
 		}else{
-			// TODO log error properly
-			System.err.println("Duplicate class declaration: " + name + " on line " + token.lineno);
+			Log.error.println("Duplicate class declaration: " + name + " on line " + token.lineno);
+			context.skipNextCloseScope = true;
 		}
 	}
 

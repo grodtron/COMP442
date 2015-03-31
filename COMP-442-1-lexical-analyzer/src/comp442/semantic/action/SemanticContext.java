@@ -17,6 +17,7 @@ public final class SemanticContext {
 	public SymbolTableEntryType storedType;
 	public String storedId;
 	public FunctionEntry storedFunction;
+	public boolean skipNextCloseScope;
 	
 	private SemanticContext(){
 		init();
@@ -26,6 +27,7 @@ public final class SemanticContext {
 		currentSymbolTable = new SymbolTable(null);
 		storedType = null;
 		storedId = null;
+		skipNextCloseScope = false;
 	}
 	
 	public static void reset(){
@@ -38,6 +40,10 @@ public final class SemanticContext {
 
 	public static SymbolTableEntry find(String name) {
 		return instance.currentSymbolTable.find(name);
+	}
+
+	public static SymbolTable getGlobalScope() {
+		return instance.currentSymbolTable;
 	}
 	
 

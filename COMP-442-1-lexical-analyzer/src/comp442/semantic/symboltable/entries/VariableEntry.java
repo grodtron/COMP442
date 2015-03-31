@@ -7,5 +7,4 @@ public class VariableEntry extends SymbolTableEntry {
 	public VariableEntry(String name, SymbolTableEntryType type) {
 		super(name, Kind.Variable, type, null);
 	}
-
 }

@@ -9,12 +9,16 @@ public class EndScopeAction implements SemanticAction {
 	
 	@Override
 	public void execute(Token token) {
-		SymbolTable parent = context.currentSymbolTable.getParent();
-		if(parent != null){
-			context.currentSymbolTable = parent;
-			System.out.println("Ended current scope");
+		if(context.skipNextCloseScope){
+			context.skipNextCloseScope = false;
 		}else{
-			throw new RuntimeException("Tried to close global scope");
+			SymbolTable parent = context.currentSymbolTable.getParent();
+			if(parent != null){
+				context.currentSymbolTable = parent;
+				System.out.println("Ended current scope");
+			}else{
+				throw new RuntimeException("Tried to close global scope");
+			}
 		}
 	}
 

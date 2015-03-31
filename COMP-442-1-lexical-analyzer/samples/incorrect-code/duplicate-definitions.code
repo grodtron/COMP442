@@ -1,0 +1,18 @@
+class Utility {
+  	int var1 ;
+  	float var1 ;
+  	int func1 ( int parm ) {
+	};
+	float func1 (){
+	};
+};
+class Utility {
+};
+program {
+Utility x;
+int x[1][2][3];
+};
+int foo(){
+};
+float foo(int x, int y, int z){
+};

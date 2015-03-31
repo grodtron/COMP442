@@ -60,4 +60,17 @@ public abstract class SymbolTableEntry {
 	public String toString(){
 		return getKind() + " " + getName() + " " + getType(); 
 	}
+	
+	@Override
+	public boolean equals(Object other){
+		if(other instanceof SymbolTableEntry){
+			SymbolTableEntry e = (SymbolTableEntry) other;
+			return ((e.getKind() == null  && getKind()  == null) || e.getKind().equals(getKind()))
+				&& ((e.getType() == null  && getType()  == null) || e.getType().equals(getType()))
+				&& ((e.getName() == null  && getName()  == null) || e.getName().equals(getName()))
+				/*&& ((e.getScope() == null && getScope() == null) || e.getScope().equals(getScope()))*/;
+		}else{
+			return false;
+		}
+	}
 }

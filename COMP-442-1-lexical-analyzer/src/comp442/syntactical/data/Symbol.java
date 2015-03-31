@@ -252,13 +252,18 @@ public enum Symbol {
 	}
 	
 	public String toHtmlString(){
-		if(symbolType == Type.Terminal){
-			return "<b>" + terminalToString()
-							.replace("<", "&lt;")
-							.replace(">", "&gt;") +
-					"</b>";
-		}else{
+		switch(symbolType){
+		case Nonterminal:
 			return "&lt;" + name() + "&gt;";
+		case SemanticAction:
+			return "<span style='color:red'>#" + name() + "#</span>";
+		case Terminal:
+			return "<b>" + terminalToString()
+					.replace("<", "&lt;")
+					.replace(">", "&gt;") +
+			"</b>";
+		default:
+			return "<b>==========UNKNOWN==========</b>";
 		}
 	}
 

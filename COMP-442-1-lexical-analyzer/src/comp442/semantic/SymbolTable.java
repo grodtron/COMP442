@@ -69,7 +69,7 @@ public class SymbolTable {
 		private void newline(){
 			sb.append('\n');
 			for(int i = 0; i < indent; ++i){
-				sb.append(' ');
+				sb.append("   ");
 			}
 		}
 	}

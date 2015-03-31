@@ -37,4 +37,27 @@ public class ArrayType implements SymbolTableEntryType {
 		dimensions.add(dim);
 	}
 	
+	@Override
+	public boolean equals(Object other){
+		if(other instanceof ArrayType){
+			ArrayType o = (ArrayType) other;
+			if(getType().equals(o.getType())){
+				if(dimensions.size() == o.dimensions.size()){
+					for(int i = 0; i < dimensions.size(); ++i){
+						if(dimensions.get(i) != o.dimensions.get(i)){
+							return false;
+						}
+					}
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
+	
 }

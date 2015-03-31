@@ -43,4 +43,27 @@ public class FunctionType implements SymbolTableEntryType {
 		return sb.toString();
 	}
 	
+	@Override
+	public boolean equals(Object other){
+		if(other instanceof FunctionType){
+			FunctionType o = (FunctionType) other;
+			if(returnType.equals(o.returnType)){
+				if(argumentTypes.size() == o.argumentTypes.size()){
+					for(int i = 0; i < argumentTypes.size(); ++i){
+						if(! argumentTypes.get(i).equals(o.argumentTypes.get(i))){
+							return false;
+						}
+					}
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
+	
 }

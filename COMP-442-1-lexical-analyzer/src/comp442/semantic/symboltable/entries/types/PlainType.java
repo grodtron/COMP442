@@ -18,4 +18,9 @@ public class PlainType implements SymbolTableEntryType{
 	public String toString(){
 		return name;
 	}
+	
+	@Override
+	public boolean equals(Object other){
+		return other instanceof PlainType && name.equals(((PlainType)other).name);
+	}
 }

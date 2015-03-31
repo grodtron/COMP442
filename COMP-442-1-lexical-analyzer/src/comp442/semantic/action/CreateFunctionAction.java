@@ -8,9 +8,10 @@ public class CreateFunctionAction implements SemanticAction {
 	
 	@Override
 	public void execute(Token precedingToken) {
-		context.currentSymbolTable.add(context.storedFunction);
-		context.currentSymbolTable = context.storedFunction.getScope();
-		System.out.println("Adding function " + context.storedFunction);
+		if(context.storedFunction != null){
+			context.currentSymbolTable.add(context.storedFunction);
+			context.currentSymbolTable = context.storedFunction.getScope();
+			System.out.println("Adding function " + context.storedFunction);
+		}
 	}
-
 }

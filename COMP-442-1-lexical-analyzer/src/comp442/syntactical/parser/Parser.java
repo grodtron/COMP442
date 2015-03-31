@@ -7,11 +7,13 @@ import static comp442.syntactical.data.Symbol.prog;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Set;
 
 import comp442.lexical.Scanner;
 import comp442.lexical.token.Token;
+import comp442.logging.Log;
 import comp442.semantic.action.SemanticContext;
 import comp442.syntactical.data.First;
 import comp442.syntactical.data.Follow;
@@ -26,10 +28,13 @@ public class Parser {
 	private Symbol symbol;
 	
 	private int nErrors;
-	
-	private PrintStream error;
-	private PrintStream output;
-	private PrintStream derivation;
+		
+	public Parser(InputStream in){
+		this.scanner = new Scanner(in);
+		nErrors = 0;
+				
+		SemanticContext.reset();
+	}
 	
 	public Parser(File input) throws FileNotFoundException{
 		this.scanner = new Scanner(new FileInputStream(input));
@@ -37,9 +42,10 @@ public class Parser {
 		String baseName = input.getPath();
 		baseName = baseName.substring(0, baseName.lastIndexOf('.'));
 		
-		error      = new PrintStream(new File(baseName + ".error"));
-		output     = new PrintStream(new File(baseName + ".output"));
-		derivation = new PrintStream(new File(baseName + ".derivation"));
+		Log.error      = new PrintStream(new File(baseName + ".error"));
+		Log.output     = new PrintStream(new File(baseName + ".output"));
+		Log.derivation = new PrintStream(new File(baseName + ".derivation"));
+		Log.symbols    = new PrintStream(new File(baseName + ".symbols"));
 		
 		nErrors = 0;
 		
@@ -53,16 +59,15 @@ public class Parser {
 		nextToken();
 		parse(tree);
 		
-		tree.printSelf(derivation);
-		tree.printParsedCode(output);
+		tree.printSelf(Log.derivation);
+		tree.printParsedCode(Log.output);
 		
+		Log.symbols.print(SemanticContext.printableString());
 		
-		System.out.println("-------------------------------------");
-		System.out.println(SemanticContext.printableString());
-		
-		error.close();
-		output.close();
-		derivation.close();
+		Log.error.close();
+		Log.output.close();
+		Log.derivation.close();
+		Log.symbols.close();
 	}
 	
 	private void nextToken(){
@@ -83,7 +88,7 @@ public class Parser {
 				return true;
 			}else{
 				if(symbol == END_MARKER){
-					error.println("ERROR: unexpected end of input, expected " + tree.symbol);					
+					Log.error.println("ERROR: unexpected end of input, expected " + tree.symbol);					
 				}
 				
 				return false;
@@ -121,7 +126,7 @@ public class Parser {
 				tree.addChild(new ParseTree(EPSILON));
 				return true;
 			}else{
-				error.println("ERROR: no rule matches! Current symbol is " + tree.symbol + " looking for " + symbol);
+				Log.error.println("ERROR: no rule matches! Current symbol is " + tree.symbol + " looking for " + symbol);
 				
 				return false;
 			}
@@ -141,7 +146,7 @@ public class Parser {
 		
 		// Skip any token that cannot follow the current token
 		while( ! first.contains(symbol) && token != null){
-			error.println("ERROR: unexpected token '" + symbol + "' on line " + token.lineno + ", expecting any of " + first);			
+			Log.error.println("ERROR: unexpected token '" + symbol + "' on line " + token.lineno + ", expecting any of " + first);			
 			++nErrors;
 			nextToken();
 		}

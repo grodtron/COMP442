@@ -407,7 +407,7 @@ public class Grammar {
 				+ "</style>"
 				+ "</head><body><table>");
 		for(Symbol lhs : Symbol.values()){
-			if (lhs.isTerminal()) continue;
+			if (! lhs.isNonterminal()) continue;
 			
 			out.write("<tr>");
 			Symbol [][] rhss = Grammar.productions.get(lhs);

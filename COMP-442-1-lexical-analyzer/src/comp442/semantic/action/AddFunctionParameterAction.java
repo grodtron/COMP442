@@ -9,7 +9,7 @@ public class AddFunctionParameterAction implements SemanticAction {
 	
 	@Override
 	public void execute(Token precedingToken) {
-		context.storedFunction.addParameter(new ParameterEntry(context.storedId, context.storedType));
+		if (context.storedFunction != null) context.storedFunction.addParameter(new ParameterEntry(context.storedId, context.storedType));
 	}
 
 }

@@ -17,6 +17,5 @@ public class FunctionEntry extends SymbolTableEntry {
 		type.pushParameter(param.getType());
 		
 		getScope().add(param);
-	}
-	
+	}	
 }
