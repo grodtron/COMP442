@@ -1,12 +1,12 @@
 package comp442.semantic.symboltable.entries.types;
 
-public class PlainType implements SymbolTableEntryType{
+public class PrimitiveType implements SymbolTableEntryType{
 
 	private final String name;
 	
 	// TODO - maybe need to distinguish between class type and primitives
 	
-	public PlainType(String name){
+	public PrimitiveType(String name){
 		this.name = name;
 	}
 	
@@ -21,6 +21,11 @@ public class PlainType implements SymbolTableEntryType{
 	
 	@Override
 	public boolean equals(Object other){
-		return other instanceof PlainType && name.equals(((PlainType)other).name);
+		return other instanceof PrimitiveType && name.equals(((PrimitiveType)other).name);
+	}
+
+	@Override
+	public int getSize() {
+		return 4;
 	}
 }

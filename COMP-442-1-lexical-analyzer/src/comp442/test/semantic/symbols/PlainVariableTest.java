@@ -1,4 +1,4 @@
-package comp442.test.semantic;
+package comp442.test.semantic.symbols;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,9 +13,12 @@ import org.junit.runners.Parameterized.Parameters;
 
 import comp442.semantic.SymbolTable;
 import comp442.semantic.action.SemanticContext;
+import comp442.semantic.symboltable.entries.ClassEntry;
 import comp442.semantic.symboltable.entries.SymbolTableEntry;
 import comp442.semantic.symboltable.entries.VariableEntry;
-import comp442.semantic.symboltable.entries.types.PlainType;
+import comp442.semantic.symboltable.entries.types.ClassType;
+import comp442.semantic.symboltable.entries.types.PrimitiveType;
+import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
 import comp442.syntactical.parser.Parser;
 
 @RunWith(Parameterized.class)
@@ -33,8 +36,10 @@ public class PlainVariableTest {
 		
 		List<Object[]> values = new ArrayList<Object[]>();
 		
+		String className = "TestClass";
+		
 		// name, code, expected, search-path
-		for(String type : new String[]{"int", "float", "TestClass"}){
+		for(String type : new String[]{"int", "float", className}){
 			for(Location location : Location.values()){
 				String name = location.toString().replace("_", " ") + " " + type;
 				
@@ -54,16 +59,22 @@ public class PlainVariableTest {
 							+ (location == Location.function_local ? var : "")
 						+ "};";
 				
+				SymbolTableEntryType steType;
+				if(type.equals(className)){
+					steType = new ClassType(new ClassEntry(type, new SymbolTable(null)));
+				}else{
+					steType = new PrimitiveType(type);
+				}
 				
-				VariableEntry expected = new VariableEntry("x", new PlainType(type));
+				VariableEntry expected = new VariableEntry("x", steType);
 				
 				String[] searchPath;
 				switch(location){
 				case class_member:
-					searchPath = new String[]{"TestClass", "x"};
+					searchPath = new String[]{className, "x"};
 					break;
 				case class_member_function_local:
-					searchPath = new String[]{"TestClass", "testMember", "x"};
+					searchPath = new String[]{className, "testMember", "x"};
 					break;
 				case function_local:
 					searchPath = new String[]{"test_func", "x"};

@@ -17,13 +17,39 @@ public abstract class SymbolTableEntry {
 	private SymbolTableEntryType type;
 	private SymbolTable scope;
 	
+	private int size;	
+	
 	public SymbolTableEntry(String name, Kind kind, SymbolTableEntryType type, SymbolTable scope){
 		this.name  = name;
 		this.kind  = kind;
 		this.type  = type;
 		this.scope = scope;
+		
+		this.size = -1;
 	}
 
+	/**
+	 * Force this {@link SymbolTableEntry} to calcuate its size.
+	 * 
+	 * For a variable or parameter this is the amount of space taken to store that
+	 * value.
+	 * 
+	 * For a Class this is the amount of space required to store an instance of that class
+	 * 
+	 * For a function, this is the amount of space required for the function's stack frame
+	 * 
+	 * @return the calculated size as described above in units of bytes.
+	 */
+	protected abstract int calculateSize();
+	
+	public final int getSize(){
+		if(size == -1){
+			size = calculateSize();
+		}
+		return size;
+	}
+	
+	
 	public String getName() {
 		return name;
 	}

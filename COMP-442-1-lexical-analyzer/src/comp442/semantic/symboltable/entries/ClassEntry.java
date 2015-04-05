@@ -8,4 +8,15 @@ public class ClassEntry extends SymbolTableEntry {
 		super(name, Kind.Class, null, scope);
 	}
 
+	@Override
+	protected int calculateSize() {
+		int size = 0;
+		for(SymbolTableEntry e : getScope().getEntries()){
+			if(e instanceof VariableEntry){
+				size += e.getSize();
+			}
+		}
+		return size;
+	}
+
 }

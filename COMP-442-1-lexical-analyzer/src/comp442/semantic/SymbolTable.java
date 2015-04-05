@@ -1,5 +1,7 @@
 package comp442.semantic;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -72,6 +74,10 @@ public class SymbolTable {
 				sb.append("   ");
 			}
 		}
+	}
+
+	public Collection<SymbolTableEntry> getEntries() {
+		return Collections.unmodifiableCollection(entries.values());
 	}
 
 }

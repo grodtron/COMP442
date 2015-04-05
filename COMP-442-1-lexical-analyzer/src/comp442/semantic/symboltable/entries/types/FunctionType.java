@@ -65,5 +65,10 @@ public class FunctionType implements SymbolTableEntryType {
 			return false;
 		}
 	}
+
+	@Override
+	public int getSize() {
+		throw new RuntimeException("Why do you want the size of a function type? Calling this makes no sense!");
+	}
 	
 }

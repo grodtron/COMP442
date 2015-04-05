@@ -59,5 +59,16 @@ public class ArrayType implements SymbolTableEntryType {
 			return false;
 		}
 	}
+
+	@Override
+	public int getSize() {
+		// The size to store an array is equal to the size of the base type, times
+		// the product of all of the dimensions!
+		int size = getType().getSize();
+		for(Integer i : getDimensions()){
+			size *= i;
+		}
+		return size;
+	}
 	
 }

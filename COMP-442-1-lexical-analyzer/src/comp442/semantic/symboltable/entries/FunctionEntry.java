@@ -17,5 +17,16 @@ public class FunctionEntry extends SymbolTableEntry {
 		type.pushParameter(param.getType());
 		
 		getScope().add(param);
-	}	
+	}
+
+	@Override
+	protected int calculateSize() {
+		int size = 0;
+		for(SymbolTableEntry e : getScope().getEntries()){
+			if(e instanceof ParameterEntry || e instanceof VariableEntry){
+				size += e.getSize();
+			}
+		}
+		return size;
+	}
 }

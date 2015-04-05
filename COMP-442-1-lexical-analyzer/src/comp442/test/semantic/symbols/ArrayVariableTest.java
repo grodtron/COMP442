@@ -1,4 +1,4 @@
-package comp442.test.semantic;
+package comp442.test.semantic.symbols;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,10 +13,13 @@ import org.junit.runners.Parameterized.Parameters;
 
 import comp442.semantic.SymbolTable;
 import comp442.semantic.action.SemanticContext;
+import comp442.semantic.symboltable.entries.ClassEntry;
 import comp442.semantic.symboltable.entries.SymbolTableEntry;
 import comp442.semantic.symboltable.entries.VariableEntry;
 import comp442.semantic.symboltable.entries.types.ArrayType;
-import comp442.semantic.symboltable.entries.types.PlainType;
+import comp442.semantic.symboltable.entries.types.ClassType;
+import comp442.semantic.symboltable.entries.types.PrimitiveType;
+import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
 import comp442.syntactical.parser.Parser;
 
 @RunWith(Parameterized.class)
@@ -35,7 +38,10 @@ public class ArrayVariableTest {
 		List<Object[]> values = new ArrayList<Object[]>();
 		
 		// name, code, expected, search-path
-		for(String type : new String[]{"int", "float", "TestClass"}){
+		for(SymbolTableEntryType type : new SymbolTableEntryType[]{
+				new PrimitiveType("int"), new PrimitiveType("float"),
+				new ClassType(new ClassEntry("TestClass", null))
+		}){
 			for(Integer dimension : new Integer[]{1,2,3,5,8,13,21,34}){
 				for(Location location : Location.values()){
 					String name = location.toString().replace("_", " ") + " " + type + "[]*" + dimension;
@@ -63,7 +69,7 @@ public class ArrayVariableTest {
 							+ "};";
 					
 					
-					VariableEntry expected = new VariableEntry("x", new ArrayType(new PlainType(type), expectedDimension));
+					VariableEntry expected = new VariableEntry("x", new ArrayType(type, expectedDimension));
 					
 					String[] searchPath;
 					switch(location){

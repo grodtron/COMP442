@@ -1,4 +1,4 @@
-package comp442.test.semantic;
+package comp442.test.semantic.symbols;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,11 +13,13 @@ import org.junit.runners.Parameterized.Parameters;
 
 import comp442.semantic.SymbolTable;
 import comp442.semantic.action.SemanticContext;
+import comp442.semantic.symboltable.entries.ClassEntry;
 import comp442.semantic.symboltable.entries.FunctionEntry;
 import comp442.semantic.symboltable.entries.ParameterEntry;
 import comp442.semantic.symboltable.entries.SymbolTableEntry;
 import comp442.semantic.symboltable.entries.types.ArrayType;
-import comp442.semantic.symboltable.entries.types.PlainType;
+import comp442.semantic.symboltable.entries.types.ClassType;
+import comp442.semantic.symboltable.entries.types.PrimitiveType;
 import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
 import comp442.syntactical.parser.Parser;
 import comp442.utils.Permutations;
@@ -37,13 +39,19 @@ public class ParameterTest {
 		List<Object[]> values = new ArrayList<Object[]>();
 		
 		// name, code, expected, search-path
-		for(String type : new String[]{"int", "float", "TestClass"}){
+		for(SymbolTableEntryType type : new SymbolTableEntryType[]{
+				new PrimitiveType("int"), new PrimitiveType("float"),
+				new ClassType(new ClassEntry("TestClass", null))
+		}){
 			for(Integer nParams : new Integer[]{1,2,3}){
-				for(List<String> types : Permutations.permutations(new String[]{"int", "float", "TestClass"}, nParams)){
+				for(List<SymbolTableEntryType> types : Permutations.permutations(new SymbolTableEntryType[]{
+						new PrimitiveType("int"), new PrimitiveType("float"),
+						new ClassType(new ClassEntry("TestClass", null))
+				}, nParams)){
 					for(List<Integer> dimensions : Permutations.permutations(new Integer[]{0, 1,2}, nParams)){
 						for(Location location : Location.values()){
 							
-							FunctionEntry expectedEntry = new FunctionEntry("test", new PlainType(type), new SymbolTable(null));
+							FunctionEntry expectedEntry = new FunctionEntry("test", type, new SymbolTable(null));
 
 							List<String> params = new ArrayList<String>();
 							List<SymbolTableEntry> expectedEntries   = new ArrayList<SymbolTableEntry>();
@@ -58,9 +66,9 @@ public class ParameterTest {
 								params.add(param);
 								SymbolTableEntryType t;
 								if(expectedDimension.size() == 0){
-									t = new PlainType(types.get(i));
+									t = types.get(i);
 								}else{
-									t = new ArrayType(new PlainType(types.get(i)), expectedDimension);
+									t = new ArrayType(types.get(i), expectedDimension);
 								}
 								ParameterEntry p = new ParameterEntry("p"+i, t);
 								expectedEntries.add(p);

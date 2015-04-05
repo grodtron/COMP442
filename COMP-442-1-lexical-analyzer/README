@@ -1,7 +1,0 @@
-import as an eclipse project
-
-to run the scanner, modify the file "settings.txt" to point to the desired input and output locations, then run the Run Configuration "Driver"
-
-to run the test suite, run the Run Configuration "ScannerTestSuite"
-
-in case of any problems please contact me at gordon.p.bailey@gmail.com

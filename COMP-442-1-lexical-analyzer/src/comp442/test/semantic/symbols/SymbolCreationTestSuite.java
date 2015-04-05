@@ -1,4 +1,4 @@
-package comp442.test.semantic;
+package comp442.test.semantic.symbols;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
