@@ -1,1 +1,0 @@
-input  = samples/correct-code/assignment-example.code
