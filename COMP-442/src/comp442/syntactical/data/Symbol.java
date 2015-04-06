@@ -11,7 +11,10 @@ import comp442.semantic.action.CreateFunctionAction;
 import comp442.semantic.action.CreateProgramAction;
 import comp442.semantic.action.CreateVariableAction;
 import comp442.semantic.action.EndScopeAction;
+import comp442.semantic.action.FinishVariableAction;
 import comp442.semantic.action.NullAction;
+import comp442.semantic.action.PushIndexAction;
+import comp442.semantic.action.PushVariableNameAction;
 import comp442.semantic.action.SemanticAction;
 import comp442.semantic.action.StartFunctionAction;
 import comp442.semantic.action.StoreDimensionAction;
@@ -133,17 +136,20 @@ public enum Symbol {
 	EPSILON(Type.Terminal),
 	END_MARKER(Type.Terminal),
 	
-	sem_CreateProgram(new CreateProgramAction()),
+	sym_CreateProgram(new CreateProgramAction()),
+	sym_CreateClassScope(new CreateClassAction()),
+	sym_StartFunction(new StartFunctionAction()),
+	sym_AddFunctionParameter(new AddFunctionParameterAction()),
+	sym_CreateFunction(new CreateFunctionAction()),
+	sym_StoreType(new StoreTypeAction()),
+	sym_StoreId(new StoreIdAction()),
+	sym_StoreDimension(new StoreDimensionAction()),
+	sym_CreateVariable(new CreateVariableAction()),
+	sym_EndScope(new EndScopeAction()),
 	
-	sem_CreateClassScope(new CreateClassAction()),
-	sem_StartFunction(new StartFunctionAction()),
-	sem_AddFunctionParameter(new AddFunctionParameterAction()),
-	sem_CreateFunction(new CreateFunctionAction()),
-	sem_StoreType(new StoreTypeAction()),
-	sem_StoreId(new StoreIdAction()),
-	sem_StoreDimension(new StoreDimensionAction()),
-	sem_CreateVariable(new CreateVariableAction()),
-	sem_EndScope(new EndScopeAction()),
+	sem_PushVariableName(new PushVariableNameAction()),
+	sem_PushVariableIndex(new PushIndexAction()),
+	sem_FinishVariable(new FinishVariableAction()),
 	;
 
 	public static enum Type {
@@ -258,7 +264,13 @@ public enum Symbol {
 		case Nonterminal:
 			return "&lt;" + name() + "&gt;";
 		case SemanticAction:
-			return "<span style='color:red'>#" + name() + "#</span>";
+			// Just to have a visual difference between symbol-table related
+			// actions and AST related actions, we'll give them a different color
+			if(name().startsWith("sym")){
+				return "<span style='color:red'>#" + name() + "#</span>";
+			}else{
+				return "<span style='color:blue'>@" + name() + "@</span>";
+			}
 		case Terminal:
 			return "<b>" + terminalToString()
 					.replace("<", "&lt;")

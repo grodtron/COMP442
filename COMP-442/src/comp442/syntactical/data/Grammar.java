@@ -27,15 +27,15 @@ public class Grammar {
 		});
 		p.put(classDecl, new Symbol[][] {
 			new Symbol[] {
-				tok_class, tok_id, sem_CreateClassScope, tok_open_brace, classBody,
+				tok_class, tok_id, sym_CreateClassScope, tok_open_brace, classBody,
 			}
 		});
 		p.put(classBody, new Symbol[][] {
 			new Symbol[] {
-				type, sem_StoreType, tok_id, sem_StoreId, classBodyPrime,
+				type, sym_StoreType, tok_id, sym_StoreId, classBodyPrime,
 			},
 			new Symbol[] {
-				tok_close_brace, tok_semicolon, sem_EndScope
+				tok_close_brace, tok_semicolon, sym_EndScope
 			},		
 		});
 		p.put(classBodyPrime, new Symbol[][] {
@@ -48,30 +48,30 @@ public class Grammar {
 		});
 		p.put(classBodyVar, new Symbol[][] {
 			new Symbol[] {
-				varDeclArray, sem_CreateVariable, classBody,
+				varDeclArray, sym_CreateVariable, classBody,
 			}
 		});
 		p.put(classBodyFunc, new Symbol[][] {
 			new Symbol[] {
-				tok_open_paren, sem_StartFunction, fParams, tok_close_paren, sem_CreateFunction, funcBody, tok_semicolon, classBodyFuncPrime,
+				tok_open_paren, sym_StartFunction, fParams, tok_close_paren, sym_CreateFunction, funcBody, tok_semicolon, classBodyFuncPrime,
 			}
 		});
 		p.put(classBodyFuncPrime, new Symbol[][] {
 			new Symbol[] {
-				type, sem_StoreType, tok_id, sem_StoreId, classBodyFunc,
+				type, sym_StoreType, tok_id, sym_StoreId, classBodyFunc,
 			}, new Symbol[] {
-				tok_close_brace, tok_semicolon, sem_EndScope /* end class scope */
+				tok_close_brace, tok_semicolon, sym_EndScope /* end class scope */
 			}
 		});
 		
 		p.put(progBody, new Symbol[][] {
 			new Symbol[] {
-				tok_program, sem_CreateProgram, funcBody, tok_semicolon, funcDefs,
+				tok_program, sym_CreateProgram, funcBody, tok_semicolon, funcDefs,
 			}
 		});
 		p.put(funcDefs, new Symbol[][] {
 			new Symbol[] {
-					type, sem_StoreType, tok_id, sem_StoreId, tok_open_paren, sem_StartFunction, fParams, tok_close_paren, sem_CreateFunction, funcBody, tok_semicolon, funcDefs,
+					type, sym_StoreType, tok_id, sym_StoreId, tok_open_paren, sym_StartFunction, fParams, tok_close_paren, sym_CreateFunction, funcBody, tok_semicolon, funcDefs,
 			}, new Symbol[] {
 					EPSILON
 				}
@@ -83,20 +83,20 @@ public class Grammar {
 		});
 		p.put(funcBodyVar, new Symbol[][] {
 			new Symbol[] {
-				tok_int, sem_StoreType, tok_id, sem_StoreId, varDeclArray, sem_CreateVariable, funcBodyVar,
+				tok_int, sym_StoreType, tok_id, sym_StoreId, varDeclArray, sym_CreateVariable, funcBodyVar,
 			}, new Symbol[] {
-				tok_float, sem_StoreType, tok_id, sem_StoreId, varDeclArray, sem_CreateVariable, funcBodyVar,
+				tok_float, sym_StoreType, tok_id, sym_StoreId, varDeclArray, sym_CreateVariable, funcBodyVar,
 			}, new Symbol[] {
 				tok_id, funcBodyVarPrime
 			}, new Symbol[] {
 				controlStat, funcBodyStmt,
 			}, new Symbol[] {
-				tok_close_brace, sem_EndScope,
+				tok_close_brace, sym_EndScope,
 			}
 		});
 		p.put(funcBodyVarPrime, new Symbol[][] {
 			new Symbol[] {
-				sem_StoreType, tok_id, sem_StoreId, varDeclArray, sem_CreateVariable, funcBodyVar,
+				sym_StoreType, tok_id, sym_StoreId, varDeclArray, sym_CreateVariable, funcBodyVar,
 			}, new Symbol[] {
 				indices, variablePrime, assignStat, funcBodyStmt,
 			}
@@ -107,7 +107,7 @@ public class Grammar {
 			}, new Symbol[] {
 				controlStat, funcBodyStmt,
 			}, new Symbol[] {
-				tok_close_brace, sem_EndScope
+				tok_close_brace, sym_EndScope
 			}
 		});
 		p.put(varDeclArray, new Symbol[][] {
@@ -249,14 +249,14 @@ public class Grammar {
 		});
 		p.put(variable, new Symbol[][] {
 			new Symbol[] {
-				tok_id, indices, variablePrime
+				tok_id, sem_PushVariableName, indices, variablePrime
 			}
 		});
 		p.put(variablePrime, new Symbol[][] {
 			new Symbol[] {
 				tok_dot, variable
 			}, new Symbol[] {
-				EPSILON
+				EPSILON, sem_FinishVariable
 			}
 		});
 		p.put(indices, new Symbol[][] {
@@ -268,12 +268,13 @@ public class Grammar {
 		});
 		p.put(indice, new Symbol[][] {
 			new Symbol[] {
-				tok_open_square, arithExpr, tok_close_square
+					// TODO - need to push entire arithExpr, not just assume int literal
+				tok_open_square, arithExpr, sem_PushVariableIndex, tok_close_square
 			}
 		});
 		p.put(arraySize, new Symbol[][] {
 			new Symbol[] {
-				tok_open_square, tok_int_literal, sem_StoreDimension, tok_close_square
+				tok_open_square, tok_int_literal, sym_StoreDimension, tok_close_square
 			}
 		});
 		p.put(type, new Symbol[][] {
@@ -287,7 +288,7 @@ public class Grammar {
 		});
 		p.put(fParams, new Symbol[][] {
 			new Symbol[] {
-				type, sem_StoreType, tok_id, sem_StoreId, fParamsArraySz,
+				type, sym_StoreType, tok_id, sym_StoreId, fParamsArraySz,
 			}, new Symbol[] {
 				EPSILON
 			}
@@ -296,7 +297,7 @@ public class Grammar {
 			new Symbol[] {
 				arraySize, fParamsArraySz,
 			}, new Symbol[] {
-				sem_AddFunctionParameter, fParamsTailStar,
+				sym_AddFunctionParameter, fParamsTailStar,
 			}
 		});
 		p.put(fParamsTailStar, new Symbol[][] {
@@ -308,7 +309,7 @@ public class Grammar {
 		});
 		p.put(fParamsTail, new Symbol[][] {
 			new Symbol[] {
-				tok_comma, type, sem_StoreType, tok_id, sem_StoreId, arraySizeStar, sem_AddFunctionParameter
+				tok_comma, type, sym_StoreType, tok_id, sym_StoreId, arraySizeStar, sym_AddFunctionParameter
 			}
 		});
 		p.put(arraySizeStar, new Symbol[][] {

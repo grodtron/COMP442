@@ -98,6 +98,8 @@ public class Parser {
 			}
 		}else{
 			boolean nullable = false;
+			Symbol [] nullProduction = null;
+			
 			Symbol[][] productions = Grammar.productions.get(tree.symbol);
 			for(Symbol[] production : productions){
 				if(First.get(production).contains(symbol)
@@ -121,12 +123,20 @@ public class Parser {
 				// EPSILONs in a row, because that would make no sense ... :P
 				if(production[0] == EPSILON){
 					nullable = true;
+					nullProduction = production;
 				}
 				
 			}
 			
 			if(nullable){
 				tree.addChild(new ParseTree(EPSILON));
+				
+				// We need to make sure semantic actions are not ignored in this case!
+				for(Symbol s : nullProduction){
+					if(s.isSemanticAction()){
+						s.action.execute(previousToken);
+					}
+				}
 				return true;
 			}else{
 				Log.error.println("ERROR: no rule matches! Current symbol is " + tree.symbol + " looking for " + symbol);
