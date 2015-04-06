@@ -29,7 +29,6 @@ public enum Symbol {
 	classBodyFuncPrime(Type.Nonterminal),
 	progBody(Type.Nonterminal),
 	funcDefs(Type.Nonterminal),
-	funcDefsPrime(Type.Nonterminal),
 	funcBody(Type.Nonterminal),
 	funcBodyVar(Type.Nonterminal),
 	funcBodyVarPrime(Type.Nonterminal),

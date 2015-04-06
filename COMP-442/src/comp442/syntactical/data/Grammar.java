@@ -66,22 +66,15 @@ public class Grammar {
 		
 		p.put(progBody, new Symbol[][] {
 			new Symbol[] {
-				tok_program, sem_CreateProgram, funcBody, tok_semicolon, funcDefsPrime,
+				tok_program, sem_CreateProgram, funcBody, tok_semicolon, funcDefs,
 			}
 		});
 		p.put(funcDefs, new Symbol[][] {
 			new Symbol[] {
-				tok_open_paren, sem_StartFunction, fParams, tok_close_paren, sem_CreateFunction, funcBody, tok_semicolon, funcDefsPrime,
+					type, sem_StoreType, tok_id, sem_StoreId, tok_open_paren, sem_StartFunction, fParams, tok_close_paren, sem_CreateFunction, funcBody, tok_semicolon, funcDefs,
 			}, new Symbol[] {
-				funcDefsPrime
-			}
-		});
-		p.put(funcDefsPrime, new Symbol[][] {
-			new Symbol[] {
-				type, sem_StoreType, tok_id, sem_StoreId, funcDefs,
-			}, new Symbol[] {
-				EPSILON
-			}
+					EPSILON
+				}
 		});
 		p.put(funcBody, new Symbol[][] {
 			new Symbol[] {
