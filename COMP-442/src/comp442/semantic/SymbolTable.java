@@ -10,12 +10,17 @@ import comp442.semantic.symboltable.entries.SymbolTableEntry;
 
 public class SymbolTable {
 
+	// TODO is it necessary to have this as a LinkedHashMap ?
 	private Map<String, SymbolTableEntry> entries;
+		
+	int currentOffset;
+	
 	private final SymbolTable parent;
 	
 	public SymbolTable(SymbolTable parent){
 		this.parent = parent;
 		this.entries = new HashMap<String, SymbolTableEntry>();
+		this.currentOffset = 0;
 	}
 
 	public boolean exists(String name) {
@@ -36,7 +41,11 @@ public class SymbolTable {
 	}
 
 	public void add(SymbolTableEntry entry) {
+		// Note that for functions, parameters are added in order
 		entries.put(entry.getName(), entry);
+		
+		entry.setOffset(currentOffset);
+		currentOffset += entry.getSize();
 	}
 
 	public SymbolTable getParent() {

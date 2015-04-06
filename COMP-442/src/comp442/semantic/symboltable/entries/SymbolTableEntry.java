@@ -17,7 +17,8 @@ public abstract class SymbolTableEntry {
 	private SymbolTableEntryType type;
 	private SymbolTable scope;
 	
-	private int size;	
+	private int size;
+	private int offset;
 	
 	public SymbolTableEntry(String name, Kind kind, SymbolTableEntryType type, SymbolTable scope){
 		this.name  = name;
@@ -26,6 +27,7 @@ public abstract class SymbolTableEntry {
 		this.scope = scope;
 		
 		this.size = -1;
+		this.offset = -1;
 	}
 
 	/**
@@ -98,5 +100,13 @@ public abstract class SymbolTableEntry {
 		}else{
 			return false;
 		}
+	}
+
+	public void setOffset(int offset) {
+		this.offset = offset;
+	}
+	
+	public int getOffset(){
+		return offset;
 	}
 }
