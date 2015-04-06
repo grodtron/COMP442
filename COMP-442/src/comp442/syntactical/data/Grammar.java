@@ -66,7 +66,7 @@ public class Grammar {
 		
 		p.put(progBody, new Symbol[][] {
 			new Symbol[] {
-				tok_program, sem_StoreId, sem_StoreType, sem_StartFunction, sem_CreateFunction, funcBody, tok_semicolon, funcDefsPrime,
+				tok_program, sem_CreateProgram, funcBody, tok_semicolon, funcDefsPrime,
 			}
 		});
 		p.put(funcDefs, new Symbol[][] {

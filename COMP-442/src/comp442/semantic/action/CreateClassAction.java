@@ -7,13 +7,8 @@ import comp442.semantic.SymbolTable;
 import comp442.semantic.symboltable.entries.ClassEntry;
 import comp442.semantic.symboltable.entries.SymbolTableEntry;
 
-public class CreateClassAction implements SemanticAction {
+public class CreateClassAction extends SemanticAction {
 
-	private final static SemanticContext context;
-	
-	static{
-		context = SemanticContext.instance;
-	}
 	
 	@Override
 	public void execute(Token token) {

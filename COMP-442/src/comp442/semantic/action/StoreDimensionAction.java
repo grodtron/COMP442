@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import comp442.lexical.token.Token;
 import comp442.semantic.symboltable.entries.types.ArrayType;
 
-public class StoreDimensionAction implements SemanticAction {
-
-	private SemanticContext context = SemanticContext.instance;
+public class StoreDimensionAction extends SemanticAction {
 	
 	@Override
 	public void execute(Token precedingToken) {

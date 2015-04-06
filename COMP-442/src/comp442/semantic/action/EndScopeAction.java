@@ -3,9 +3,7 @@ package comp442.semantic.action;
 import comp442.lexical.token.Token;
 import comp442.semantic.SymbolTable;
 
-public class EndScopeAction implements SemanticAction {
-
-	private final static SemanticContext context = SemanticContext.instance;
+public class EndScopeAction extends SemanticAction {
 	
 	@Override
 	public void execute(Token token) {

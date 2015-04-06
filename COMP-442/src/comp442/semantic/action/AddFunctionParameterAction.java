@@ -3,9 +3,7 @@ package comp442.semantic.action;
 import comp442.lexical.token.Token;
 import comp442.semantic.symboltable.entries.ParameterEntry;
 
-public class AddFunctionParameterAction implements SemanticAction {
-
-	private final static SemanticContext context = SemanticContext.instance;
+public class AddFunctionParameterAction extends SemanticAction {
 	
 	@Override
 	public void execute(Token precedingToken) {

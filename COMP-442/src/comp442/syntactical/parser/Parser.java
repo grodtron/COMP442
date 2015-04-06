@@ -47,6 +47,9 @@ public class Parser {
 		Log.derivation = new PrintStream(new File(baseName + ".derivation"));
 		Log.symbols    = new PrintStream(new File(baseName + ".symbols"));
 		
+		// The actual ASM file
+		Log.masm       = new PrintStream(new File(baseName + ".masm"));
+		
 		nErrors = 0;
 		
 		SemanticContext.reset();

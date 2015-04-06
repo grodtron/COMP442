@@ -5,9 +5,7 @@ import comp442.logging.Log;
 import comp442.semantic.SymbolTable;
 import comp442.semantic.symboltable.entries.FunctionEntry;
 
-public class StartFunctionAction implements SemanticAction {
-
-	private final static SemanticContext context = SemanticContext.instance;
+public class StartFunctionAction extends SemanticAction {
 	
 	@Override
 	public void execute(Token token) {

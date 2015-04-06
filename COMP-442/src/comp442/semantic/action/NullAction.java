@@ -2,7 +2,7 @@ package comp442.semantic.action;
 
 import comp442.lexical.token.Token;
 
-public class NullAction implements SemanticAction {
+public class NullAction extends SemanticAction {
 
 	private NullAction() {}
 	

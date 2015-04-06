@@ -7,10 +7,8 @@ import comp442.semantic.symboltable.entries.SymbolTableEntry;
 import comp442.semantic.symboltable.entries.types.ClassType;
 import comp442.semantic.symboltable.entries.types.PrimitiveType;
 
-public class StoreTypeAction implements SemanticAction {
+public class StoreTypeAction extends SemanticAction {
 
-	private SemanticContext context = SemanticContext.instance;
-	
 	@Override
 	public void execute(Token precedingToken) {
 		String typeName = precedingToken.lexeme;

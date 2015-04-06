@@ -5,9 +5,7 @@ import comp442.logging.Log;
 import comp442.semantic.symboltable.entries.SymbolTableEntry;
 import comp442.semantic.symboltable.entries.VariableEntry;
 
-public class CreateVariableAction implements SemanticAction {
-
-	private SemanticContext context = SemanticContext.instance;
+public class CreateVariableAction extends SemanticAction {
 	
 	@Override
 	public void execute(Token token) {

@@ -8,6 +8,7 @@ import comp442.lexical.token.Token;
 import comp442.semantic.action.AddFunctionParameterAction;
 import comp442.semantic.action.CreateClassAction;
 import comp442.semantic.action.CreateFunctionAction;
+import comp442.semantic.action.CreateProgramAction;
 import comp442.semantic.action.CreateVariableAction;
 import comp442.semantic.action.EndScopeAction;
 import comp442.semantic.action.NullAction;
@@ -132,6 +133,8 @@ public enum Symbol {
 	
 	EPSILON(Type.Terminal),
 	END_MARKER(Type.Terminal),
+	
+	sem_CreateProgram(new CreateProgramAction()),
 	
 	sem_CreateClassScope(new CreateClassAction()),
 	sem_StartFunction(new StartFunctionAction()),

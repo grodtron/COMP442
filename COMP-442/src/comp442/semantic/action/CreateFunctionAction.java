@@ -2,9 +2,7 @@ package comp442.semantic.action;
 
 import comp442.lexical.token.Token;
 
-public class CreateFunctionAction implements SemanticAction {
-
-	private final static SemanticContext context = SemanticContext.instance;
+public class CreateFunctionAction extends SemanticAction {
 	
 	@Override
 	public void execute(Token precedingToken) {
