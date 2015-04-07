@@ -17,7 +17,6 @@ public abstract class SymbolTableEntry {
 	private SymbolTableEntryType type;
 	private SymbolTable scope;
 	
-	private int size;
 	private int offset;
 	
 	public SymbolTableEntry(String name, Kind kind, SymbolTableEntryType type, SymbolTable scope){
@@ -26,7 +25,6 @@ public abstract class SymbolTableEntry {
 		this.type  = type;
 		this.scope = scope;
 		
-		this.size = -1;
 		this.offset = -1;
 	}
 
@@ -45,10 +43,7 @@ public abstract class SymbolTableEntry {
 	protected abstract int calculateSize();
 	
 	public final int getSize(){
-		if(size == -1){
-			size = calculateSize();
-		}
-		return size;
+		return calculateSize(); // TODO - make lazy in calculating size
 	}
 	
 	

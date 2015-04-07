@@ -30,7 +30,7 @@ public class StorageSizeTest {
 				
 				"program {"
 				+ "int x;"
-				+ "}",
+				+ "};",
 				
 				new String[]{"program", "x"},
 				
@@ -45,7 +45,7 @@ public class StorageSizeTest {
 				+ "float y;"
 				+ "};"
 				+ "program {"
-				+ "}",
+				+ "};",
 				
 				new String[]{"TestClass"},
 				
@@ -53,11 +53,25 @@ public class StorageSizeTest {
 			});
 
 		tests.add(new Object[]{
+				"class test",
+				
+				"class TestClass {"
+				+ "int x[4];"
+				+ "};"
+				+ "program {"
+				+ "};",
+				
+				new String[]{"TestClass"},
+				
+				4*4
+			});
+
+		tests.add(new Object[]{
 				"array test",
 				
 				"program {"
 				+ "int x[3][2][1];"
-				+ "}",
+				+ "};",
 				
 				new String[]{"program", "x"},
 				
@@ -74,7 +88,7 @@ public class StorageSizeTest {
 				
 				new String[]{"foo"},
 				
-				8
+				8 + 8/* +8 for return addrs */
 			});
 
 		tests.add(new Object[]{
@@ -88,7 +102,7 @@ public class StorageSizeTest {
 				
 				new String[]{"foo"},
 				
-				4 + (4*3*2*1)
+				4 + (4*3*2*1) + 8/* plus 8 for return addrs */
 			});
 		
 		return tests;
