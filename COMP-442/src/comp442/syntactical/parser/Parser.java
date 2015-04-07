@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Set;
 
+import comp442.error.CompilerError;
 import comp442.lexical.Scanner;
 import comp442.lexical.token.Token;
 import comp442.logging.Log;
@@ -91,7 +92,7 @@ public class Parser {
 				return true;
 			}else{
 				if(symbol == END_MARKER){
-					Log.error.println("ERROR: unexpected end of input, expected " + tree.symbol);					
+					logError(new CompilerError("Unexpected end of input, expected " + tree.symbol));
 				}
 				
 				return false;
@@ -110,7 +111,11 @@ public class Parser {
 					// This rule matches !
 					for(Symbol child : production){
 						if(child.isSemanticAction()){
-							child.action.execute(previousToken);
+							try {
+								child.action.execute(previousToken);
+							} catch (CompilerError e) {
+								logError(e);
+							}
 						}else{
 							ParseTree childTree = new ParseTree(child);
 							tree.addChild(childTree);
@@ -134,18 +139,27 @@ public class Parser {
 				// We need to make sure semantic actions are not ignored in this case!
 				for(Symbol s : nullProduction){
 					if(s.isSemanticAction()){
-						s.action.execute(previousToken);
+						try{								
+							s.action.execute(previousToken);
+						}catch(CompilerError e){
+							logError(e);
+						}
 					}
 				}
 				return true;
 			}else{
-				Log.error.println("ERROR: no rule matches! Current symbol is " + tree.symbol + " looking for " + symbol);
+				logError(new CompilerError("No rule matches! Current symbol is " + tree.symbol + " looking for " + symbol));
 				
 				return false;
 			}
-		}		
+		}
 	}
 
+	private void logError(CompilerError e){
+		Log.error.println("line " + token.lineno + ": " + e.getMessage());
+		++nErrors;
+	}
+	
 	public int getNErrors(){
 		return nErrors;
 	}
@@ -159,8 +173,8 @@ public class Parser {
 		
 		// Skip any token that cannot follow the current token
 		while( ! first.contains(symbol) && token != null){
-			Log.error.println("ERROR: unexpected token '" + symbol + "' on line " + token.lineno + ", expecting any of " + first);			
-			++nErrors;
+			// TODO
+			logError(new CompilerError("ERROR: unexpected token '" + symbol + "', expecting any of " + first));
 			nextToken();
 		}
 		

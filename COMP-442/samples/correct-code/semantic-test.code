@@ -11,12 +11,12 @@ class TestClass {
 	int test3(int p1, int p2, int p3){
 		float v1;
 	};
-	int test3(int p1[1][2][3][4], int p2[5][6], int p3[7][8][9][10][11111]){
+	int test4(int p1[1][2][3][4], int p2[5][6], int p3[7][8][9][10][11111]){
 		float v1;
 	};
 };
 program {
-	Test testArray[1][2][3][4][5][6][7];
+	TestClass testArray[1][2][3][4][5][6][7];
 };
 int test0(){
 		float v1;
