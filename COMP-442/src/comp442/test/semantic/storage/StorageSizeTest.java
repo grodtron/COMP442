@@ -123,7 +123,7 @@ public class StorageSizeTest {
 	public void test(){
 		p.parse();
 		
-		SymbolTable scope = SemanticContext.getGlobalScope();
+		SymbolTable scope = SemanticContext.getCurrentScope();
 		
 		SymbolTableEntry entry = null;
 		for(String name : path){

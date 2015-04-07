@@ -58,6 +58,53 @@ public class OffsetLocationTest {
 				}
 			});
 		
+		tests.add(new Object[]{
+				"int test",
+				
+				"  class Z{"
+				+ "  int x[4];"
+				+ "};"
+				+ "program {"
+				+ "};"
+				+ "int foo(int px, int pxarr[1][2][3], Z pz){"
+				+ "  int x;"
+				+ "  float y;"
+				+ "  Z z;"
+				+ "  int q;"	
+				+ "};",
+				
+				new Object[][]{
+						new Object[]{
+								new String[]{"foo", "px"},
+								8 + 0
+						},
+						new Object[]{
+								new String[]{"foo", "pxarr"},
+								8 + 4
+						},
+						new Object[]{
+								new String[]{"foo", "pz"},
+								8 + 8
+						},
+						new Object[]{
+								new String[]{"foo", "x"},
+								20 + 0
+						},
+						new Object[]{
+								new String[]{"foo", "y"},
+								20 + 4	
+						},
+						new Object[]{
+								new String[]{"foo", "z"},
+								20 + 8
+						},
+						new Object[]{
+								new String[]{"foo", "q"},
+								20 + 8 + (4*4)
+						},
+				}
+			});
+		
 		return tests;
 	}
 	
@@ -75,7 +122,7 @@ public class OffsetLocationTest {
 		p.parse();
 		
 		for(Object[] v : vals){
-			SymbolTable scope = SemanticContext.getGlobalScope();
+			SymbolTable scope = SemanticContext.getCurrentScope();
 			SymbolTableEntry entry = null;
 			for(String name : (String[])v[0]){
 				entry = scope.find(name);

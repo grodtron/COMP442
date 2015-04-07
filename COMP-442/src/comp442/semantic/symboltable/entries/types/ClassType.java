@@ -1,5 +1,6 @@
 package comp442.semantic.symboltable.entries.types;
 
+import comp442.semantic.SymbolTable;
 import comp442.semantic.symboltable.entries.ClassEntry;
 
 public class ClassType implements SymbolTableEntryType {
@@ -18,6 +19,10 @@ public class ClassType implements SymbolTableEntryType {
 	@Override
 	public String toString(){
 		return classEntry.getName();
+	}
+	
+	public SymbolTable getScope(){
+		return classEntry.getScope();
 	}
 	
 	@Override

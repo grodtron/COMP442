@@ -13,6 +13,11 @@ public class ArrayType implements SymbolTableEntryType {
 		this.dimensions = dimensions;
 	}
 
+	/**
+	 * Get the base type for this array
+	 * 
+	 * @return
+	 */
 	public SymbolTableEntryType getType() {
 		return type;
 	}
@@ -69,6 +74,10 @@ public class ArrayType implements SymbolTableEntryType {
 			size *= i;
 		}
 		return size;
+	}
+
+	public int getDimension(int i) {
+		return dimensions.get(i);
 	}
 	
 }

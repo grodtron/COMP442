@@ -98,7 +98,7 @@ public class Grammar {
 			new Symbol[] {
 				sym_StoreType, tok_id, sym_StoreId, varDeclArray, sym_CreateVariable, funcBodyVar,
 			}, new Symbol[] {
-				indices, variablePrime, assignStat, funcBodyStmt,
+				sem_PushVariableName, indices, variablePrime, assignStat, funcBodyStmt,
 			}
 		});
 		p.put(funcBodyStmt, new Symbol[][] {
@@ -121,7 +121,7 @@ public class Grammar {
 			new Symbol[] {
 				tok_if, tok_open_paren, expr, tok_close_paren, tok_then, statBlock, tok_else, statBlock, tok_semicolon
 			}, new Symbol[] {
-				tok_for, tok_open_paren, type, tok_id, assignOp, expr, tok_semicolon, relExpr, tok_semicolon, variable, assignExpr, tok_close_paren, statBlock, tok_semicolon
+				tok_for, tok_open_paren, type, sym_StoreType, tok_id, sym_StoreId, sym_CreateVariable, sem_PushVariableName, sem_FinishVariable, assignOp, expr, tok_semicolon, relExpr, tok_semicolon, variable, assignExpr, tok_close_paren, statBlock, tok_semicolon
 			}, new Symbol[] {
 				tok_get, tok_open_paren, variable, tok_close_paren, tok_semicolon
 			}, new Symbol[] {
@@ -230,7 +230,7 @@ public class Grammar {
 		});
 		p.put(factorIdNest, new Symbol[][] {
 			new Symbol[] {
-				tok_id, factorIdNestPrime,
+				tok_id, sem_PushVariableName, factorIdNestPrime,
 			}
 		});
 		p.put(factorIdNestPrime, new Symbol[][] {
@@ -244,7 +244,7 @@ public class Grammar {
 			new Symbol[] {
 				tok_dot, factorIdNest,
 			}, new Symbol[] {
-				EPSILON
+				EPSILON, sem_FinishVariable
 			}
 		});
 		p.put(variable, new Symbol[][] {

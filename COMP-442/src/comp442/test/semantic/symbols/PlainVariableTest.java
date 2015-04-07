@@ -110,7 +110,7 @@ public class PlainVariableTest {
 		p.parse();
 
 		
-		SymbolTable scope = SemanticContext.getGlobalScope();
+		SymbolTable scope = SemanticContext.getCurrentScope();
 		
 		SymbolTableEntry entry = null;
 		for(String name : searchPath){

@@ -1,2 +1,2 @@
-input  = input.code
+input  = samples/correct-code/assignment-example.code
 output = samples/hello-world.tokens

@@ -1,6 +1,7 @@
 package comp442.semantic.action;
 
 import comp442.semantic.SymbolTable;
+import comp442.semantic.expressions.VariableBuilder;
 import comp442.semantic.symboltable.entries.FunctionEntry;
 import comp442.semantic.symboltable.entries.SymbolTableEntry;
 import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
@@ -18,6 +19,7 @@ public final class SemanticContext {
 	public String storedId;
 	public FunctionEntry storedFunction;
 	public boolean skipNextCloseScope;
+	public VariableBuilder variableBuilder;
 	
 	private SemanticContext(){
 		init();
@@ -42,7 +44,7 @@ public final class SemanticContext {
 		return instance.currentSymbolTable.find(name);
 	}
 
-	public static SymbolTable getGlobalScope() {
+	public static SymbolTable getCurrentScope() {
 		return instance.currentSymbolTable;
 	}
 	
