@@ -12,8 +12,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import comp442.semantic.SymbolTable;
-import comp442.semantic.action.SemanticContext;
+import comp442.semantic.symboltable.SymbolContext;
+import comp442.semantic.symboltable.SymbolTable;
 import comp442.semantic.symboltable.entries.SymbolTableEntry;
 import comp442.syntactical.parser.Parser;
 
@@ -123,7 +123,7 @@ public class StorageSizeTest {
 	public void test(){
 		p.parse();
 		
-		SymbolTable scope = SemanticContext.getCurrentScope();
+		SymbolTable scope = SymbolContext.getCurrentScope();
 		
 		SymbolTableEntry entry = null;
 		for(String name : path){

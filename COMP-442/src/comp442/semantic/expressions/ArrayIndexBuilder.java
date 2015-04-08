@@ -5,8 +5,9 @@ import java.util.List;
 
 import comp442.error.CompilerError;
 import comp442.semantic.symboltable.entries.types.ArrayType;
+import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
 
-public class ArrayIndexBuilder {
+public class ArrayIndexBuilder extends ExpressionElement {
 	
 	private int offset;
 	private int currentIndex;
@@ -48,5 +49,4 @@ public class ArrayIndexBuilder {
 			return offset;			
 		}
 	}
-	
 }

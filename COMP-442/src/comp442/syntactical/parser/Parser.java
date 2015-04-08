@@ -15,7 +15,7 @@ import comp442.error.CompilerError;
 import comp442.lexical.Scanner;
 import comp442.lexical.token.Token;
 import comp442.logging.Log;
-import comp442.semantic.action.SemanticContext;
+import comp442.semantic.symboltable.SymbolContext;
 import comp442.syntactical.data.First;
 import comp442.syntactical.data.Follow;
 import comp442.syntactical.data.Grammar;
@@ -34,7 +34,7 @@ public class Parser {
 		this.scanner = new Scanner(in);
 		nErrors = 0;
 				
-		SemanticContext.reset();
+		SymbolContext.reset();
 	}
 	
 	public Parser(File input) throws FileNotFoundException{
@@ -53,7 +53,7 @@ public class Parser {
 		
 		nErrors = 0;
 		
-		SemanticContext.reset();
+		SymbolContext.reset();
 		
 	}
 
@@ -66,7 +66,7 @@ public class Parser {
 		tree.printSelf(Log.derivation);
 		tree.printParsedCode(Log.output);
 		
-		Log.symbols.print(SemanticContext.printableString());
+		Log.symbols.print(SymbolContext.printableString());
 		
 		Log.error.close();
 		Log.output.close();

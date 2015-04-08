@@ -2,7 +2,7 @@ package comp442.semantic.symboltable.entries;
 
 import java.util.ArrayList;
 
-import comp442.semantic.SymbolTable;
+import comp442.semantic.symboltable.SymbolTable;
 import comp442.semantic.symboltable.entries.types.FunctionType;
 import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
 

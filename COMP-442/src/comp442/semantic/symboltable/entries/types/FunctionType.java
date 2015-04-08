@@ -3,6 +3,8 @@ package comp442.semantic.symboltable.entries.types;
 import java.util.Collections;
 import java.util.List;
 
+import comp442.semantic.symboltable.SymbolTable;
+
 public class FunctionType implements SymbolTableEntryType {
 
 	private SymbolTableEntryType returnType;
@@ -69,6 +71,11 @@ public class FunctionType implements SymbolTableEntryType {
 	@Override
 	public int getSize() {
 		throw new RuntimeException("Why do you want the size of a function type? Calling this makes no sense!");
+	}
+
+	@Override
+	public SymbolTable getScope() {
+		return null;
 	}
 	
 }

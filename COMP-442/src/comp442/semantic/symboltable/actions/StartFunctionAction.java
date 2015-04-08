@@ -1,13 +1,14 @@
-package comp442.semantic.action;
+package comp442.semantic.symboltable.actions;
 
 import comp442.error.CompilerError;
 import comp442.lexical.token.Token;
-import comp442.semantic.SymbolTable;
+import comp442.semantic.symboltable.SymbolAction;
+import comp442.semantic.symboltable.SymbolTable;
 import comp442.semantic.symboltable.entries.FunctionEntry;
 import comp442.semantic.symboltable.entries.ParameterEntry;
 import comp442.semantic.symboltable.entries.types.PrimitiveType;
 
-public class StartFunctionAction extends SemanticAction {
+public class StartFunctionAction extends SymbolAction {
 	
 	@Override
 	public void execute(Token token) throws CompilerError {

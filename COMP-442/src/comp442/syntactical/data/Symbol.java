@@ -5,21 +5,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 import comp442.lexical.token.Token;
-import comp442.semantic.action.AddFunctionParameterAction;
-import comp442.semantic.action.CreateClassAction;
-import comp442.semantic.action.CreateFunctionAction;
-import comp442.semantic.action.CreateProgramAction;
-import comp442.semantic.action.CreateVariableAction;
-import comp442.semantic.action.EndScopeAction;
-import comp442.semantic.action.FinishVariableAction;
-import comp442.semantic.action.NullAction;
-import comp442.semantic.action.PushIndexAction;
-import comp442.semantic.action.PushVariableNameAction;
-import comp442.semantic.action.SemanticAction;
-import comp442.semantic.action.StartFunctionAction;
-import comp442.semantic.action.StoreDimensionAction;
-import comp442.semantic.action.StoreIdAction;
-import comp442.semantic.action.StoreTypeAction;
+import comp442.semantic.SemanticAction;
+import comp442.semantic.expressions.actions.FinishVariableAction;
+import comp442.semantic.expressions.actions.PushIndexAction;
+import comp442.semantic.expressions.actions.PushVariableNameAction;
+import comp442.semantic.symboltable.actions.AddFunctionParameterAction;
+import comp442.semantic.symboltable.actions.CreateClassAction;
+import comp442.semantic.symboltable.actions.CreateFunctionAction;
+import comp442.semantic.symboltable.actions.CreateProgramAction;
+import comp442.semantic.symboltable.actions.CreateVariableAction;
+import comp442.semantic.symboltable.actions.EndScopeAction;
+import comp442.semantic.symboltable.actions.NullAction;
+import comp442.semantic.symboltable.actions.StartFunctionAction;
+import comp442.semantic.symboltable.actions.StoreDimensionAction;
+import comp442.semantic.symboltable.actions.StoreIdAction;
+import comp442.semantic.symboltable.actions.StoreTypeAction;
 
 public enum Symbol {
 	

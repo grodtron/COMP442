@@ -1,6 +1,6 @@
 package comp442.semantic.symboltable.entries;
 
-import comp442.semantic.SymbolTable;
+import comp442.semantic.symboltable.SymbolTable;
 
 public class ClassEntry extends SymbolTableEntry {
 

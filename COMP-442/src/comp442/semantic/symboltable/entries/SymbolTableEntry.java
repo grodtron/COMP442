@@ -1,6 +1,6 @@
 package comp442.semantic.symboltable.entries;
 
-import comp442.semantic.SymbolTable;
+import comp442.semantic.symboltable.SymbolTable;
 import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
 
 public abstract class SymbolTableEntry {

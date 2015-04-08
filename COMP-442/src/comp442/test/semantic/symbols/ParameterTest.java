@@ -11,8 +11,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import comp442.semantic.SymbolTable;
-import comp442.semantic.action.SemanticContext;
+import comp442.semantic.symboltable.SymbolContext;
+import comp442.semantic.symboltable.SymbolTable;
 import comp442.semantic.symboltable.entries.ClassEntry;
 import comp442.semantic.symboltable.entries.FunctionEntry;
 import comp442.semantic.symboltable.entries.ParameterEntry;
@@ -79,7 +79,8 @@ public class ParameterTest {
 							String paramString = StringUtils.join(params, ", ");
 							
 							String code 
-									= "class TestClass{"
+									= "class ParamClass{int x;};"
+											+ "class TestClass{"
 											+ type + " test("
 												+ (location == Location.member_function ? paramString : "")
 											+ "){"
@@ -134,7 +135,7 @@ public class ParameterTest {
 		p.parse();
 
 		
-		SymbolTable scope = SemanticContext.getCurrentScope();
+		SymbolTable scope = SymbolContext.getCurrentScope();
 		
 		SymbolTableEntry entry = null;
 		for(String name : searchPath){

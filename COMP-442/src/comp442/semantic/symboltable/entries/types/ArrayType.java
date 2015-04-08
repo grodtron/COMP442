@@ -3,6 +3,8 @@ package comp442.semantic.symboltable.entries.types;
 import java.util.Collections;
 import java.util.List;
 
+import comp442.semantic.symboltable.SymbolTable;
+
 public class ArrayType implements SymbolTableEntryType {
 
 	private final SymbolTableEntryType type;
@@ -78,6 +80,11 @@ public class ArrayType implements SymbolTableEntryType {
 
 	public int getDimension(int i) {
 		return dimensions.get(i);
+	}
+
+	@Override
+	public SymbolTable getScope() {
+		return null;
 	}
 	
 }

@@ -1,12 +1,10 @@
-package comp442.semantic.action;
+package comp442.semantic;
 
 import comp442.error.CompilerError;
 import comp442.lexical.token.Token;
 
-public abstract class SemanticAction {
+public interface SemanticAction {
 
-	protected final static SemanticContext context = SemanticContext.instance;
-	
 	public abstract void execute(Token precedingToken) throws CompilerError;
 	
 }

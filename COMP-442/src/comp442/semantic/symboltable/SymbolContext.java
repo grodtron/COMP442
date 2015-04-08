@@ -1,17 +1,16 @@
-package comp442.semantic.action;
+package comp442.semantic.symboltable;
 
-import comp442.semantic.SymbolTable;
 import comp442.semantic.expressions.VariableBuilder;
 import comp442.semantic.symboltable.entries.FunctionEntry;
 import comp442.semantic.symboltable.entries.SymbolTableEntry;
 import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
 
-public final class SemanticContext {
+public final class SymbolContext {
 
-	/*package*/final static SemanticContext instance;
+	/*package*/final static SymbolContext instance;
 	
 	static {
-		instance = new SemanticContext();
+		instance = new SymbolContext();
 	}
 	
 	public SymbolTable currentSymbolTable;
@@ -21,7 +20,7 @@ public final class SemanticContext {
 	public boolean skipNextCloseScope;
 	public VariableBuilder variableBuilder;
 	
-	private SemanticContext(){
+	private SymbolContext(){
 		init();
 	}
 

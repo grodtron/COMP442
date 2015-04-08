@@ -1,13 +1,14 @@
-package comp442.semantic.action;
+package comp442.semantic.symboltable.actions;
 
 import comp442.error.CompilerError;
 import comp442.lexical.token.Token;
 import comp442.lexical.token.TokenType;
-import comp442.semantic.SymbolTable;
+import comp442.semantic.symboltable.SymbolAction;
+import comp442.semantic.symboltable.SymbolTable;
 import comp442.semantic.symboltable.entries.ClassEntry;
 import comp442.semantic.symboltable.entries.SymbolTableEntry;
 
-public class CreateClassAction extends SemanticAction {
+public class CreateClassAction extends SymbolAction {
 
 	
 	@Override

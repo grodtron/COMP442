@@ -1,4 +1,4 @@
-package comp442.semantic;
+package comp442.semantic.symboltable;
 
 import java.util.Collection;
 import java.util.Collections;

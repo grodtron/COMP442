@@ -1,28 +1,24 @@
 package comp442.semantic.expressions;
 
 import comp442.error.CompilerError;
-import comp442.semantic.SymbolTable;
-import comp442.semantic.action.SemanticContext;
+import comp442.semantic.symboltable.SymbolContext;
+import comp442.semantic.symboltable.SymbolTable;
 import comp442.semantic.symboltable.entries.SymbolTableEntry;
 import comp442.semantic.symboltable.entries.types.ArrayType;
-import comp442.semantic.symboltable.entries.types.ClassType;
 import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
 
-public class VariableBuilder {
+public class VariableBuilder extends ExpressionElement {
 	
 	private SymbolTable scope;
 
 	private int offset; // TODO convert to some "value" type
 	
-	SymbolTableEntry current;
-	
-	private ArrayIndexBuilder arrayIndexBuilder;
-	
+	SymbolTableEntryType currentType;
+		
 	public VariableBuilder(String id) throws CompilerError{
-		this.scope  = SemanticContext.getCurrentScope();
+		this.scope  = SymbolContext.getCurrentScope();
 		this.offset = 0;
-		this.current = null;
-		this.arrayIndexBuilder = new ArrayIndexBuilder();
+		this.currentType = null;
 		
 		pushId(id);
 	}
@@ -30,7 +26,7 @@ public class VariableBuilder {
 	public void pushId(String id) throws CompilerError{
 		
 		if(scope == null){
-			throw new CompilerError("Cannot access property " + id + " of non-class type " + current.getType());
+			throw new CompilerError("Cannot access property " + id + " of non-class type " + currentType);
 		}
 		
 		SymbolTableEntry e = scope.find(id);
@@ -38,34 +34,31 @@ public class VariableBuilder {
 		if(e == null){
 			throw new CompilerError("Id " + id + " not found in current scope");
 		}else{
-			offset += arrayIndexBuilder.getOffset();
-			
-			offset += e.getOffset();
-			current = e;
-			
-			SymbolTableEntryType type = e.getType();
-
-			scope = null;
-			
-			if(type instanceof ClassType){
-				scope = ((ClassType) type).getScope();
-			}else
-			if(type instanceof ArrayType){
-				arrayIndexBuilder = new ArrayIndexBuilder((ArrayType)e.getType());
-				if(((ArrayType) type).getType() instanceof ClassType){
-					scope = ((ClassType) ((ArrayType) type).getType()).getScope(); // wow, ugly
-				}
-			}else{
-				arrayIndexBuilder = new ArrayIndexBuilder(); // no-op arrayindexbuilder
-			}
+			offset      += e.getOffset();
+			currentType  = e.getType();
+			scope        = e.getScope();			
+		}
+	}
+	
+	@Override
+	public void acceptSubElement(ExpressionElement e) throws CompilerError {
+		if(e instanceof ArrayIndexBuilder){
+			ArrayIndexBuilder a = (ArrayIndexBuilder) e;
+			offset += a.getOffset();
+			currentType = ((ArrayType) currentType).getType();
+			scope = currentType.getScope();
+		}else{
+			super.acceptSubElement(e);
 		}
 	}
 	
 	public void pushIndex(int index) throws CompilerError{
-		if( arrayIndexBuilder == null ){
-			throw new CompilerError("Cannot index non-array type " + current); // TODO
+		if(currentType instanceof ArrayType){
+			ArrayIndexBuilder child = new ArrayIndexBuilder((ArrayType)currentType);
+			child.pushIndex(index);
+			context.pushChild(child);
 		}else{
-			arrayIndexBuilder.pushIndex(index);
+			throw new CompilerError("Cannot index non-array type " + currentType);
 		}
 	}
 	

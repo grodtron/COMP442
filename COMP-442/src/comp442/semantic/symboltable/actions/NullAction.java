@@ -1,8 +1,9 @@
-package comp442.semantic.action;
+package comp442.semantic.symboltable.actions;
 
 import comp442.lexical.token.Token;
+import comp442.semantic.symboltable.SymbolAction;
 
-public class NullAction extends SemanticAction {
+public class NullAction extends SymbolAction {
 
 	private NullAction() {}
 	

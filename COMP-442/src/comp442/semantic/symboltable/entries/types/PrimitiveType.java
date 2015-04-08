@@ -1,5 +1,7 @@
 package comp442.semantic.symboltable.entries.types;
 
+import comp442.semantic.symboltable.SymbolTable;
+
 public class PrimitiveType implements SymbolTableEntryType{
 
 	private final String name;
@@ -27,5 +29,10 @@ public class PrimitiveType implements SymbolTableEntryType{
 	@Override
 	public int getSize() {
 		return 4;
+	}
+
+	@Override
+	public SymbolTable getScope() {
+		return null;
 	}
 }
