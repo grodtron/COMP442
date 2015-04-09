@@ -4,6 +4,6 @@ import comp442.semantic.SemanticAction;
 
 public abstract class ExpressionAction implements SemanticAction {
 
-	ExpressionContext context = ExpressionContext.instance;
+	protected ExpressionContext context = ExpressionContext.instance;
 	
 }

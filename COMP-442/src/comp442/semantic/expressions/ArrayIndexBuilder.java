@@ -5,7 +5,6 @@ import java.util.List;
 
 import comp442.error.CompilerError;
 import comp442.semantic.symboltable.entries.types.ArrayType;
-import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
 
 public class ArrayIndexBuilder extends ExpressionElement {
 	
@@ -30,15 +29,15 @@ public class ArrayIndexBuilder extends ExpressionElement {
 	}
 	
 	public void pushIndex(int i) throws CompilerError{
-		if(currentIndex == dimensions.size()){
-			throw new CompilerError("Too many indices");
-		}else
 		if(i >= dimensions.get(currentIndex)){
 			throw new CompilerError("Index " + i + " out of bounds");
 		}else{
 			offset += i * nextOffsetSize;
 			nextOffsetSize *= dimensions.get(currentIndex);
 			++currentIndex;
+			if(currentIndex == dimensions.size()){
+				context.finishTopElement();
+			}
 		}
 	}
 	

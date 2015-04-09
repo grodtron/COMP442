@@ -1,14 +1,17 @@
 package comp442.semantic.expressions.actions;
 
 import comp442.error.CompilerError;
-import comp442.error.NotYetSupportedError;
 import comp442.lexical.token.Token;
-import comp442.semantic.symboltable.SymbolAction;
+import comp442.semantic.expressions.ExpressionAction;
 
-public class PushIndexAction extends SymbolAction {
+public class PushIndexAction extends ExpressionAction {
 
 	@Override
 	public void execute(Token precedingToken) throws CompilerError {
+		System.out.println(" push index! " + precedingToken.lexeme);
+		context.getCurrent().pushIndex(precedingToken.lexeme);
+
+		
 //		if(context.variableBuilder == null){
 //			throw new RuntimeException("Something has gone very wrong in the syntactic/lexical stage");
 //		}else{
