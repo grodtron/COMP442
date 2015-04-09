@@ -8,7 +8,8 @@ import comp442.lexical.token.Token;
 import comp442.semantic.SemanticAction;
 import comp442.semantic.expressions.actions.FinishVariableAction;
 import comp442.semantic.expressions.actions.PushIndexAction;
-import comp442.semantic.expressions.actions.PushVariableNameAction;
+import comp442.semantic.expressions.actions.PushIdentifierAction;
+import comp442.semantic.expressions.actions.StartAssignmentStatementAction;
 import comp442.semantic.symboltable.actions.AddFunctionParameterAction;
 import comp442.semantic.symboltable.actions.CreateClassAction;
 import comp442.semantic.symboltable.actions.CreateFunctionAction;
@@ -147,9 +148,11 @@ public enum Symbol {
 	sym_CreateVariable(new CreateVariableAction()),
 	sym_EndScope(new EndScopeAction()),
 	
-	sem_PushVariableName(new PushVariableNameAction()),
+	sem_PushVariableName(new PushIdentifierAction()),
 	sem_PushVariableIndex(new PushIndexAction()),
 	sem_FinishVariable(new FinishVariableAction()),
+	
+	sem_StartAssignmentStatment(new StartAssignmentStatementAction());
 	;
 
 	public static enum Type {

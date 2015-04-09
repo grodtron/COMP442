@@ -98,12 +98,12 @@ public class Grammar {
 			new Symbol[] {
 				sym_StoreType, tok_id, sym_StoreId, varDeclArray, sym_CreateVariable, funcBodyVar,
 			}, new Symbol[] {
-				sem_PushVariableName, indices, variablePrime, assignStat, funcBodyStmt,
+				sem_StartAssignmentStatment, sem_PushVariableName, indices, variablePrime, assignStat, funcBodyStmt,
 			}
 		});
 		p.put(funcBodyStmt, new Symbol[][] {
 			new Symbol[] {
-				variable, assignStat, funcBodyStmt,
+				sem_StartAssignmentStatment, variable, assignStat, funcBodyStmt,
 			}, new Symbol[] {
 				controlStat, funcBodyStmt,
 			}, new Symbol[] {

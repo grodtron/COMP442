@@ -7,7 +7,7 @@ import comp442.semantic.symboltable.entries.SymbolTableEntry;
 import comp442.semantic.symboltable.entries.types.ArrayType;
 import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
 
-public class VariableBuilder extends ExpressionElement {
+public class VariableExpressionFragment extends ExpressionElement {
 	
 	private SymbolTable scope;
 
@@ -15,15 +15,16 @@ public class VariableBuilder extends ExpressionElement {
 	
 	SymbolTableEntryType currentType;
 		
-	public VariableBuilder(String id) throws CompilerError{
+	public VariableExpressionFragment(String id) throws CompilerError{
 		this.scope  = SymbolContext.getCurrentScope();
 		this.offset = 0;
 		this.currentType = null;
 		
-		pushId(id);
+		pushIdentifier(id);
 	}
 	
-	public void pushId(String id) throws CompilerError{
+	@Override
+	public void pushIdentifier(String id) throws CompilerError {
 		
 		if(scope == null){
 			throw new CompilerError("Cannot access property " + id + " of non-class type " + currentType);
@@ -42,8 +43,8 @@ public class VariableBuilder extends ExpressionElement {
 	
 	@Override
 	public void acceptSubElement(ExpressionElement e) throws CompilerError {
-		if(e instanceof ArrayIndexBuilder){
-			ArrayIndexBuilder a = (ArrayIndexBuilder) e;
+		if(e instanceof IndexingExpressionFragment){
+			IndexingExpressionFragment a = (IndexingExpressionFragment) e;
 			offset += a.getOffset();
 			currentType = ((ArrayType) currentType).getType();
 			scope = currentType.getScope();
@@ -52,11 +53,12 @@ public class VariableBuilder extends ExpressionElement {
 		}
 	}
 	
-	public void pushIndex(int index) throws CompilerError{
+	@Override
+	public void pushIndex(String index) throws CompilerError{
 		if(currentType instanceof ArrayType){
-			ArrayIndexBuilder child = new ArrayIndexBuilder((ArrayType)currentType);
-			child.pushIndex(index);
+			IndexingExpressionFragment child = new IndexingExpressionFragment((ArrayType)currentType);
 			context.pushChild(child);
+			child.pushIndex(index);
 		}else{
 			throw new CompilerError("Cannot index non-array type " + currentType);
 		}

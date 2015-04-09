@@ -3,7 +3,7 @@ package comp442.semantic.expressions.actions;
 import comp442.error.CompilerError;
 import comp442.lexical.token.Token;
 import comp442.semantic.expressions.ExpressionAction;
-import comp442.semantic.expressions.VariableBuilder;
+import comp442.semantic.expressions.VariableExpressionFragment;
 
 public class FinishVariableAction extends ExpressionAction {
 
@@ -11,8 +11,8 @@ public class FinishVariableAction extends ExpressionAction {
 	public void execute(Token precedingToken) throws CompilerError {
 
 		try{
-			System.out.println("=== calculated offset: " + ((VariableBuilder)(context.getCurrent())).get() + " ===");
-			context.popChild();
+			System.out.println("=== calculated offset: " + ((VariableExpressionFragment)(context.getCurrent())).get() + " ===");
+			context.finishTopElement();
 		}catch(RuntimeException e){
 			System.out.println("wooooooopsy " + e);
 		}

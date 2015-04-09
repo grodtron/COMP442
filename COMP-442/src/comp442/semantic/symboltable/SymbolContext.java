@@ -1,6 +1,6 @@
 package comp442.semantic.symboltable;
 
-import comp442.semantic.expressions.VariableBuilder;
+import comp442.semantic.expressions.VariableExpressionFragment;
 import comp442.semantic.symboltable.entries.FunctionEntry;
 import comp442.semantic.symboltable.entries.SymbolTableEntry;
 import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
@@ -18,7 +18,7 @@ public final class SymbolContext {
 	public String storedId;
 	public FunctionEntry storedFunction;
 	public boolean skipNextCloseScope;
-	public VariableBuilder variableBuilder;
+	public VariableExpressionFragment variableBuilder;
 	
 	private SymbolContext(){
 		init();
