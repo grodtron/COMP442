@@ -25,7 +25,7 @@ import comp442.syntactical.parser.Parser;
 import comp442.utils.Permutations;
 
 @RunWith(Parameterized.class)
-public class AssignmentExpressionTest {
+public class AssignmentExpression3DarrayTest {
 
 	private final static String skeleton = ""
 			+ "class Inner {\n"
@@ -59,7 +59,7 @@ public class AssignmentExpressionTest {
 	
 	@Parameters(name="{0}")
 	public static Collection<Object[]> data(){
-		List<Var> vars = new ArrayList<AssignmentExpressionTest.Var>( 2*2*(3*3*3)*(3*3*3)*5 ); // estimate of size
+		List<Var> vars = new ArrayList<AssignmentExpression3DarrayTest.Var>( 2*2*(3*3*3)*(3*3*3)*5 ); // estimate of size
 		
 		for(int i = 0; i < (3*3*3); ++i){
 			int a = i%3;
@@ -126,7 +126,7 @@ public class AssignmentExpressionTest {
 	private Value lhs;
 	private Value rhs;
 	
-	public AssignmentExpressionTest(String name, String code, Value lhs, Value rhs ) {
+	public AssignmentExpression3DarrayTest(String name, String code, Value lhs, Value rhs ) {
 		this.parser = new Parser(new ByteArrayInputStream(code.getBytes()));
 		this.lhs = lhs;
 		this.rhs = rhs;
