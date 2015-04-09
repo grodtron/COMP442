@@ -1,11 +1,16 @@
 package comp442.semantic.expressions;
 
+import comp442.codegen.Register;
 import comp442.error.CompilerError;
 import comp442.semantic.symboltable.SymbolContext;
 import comp442.semantic.symboltable.SymbolTable;
 import comp442.semantic.symboltable.entries.SymbolTableEntry;
 import comp442.semantic.symboltable.entries.types.ArrayType;
 import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
+import comp442.semantic.value.RegisterValue;
+import comp442.semantic.value.StaticIntValue;
+import comp442.semantic.value.StoredValue;
+import comp442.semantic.value.Value;
 
 public class VariableExpressionFragment extends ExpressionElement {
 	
@@ -37,7 +42,7 @@ public class VariableExpressionFragment extends ExpressionElement {
 		}else{
 			offset      += e.getOffset();
 			currentType  = e.getType();
-			scope        = e.getScope();			
+			scope        = currentType.getScope();			
 		}
 	}
 	
@@ -64,6 +69,10 @@ public class VariableExpressionFragment extends ExpressionElement {
 		}
 	}
 	
+	@Override
+	public Value getValue() {
+		return new StoredValue(new RegisterValue(Register.STACK_POINTER), new StaticIntValue(offset));
+	}
 	
 	public int get(){
 		return offset;

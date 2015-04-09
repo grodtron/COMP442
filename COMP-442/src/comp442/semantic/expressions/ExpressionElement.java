@@ -2,6 +2,8 @@ package comp442.semantic.expressions;
 
 import comp442.error.CompilerError;
 import comp442.error.InternalCompilerError;
+import comp442.semantic.value.Value;
+import comp442.semantic.value.VoidValue;
 
 public abstract class ExpressionElement {
 
@@ -17,6 +19,10 @@ public abstract class ExpressionElement {
 
 	public void pushIndex(String index) throws CompilerError {
 		throw new InternalCompilerError("Unexpected index " + index + " inside " + this.getClass().getSimpleName());
+	}
+	
+	public Value getValue(){
+		return VoidValue.get();
 	}
 	
 }

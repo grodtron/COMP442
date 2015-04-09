@@ -1,6 +1,7 @@
 package comp442.semantic.symboltable.entries;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import comp442.semantic.statement.Statement;
@@ -37,5 +38,9 @@ public class FunctionEntry extends SymbolTableEntry {
 	
 	public void appendStatement(Statement s){
 		statements.add(s);
+	}
+
+	public List<Statement> getStatements() {
+		return Collections.unmodifiableList(statements);
 	}
 }

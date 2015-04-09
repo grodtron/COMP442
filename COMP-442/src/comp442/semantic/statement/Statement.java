@@ -4,4 +4,6 @@ public interface Statement {
 
 	// TODO public ????? generateAsm(????, ???, ....);
 	
+	public String pseudoCode();
+	
 }
