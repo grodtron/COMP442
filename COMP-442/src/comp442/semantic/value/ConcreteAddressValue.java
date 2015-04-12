@@ -32,7 +32,8 @@ public class ConcreteAddressValue extends DynamicValue {
 			tempReg = baseAddr;
 		}
 		
-		c.appendInstruction(new LoadWordInstruction(tempReg, baseAddr, offset));
+		c.appendInstruction(new LoadWordInstruction(tempReg, baseAddr, offset)
+				.setComment(toString()));
 		
 		return tempReg;
 	}

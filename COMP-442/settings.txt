@@ -1,2 +1,2 @@
-input  = samples/code-generation-tests/simple-assignments.code
+input  = samples/code-generation-tests/less-simple-assignments.code
 output = samples/hello-world.tokens

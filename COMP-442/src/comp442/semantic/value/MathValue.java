@@ -62,7 +62,8 @@ public class MathValue extends DynamicValue {
 			temp = aReg;
 		}
 		
-		c.appendInstruction(new ImmediateMathOperationInstruction(operator.immediateOpcode, temp, aReg, uB.intValue()));
+		c.appendInstruction(new ImmediateMathOperationInstruction(operator.immediateOpcode, temp, aReg, uB.intValue())
+			.setComment(toString()));
 
 		return new RegisterValue(temp);
 	}
@@ -93,7 +94,8 @@ public class MathValue extends DynamicValue {
 			}
 		}
 		
-		c.appendInstruction(new MathOperationInstruction(operator.opcode, temp, aReg, bReg));
+		c.appendInstruction(new MathOperationInstruction(operator.opcode, temp, aReg, bReg)
+				.setComment(toString()));
 		
 		if(free){
 			c.freeTemporaryRegister(bReg);

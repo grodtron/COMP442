@@ -32,10 +32,12 @@ public class MultiplicationExpressionFragment extends ExpressionElement {
 		|| e instanceof VariableExpressionFragment){
 			
 			switch(state){
+			case INIT_FIRST:
 			case FIRST:
 				state = State.WAITING_FOR_OP;
 				first = e;
 				break;
+			case INIT_SECOND:
 			case SECOND:
 				state = State.DONE;
 				second = e;

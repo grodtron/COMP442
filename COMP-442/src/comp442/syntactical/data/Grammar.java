@@ -163,18 +163,18 @@ public class Grammar {
 		});
 		p.put(expr, new Symbol[][] {
 			new Symbol[] {
-				term, exprPrime
+					sem_StartAdditionExpression, term, exprPrime
 			}
 		});
 		p.put(exprPrime, new Symbol[][] {
 			new Symbol[] {
-				relOp, expr
+				sem_EndAdditionExpression, relOp, expr
 			},
 			new Symbol[] {
 				addOp, sem_PushAdditionOperation, expr
 			},
 			new Symbol[] {
-				EPSILON
+				EPSILON, sem_EndAdditionExpression,
 			},
 		});
 		p.put(relExpr, new Symbol[][] {

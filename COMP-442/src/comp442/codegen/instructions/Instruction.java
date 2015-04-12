@@ -21,8 +21,9 @@ public abstract class Instruction {
 		this.label = label;
 	}
 
-	public void setComment(String comment) {
+	public Instruction setComment(String comment) {
 		this.comment = comment;
+		return this;
 	}
 	
 }

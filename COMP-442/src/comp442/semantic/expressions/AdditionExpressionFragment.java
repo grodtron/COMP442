@@ -15,8 +15,8 @@ public class AdditionExpressionFragment extends ExpressionElement {
 	};
 	
 	private State state;
-	private MultiplicationExpressionFragment first;
-	private MultiplicationExpressionFragment second;
+	private ExpressionElement first;
+	private ExpressionElement second;
 	private MathOperation operator;
 	
 	public AdditionExpressionFragment() {
@@ -33,29 +33,28 @@ public class AdditionExpressionFragment extends ExpressionElement {
 	
 	@Override
 	public void acceptSubElement(ExpressionElement e) throws CompilerError {
-		MultiplicationExpressionFragment f;
 		
-		if(e instanceof MultiplicationExpressionFragment){
-			f = (MultiplicationExpressionFragment) e;
+		if(e instanceof MultiplicationExpressionFragment
+		|| e instanceof AdditionExpressionFragment){
+			switch(state){
+			case WAITING_FOR_FIRST:
+				first = e;
+				state = State.WAITING_FOR_OP;
+				break;
+			case WAITING_FOR_SECOND:
+				second = e;
+				state = State.DONE;
+				context.finishTopElement();
+				break;
+			default:
+				super.acceptSubElement(e);
+				break;
+			}
 		}else{
 			super.acceptSubElement(e);
-			return;
 		}
 
-		switch(state){
-		case WAITING_FOR_FIRST:
-			first = f;
-			state = State.WAITING_FOR_OP;
-			break;
-		case WAITING_FOR_SECOND:
-			second = f;
-			state = State.DONE;
-			context.finishTopElement();
-			break;
-		default:
-			super.acceptSubElement(e);
-			break;
-		}
+		
 	}
 
 	
