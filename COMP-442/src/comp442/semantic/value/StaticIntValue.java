@@ -1,5 +1,10 @@
 package comp442.semantic.value;
 
+import comp442.codegen.CodeGenerationContext;
+import comp442.codegen.Register;
+import comp442.codegen.instructions.AddWordImmediateInstruction;
+import comp442.error.CompilerError;
+
 public class StaticIntValue extends StaticValue implements Value {
 
 	private final int v;
@@ -25,8 +30,16 @@ public class StaticIntValue extends StaticValue implements Value {
 	
 	@Override
 	public boolean equals(Object other) {
-		// TODO Auto-generated method stub
 		return other instanceof StaticIntValue && ((StaticIntValue)other).intValue() == v;
+	}
+
+	@Override
+	public RegisterValue getRegisterValue(CodeGenerationContext c) throws CompilerError {
+		RegisterValue reg = new RegisterValue(c.getTemporaryRegister());
+		
+		c.appendInstruction(new AddWordImmediateInstruction(reg.getRegister(), Register.ZERO, v));
+		
+		return reg;
 	}
 	
 }

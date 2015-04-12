@@ -1,11 +1,17 @@
 package comp442.semantic.value;
 
-public class StoredValue implements Value {
+import comp442.codegen.CodeGenerationContext;
+import comp442.codegen.Register;
+import comp442.codegen.instructions.AddWordInstruction;
+import comp442.error.CompilerError;
+import comp442.error.InternalCompilerError;
+
+public class StoredValue extends DynamicValue {
 
 	private final Value offset;
-	private final Value baseAddress;
+	private final RegisterValue baseAddress;
 
-	public StoredValue(Value baseAddress, Value offset){
+	public StoredValue(RegisterValue baseAddress, Value offset){
 		this.baseAddress = baseAddress;
 		this.offset      = offset;
 	}
@@ -28,6 +34,50 @@ public class StoredValue implements Value {
 		return other instanceof StoredValue 
 				&& ((StoredValue)other).getBaseAddress().equals(baseAddress) 
 				&& ((StoredValue)other).getOffset().equals(offset); 
+	}
+
+	@Override
+	public Value getUseableValue(CodeGenerationContext c) throws CompilerError {
+		return getConcreteAddress(c).getUseableValue(c);
+	}
+
+	@Override
+	public RegisterValue getRegisterValue(CodeGenerationContext c) throws CompilerError {
+		return getConcreteAddress(c).getRegisterValue(c);
+	}
+	
+	public ConcreteAddressValue	getConcreteAddress(CodeGenerationContext c) throws CompilerError{
+		Value useableOffset = offset.getUseableValue(c);
+
+
+		if(useableOffset instanceof StaticValue){
+			
+			return new ConcreteAddressValue(baseAddress, (StaticValue) useableOffset);
+			
+		}else
+		if(useableOffset instanceof RegisterValue){
+
+			RegisterValue tempReg;
+			if(baseAddress.getRegister().reserved){
+				tempReg = new RegisterValue(c.getTemporaryRegister());
+			}else{
+				tempReg = baseAddress;
+			}
+			
+			c.appendInstruction(new AddWordInstruction(tempReg, baseAddress, (RegisterValue)useableOffset));
+
+			Register useableOffsetRegister = ((RegisterValue) useableOffset).getRegister();
+			if( ! useableOffsetRegister.reserved){
+				c.freeTemporaryRegister(useableOffsetRegister);				
+			}
+
+			
+			return new ConcreteAddressValue(tempReg, new StaticIntValue(0));
+						
+		}else{
+			throw new InternalCompilerError("getUseableValue for offset returned an instance of " + useableOffset.getClass().getName());
+		}
+		
 	}
 	
 }

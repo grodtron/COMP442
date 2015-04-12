@@ -6,9 +6,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+import comp442.codegen.CodeGenerationContext;
+import comp442.error.CompilerError;
+import comp442.semantic.statement.Statement;
+import comp442.semantic.symboltable.SymbolContext;
+import comp442.semantic.symboltable.entries.FunctionEntry;
+
 public class Driver {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws CompilerError {
 		Properties properties = new Properties();
 		
 		String settingsFile = "settings.txt";
@@ -31,6 +37,16 @@ public class Driver {
 		}
 		
 		p.parse();
+		
+		FunctionEntry program = (FunctionEntry) SymbolContext.find("program");
+		
+		CodeGenerationContext c = new CodeGenerationContext();
+				
+		for(Statement s : program.getStatements()){
+			s.generateCode(c);
+		}
+		
+		c.printCode(System.out);
 
 	}
 

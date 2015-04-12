@@ -1,8 +1,10 @@
 package comp442.semantic.value;
 
+import comp442.codegen.CodeGenerationContext;
 import comp442.codegen.Register;
+import comp442.error.CompilerError;
 
-public class RegisterValue implements Value {
+public class RegisterValue extends DynamicValue {
 
 	private final Register register;
 	
@@ -22,6 +24,16 @@ public class RegisterValue implements Value {
 	@Override
 	public boolean equals(Object other) {
 		return other instanceof RegisterValue && ((RegisterValue)other).getRegister().equals(register);
+	}
+
+	@Override
+	public Value getUseableValue(CodeGenerationContext c) {
+		return this;
+	}
+
+	@Override
+	public RegisterValue getRegisterValue(CodeGenerationContext c) throws CompilerError {
+		return this;
 	}
 	
 }
