@@ -10,6 +10,7 @@ import comp442.semantic.value.ConcreteAddressValue;
 import comp442.semantic.value.RegisterValue;
 import comp442.semantic.value.StoredValue;
 import comp442.semantic.value.Value;
+import comp442.semantic.value.VoidValue;
 
 public class AssignmentExpression extends ExpressionElement implements Statement {
 
@@ -49,8 +50,8 @@ public class AssignmentExpression extends ExpressionElement implements Statement
 	public void acceptSubElement(ExpressionElement e) throws CompilerError {
 		if(currentState == State.LHS){
 			lhs = e.getValue();
-			System.err.println(hashCode() + " " +"moving from LHS to INIT_RHS with");
-			currentState = State.INIT_RHS;
+			System.err.println(hashCode() + " " +"moving from LHS to RHS with");
+			currentState = State.RHS;
 		}else
 		if(currentState == State.RHS){
 			rhs = e.getValue();
@@ -72,6 +73,11 @@ public class AssignmentExpression extends ExpressionElement implements Statement
 		return lhs + " = " + rhs;
 	}
 
+	@Override
+	public Value getValue() {
+		return VoidValue.get();
+	}
+	
 	public Value getLhs() {
 		return lhs;
 	}

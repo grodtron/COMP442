@@ -171,7 +171,7 @@ public class Grammar {
 				relOp, expr
 			},
 			new Symbol[] {
-				addOp, expr
+				addOp, sem_PushAdditionOperation, expr
 			},
 			new Symbol[] {
 				EPSILON
@@ -184,14 +184,14 @@ public class Grammar {
 		});
 		p.put(arithExpr, new Symbol[][] {
 			new Symbol[] {
-				term, arithExprPrime,
+				sem_StartAdditionExpression, term, arithExprPrime,
 			}
 		});
 		p.put(arithExprPrime, new Symbol[][] {
 			new Symbol[] {
-				addOp, arithExpr,
+				addOp, sem_PushAdditionOperation, arithExpr,
 			}, new Symbol[] {
-				EPSILON
+				EPSILON, sem_EndAdditionExpression
 			}
 		});
 		p.put(sign, new Symbol[][] {
@@ -203,29 +203,29 @@ public class Grammar {
 		});
 		p.put(term, new Symbol[][] {
 			new Symbol[] {
-				factor, termPrime,
+				sem_StartMultiplicationExpression, factor, termPrime,
 			}
 		});
 		p.put(termPrime, new Symbol[][] {
 			new Symbol[] {
-				multOp, factor, termPrime,
+				multOp, sem_PushMultiplicationOperation, sem_StartMultiplicationExpression, factor, termPrime,
 			}, new Symbol[] {
-				EPSILON
+				EPSILON, sem_EndMultiplicationExpression
 			}
 		});
 		p.put(factor, new Symbol[][] {
 			new Symbol[] {
 				factorIdNest,
 			}, new Symbol[] {
-				tok_int_literal
+				tok_int_literal, sem_PushIntLiteral
 			}, new Symbol[] {
-				tok_float_literal
+				tok_float_literal, sem_PushFloatLiteral
 			}, new Symbol[] {
-				tok_open_paren, arithExpr, tok_close_paren
+				tok_open_paren, arithExpr, tok_close_paren // TODO
 			}, new Symbol[] {
-				tok_not, factor,
+				tok_not, factor, // TODO
 			}, new Symbol[] {
-				sign, factor
+				sign, factor  // TODO
 			}
 		});
 		p.put(factorIdNest, new Symbol[][] {
@@ -269,7 +269,7 @@ public class Grammar {
 		p.put(indice, new Symbol[][] {
 			new Symbol[] {
 					// TODO - need to push entire arithExpr, not just assume int literal
-				tok_open_square, arithExpr, sem_PushVariableIndex, tok_close_square
+				tok_open_square, arithExpr, tok_close_square
 			}
 		});
 		p.put(arraySize, new Symbol[][] {

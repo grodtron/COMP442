@@ -17,6 +17,11 @@ public abstract class StaticValue implements Value {
 	public boolean isStatic() {
 		return true;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof StaticValue && intValue() == ((StaticValue)obj).intValue();
+	}
 
 	
 }

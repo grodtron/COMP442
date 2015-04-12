@@ -6,10 +6,17 @@ import java.util.Set;
 
 import comp442.lexical.token.Token;
 import comp442.semantic.SemanticAction;
+import comp442.semantic.expressions.actions.EndAdditionExpressionAction;
+import comp442.semantic.expressions.actions.EndMultiplicationExpressionAction;
 import comp442.semantic.expressions.actions.FinishVariableAction;
-import comp442.semantic.expressions.actions.PushIndexAction;
+import comp442.semantic.expressions.actions.PushAdditionOperationAction;
+import comp442.semantic.expressions.actions.PushFloatLiteralAction;
 import comp442.semantic.expressions.actions.PushIdentifierAction;
+import comp442.semantic.expressions.actions.PushIntLiteralAction;
+import comp442.semantic.expressions.actions.PushMultiplicationOperationAction;
+import comp442.semantic.expressions.actions.StartAdditionExpressionAction;
 import comp442.semantic.expressions.actions.StartAssignmentStatementAction;
+import comp442.semantic.expressions.actions.StartMultiplicationExpressionAction;
 import comp442.semantic.symboltable.actions.AddFunctionParameterAction;
 import comp442.semantic.symboltable.actions.CreateClassAction;
 import comp442.semantic.symboltable.actions.CreateFunctionAction;
@@ -149,10 +156,23 @@ public enum Symbol {
 	sym_EndScope(new EndScopeAction()),
 	
 	sem_PushVariableName(new PushIdentifierAction()),
-	sem_PushVariableIndex(new PushIndexAction()),
+	//sem_PushVariableIndex(new PushIndexAction()),
 	sem_FinishVariable(new FinishVariableAction()),
 	
-	sem_StartAssignmentStatment(new StartAssignmentStatementAction());
+	sem_StartAssignmentStatment(new StartAssignmentStatementAction()),
+	
+	sem_StartAdditionExpression(new StartAdditionExpressionAction()),
+	sem_EndAdditionExpression(new EndAdditionExpressionAction()),
+	
+	sem_StartMultiplicationExpression(new StartMultiplicationExpressionAction()),
+	sem_EndMultiplicationExpression(new EndMultiplicationExpressionAction()),
+	
+	sem_PushIntLiteral(new PushIntLiteralAction()),
+	sem_PushFloatLiteral(new PushFloatLiteralAction()),
+	
+	sem_PushAdditionOperation(new PushAdditionOperationAction()),
+	sem_PushMultiplicationOperation(new PushMultiplicationOperationAction()),
+	
 	;
 
 	public static enum Type {

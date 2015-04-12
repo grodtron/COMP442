@@ -1,9 +1,9 @@
 package comp442.semantic.expressions;
 
+import comp442.codegen.MathOperation;
 import comp442.error.CompilerError;
 import comp442.error.InternalCompilerError;
 import comp442.semantic.value.Value;
-import comp442.semantic.value.VoidValue;
 
 public abstract class ExpressionElement {
 
@@ -16,13 +16,23 @@ public abstract class ExpressionElement {
 	public void pushIdentifier(String id) throws CompilerError {
 		throw new InternalCompilerError("Unexpected identifier " + id + " inside " + this.getClass().getSimpleName());
 	}
-
-	public void pushIndex(String index) throws CompilerError {
-		throw new InternalCompilerError("Unexpected index " + index + " inside " + this.getClass().getSimpleName());
-	}
 	
-	public Value getValue(){
-		return VoidValue.get();
+	public abstract Value getValue() throws CompilerError;
+
+	public void pushIntLiteral(int i) throws CompilerError {
+		throw new InternalCompilerError("Unexpected int literal " + i + " inside " + this.getClass().getSimpleName());		
+	}
+
+	public void pushFloatLiteral(float f) throws CompilerError {
+		throw new InternalCompilerError("Unexpected float literal " + f + " inside " + this.getClass().getSimpleName());		
+	}
+
+	public void pushAdditionOperator(MathOperation operator) throws CompilerError {
+		throw new InternalCompilerError("Unexpected addition operation " + operator + " inside " + this.getClass().getSimpleName());				
+	}
+
+	public void pushMultiplicationOperator(MathOperation operator) throws CompilerError {
+		throw new InternalCompilerError("Unexpected multiplication operation " + operator + " inside " + this.getClass().getSimpleName());				
 	}
 	
 }

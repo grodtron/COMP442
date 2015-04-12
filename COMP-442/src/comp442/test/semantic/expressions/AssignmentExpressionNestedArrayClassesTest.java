@@ -12,11 +12,14 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+import comp442.codegen.CodeGenerationContext;
 import comp442.codegen.Register;
+import comp442.error.CompilerError;
 import comp442.semantic.expressions.AssignmentExpression;
 import comp442.semantic.statement.Statement;
 import comp442.semantic.symboltable.SymbolContext;
 import comp442.semantic.symboltable.entries.FunctionEntry;
+import comp442.semantic.value.ConcreteAddressValue;
 import comp442.semantic.value.RegisterValue;
 import comp442.semantic.value.StaticIntValue;
 import comp442.semantic.value.StoredValue;
@@ -141,17 +144,19 @@ public class AssignmentExpressionNestedArrayClassesTest {
 	}
 
 	private Parser parser;
-	private Value lhs;
-	private Value rhs;
+	private ConcreteAddressValue lhs;
+	private ConcreteAddressValue rhs;
+	private CodeGenerationContext c;
 	
-	public AssignmentExpressionNestedArrayClassesTest(String name, String code, Value lhs, Value rhs ) {
+	
+	public AssignmentExpressionNestedArrayClassesTest(String name, String code, Value lhs, Value rhs ) throws CompilerError {
 		this.parser = new Parser(new ByteArrayInputStream(code.getBytes()));
-		this.lhs = lhs;
-		this.rhs = rhs;
+		this.lhs = ((StoredValue)lhs).getConcreteAddress(c);
+		this.rhs = ((StoredValue)rhs).getConcreteAddress(c);
 	}
 	
 	@Test
-	public void test() {
+	public void test() throws CompilerError {
 		parser.parse();
 		
 		FunctionEntry program =  (FunctionEntry) SymbolContext.getCurrentScope().find("program");
@@ -162,8 +167,9 @@ public class AssignmentExpressionNestedArrayClassesTest {
 		
 		AssignmentExpression s = (AssignmentExpression)statements.get(0);
 				
-		assertEquals(lhs, s.getLhs());
-		assertEquals(rhs, s.getRhs());
+		CodeGenerationContext c = new CodeGenerationContext();
+		assertEquals(lhs, ((StoredValue)s.getLhs()).getConcreteAddress(c));
+		assertEquals(rhs, ((StoredValue)s.getRhs()).getConcreteAddress(c));
 	}
 
 }

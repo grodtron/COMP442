@@ -41,5 +41,17 @@ public class ConcreteAddressValue extends DynamicValue {
 	public RegisterValue getRegisterValue(CodeGenerationContext c) throws InternalCompilerError {
 		return (RegisterValue) getUseableValue(c);
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof ConcreteAddressValue
+				&& getBaseAddress().equals(((ConcreteAddressValue )obj).getBaseAddress())
+				&&   getOffset() == (((ConcreteAddressValue )obj).getOffset());
+	}
 
+	@Override
+	public String toString() {
+		return "*(" + baseAddr + " + " + offset + ")";
+	}
+	
 }
