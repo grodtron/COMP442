@@ -7,7 +7,7 @@ import java.util.Set;
 public enum Register {
 	ZERO("R0"),
 	STACK_POINTER("R1"),
-	R2,
+	RETURN_ADDRESS("R2"),
 	R3,
 	R4,
 	R5,
@@ -24,10 +24,12 @@ public enum Register {
 	PROGRAM_COUNTER("PC"),
 	;
 	
+	public final static Register RETURN_VALUE = RETURN_ADDRESS;
+	
 	public final String registerName;
 	public final String symbolicName;
 	public final boolean reserved;
-	
+
 	
 	public final static Set<Register> unallocatedRegisters;
 	

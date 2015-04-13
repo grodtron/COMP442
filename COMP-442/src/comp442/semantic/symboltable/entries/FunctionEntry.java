@@ -13,9 +13,12 @@ public class FunctionEntry extends SymbolTableEntry {
 	
 	private List<Statement> statements; 
 	
+	private final String label;
+	
 	public FunctionEntry(String name, SymbolTableEntryType returnType, SymbolTable table) {
 		super(name, Kind.Function, new FunctionType(returnType, new ArrayList<SymbolTableEntryType>()), table);
 		statements = new ArrayList<Statement>();
+		this.label = name + Integer.toString(hashCode());
 	}
 
 	public void addParameter(ParameterEntry param) {
@@ -42,5 +45,9 @@ public class FunctionEntry extends SymbolTableEntry {
 
 	public List<Statement> getStatements() {
 		return Collections.unmodifiableList(statements);
+	}
+
+	public String getLabel() {
+		return label;
 	}
 }

@@ -127,7 +127,7 @@ public class Grammar {
 			}, new Symbol[] {
 				tok_put, tok_open_paren, expr, tok_close_paren, tok_semicolon
 			}, new Symbol[] {
-				tok_return, tok_open_paren, expr, tok_close_paren, tok_semicolon
+				tok_return, sem_StartReturnStatement, tok_open_paren, expr, tok_close_paren, tok_semicolon
 			}
 		});
 		p.put(assignStat, new Symbol[][] {

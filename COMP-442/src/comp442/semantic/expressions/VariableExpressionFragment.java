@@ -8,10 +8,11 @@ import comp442.semantic.symboltable.SymbolTable;
 import comp442.semantic.symboltable.entries.SymbolTableEntry;
 import comp442.semantic.symboltable.entries.types.ArrayType;
 import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
-import comp442.semantic.value.LateBindingStaticIntValue;
+import comp442.semantic.value.LateBindingStaticValue;
 import comp442.semantic.value.MathValue;
 import comp442.semantic.value.RegisterValue;
 import comp442.semantic.value.StaticIntValue;
+import comp442.semantic.value.StaticValue;
 import comp442.semantic.value.StoredValue;
 import comp442.semantic.value.Value;
 
@@ -77,12 +78,12 @@ public class VariableExpressionFragment extends ExpressionElement {
 
 	@Override
 	public Value getValue() {
-		return new StoredValue(new RegisterValue(Register.STACK_POINTER), new MathValue(MathOperation.SUBTRACT, offset, new LateBindingStaticIntValue(){
+		return new StoredValue(new RegisterValue(Register.STACK_POINTER), new MathValue(MathOperation.SUBTRACT, offset, new LateBindingStaticValue(){
 			@Override
-			public int get() {
+			public StaticValue get() {
 				// We want to grab this value only on the second (code-generating) pass. At this point the scope is still being
 				// defined and may change.
-				return enclosingScope.getSize();
+				return new StaticIntValue(enclosingScope.getSize());
 			}
 		}));
 	}

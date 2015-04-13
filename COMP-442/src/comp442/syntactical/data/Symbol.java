@@ -23,6 +23,7 @@ import comp442.semantic.expressions.actions.StartForStatementAction;
 import comp442.semantic.expressions.actions.StartFunctionCallAction;
 import comp442.semantic.expressions.actions.StartIfStatementAction;
 import comp442.semantic.expressions.actions.StartMultiplicationExpressionAction;
+import comp442.semantic.expressions.actions.StartReturnStatementAction;
 import comp442.semantic.symboltable.actions.AddFunctionParameterAction;
 import comp442.semantic.symboltable.actions.CreateClassAction;
 import comp442.semantic.symboltable.actions.CreateFunctionAction;
@@ -187,6 +188,8 @@ public enum Symbol {
 	
 	sem_StartFunctionCall(new StartFunctionCallAction()),
 	sem_EndFunctionCall(new EndFunctionCallAction()),
+	
+	sem_StartReturnStatement(new StartReturnStatementAction()),
 	;
 
 	public static enum Type {

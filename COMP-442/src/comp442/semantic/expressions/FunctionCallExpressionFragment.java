@@ -8,7 +8,9 @@ import comp442.semantic.symboltable.SymbolContext;
 import comp442.semantic.symboltable.SymbolTable;
 import comp442.semantic.symboltable.entries.FunctionEntry;
 import comp442.semantic.symboltable.entries.SymbolTableEntry;
+import comp442.semantic.value.DynamicValue;
 import comp442.semantic.value.FunctionCallValue;
+import comp442.semantic.value.LateBindingDynamicValue;
 import comp442.semantic.value.Value;
 
 public class FunctionCallExpressionFragment extends ExpressionElement {
@@ -37,13 +39,19 @@ public class FunctionCallExpressionFragment extends ExpressionElement {
 	
 	@Override
 	public Value getValue() throws CompilerError {
-		SymbolTableEntry entry = surroundingScope.find(id);
-		
-		if(entry instanceof FunctionEntry){
-			return new FunctionCallValue((FunctionEntry) entry, expressions);
-		}else{
-			throw new CompilerError("Could not find function " + id);
-		}
+		return new LateBindingDynamicValue() {
+			
+			@Override
+			public DynamicValue get() throws CompilerError {
+				SymbolTableEntry entry = surroundingScope.find(id);
+				
+				if(entry instanceof FunctionEntry){
+					return new FunctionCallValue((FunctionEntry) entry, expressions);
+				}else{
+					throw new CompilerError("Could not find function " + id);
+				}
+			}
+		};
 	}
 
 }

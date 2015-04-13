@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import comp442.codegen.CodeGenerationContext;
+import comp442.codegen.Register;
+import comp442.codegen.instructions.AddWordImmediateInstruction;
+import comp442.codegen.instructions.JumpAndLinkInstruction;
+import comp442.codegen.instructions.StoreWordInstruction;
 import comp442.error.CompilerError;
 import comp442.semantic.expressions.AdditionExpressionFragment;
 import comp442.semantic.symboltable.entries.FunctionEntry;
@@ -12,7 +16,10 @@ import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
 
 public class FunctionCallValue extends DynamicValue implements Value {
 
-	List<Value> arguments;
+	private List<Value> arguments;
+	private int scopeSize;
+	
+	private String callingLabel;
 	
 	public FunctionCallValue(FunctionEntry entry, List<AdditionExpressionFragment> expressions) throws CompilerError {
 		int nArgs = expressions.size();
@@ -29,12 +36,26 @@ public class FunctionCallValue extends DynamicValue implements Value {
 			// TODO - type checking!!!
 			arguments.add(arg);
 		}
+		
+		callingLabel = entry.getLabel();
+		scopeSize = entry.getScope().getSize();
 	}
 
 	@Override
 	public Value getUseableValue(CodeGenerationContext c) throws CompilerError {
 		// TODO Auto-generated method stub
-		return null;
+		
+		// Pass the parameters
+		int offset = 0;
+		for(Value arg : arguments){
+			c.appendInstruction(new StoreWordInstruction(Register.STACK_POINTER, offset, arg.getRegisterValue(c).getRegister()));
+			offset += 4;
+		}
+		
+		c.appendInstruction(new AddWordImmediateInstruction(Register.STACK_POINTER, Register.STACK_POINTER, scopeSize));
+		c.appendInstruction(new JumpAndLinkInstruction(Register.RETURN_ADDRESS, callingLabel));
+		
+		return new RegisterValue(Register.RETURN_VALUE);
 	}
 
 	@Override

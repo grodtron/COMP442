@@ -15,6 +15,12 @@ public class LoadWordInstruction extends Instruction {
 		sourceReg = baseAddress.getRegister();
 		offset   = offsetValue.intValue();
 	}
+	
+	public LoadWordInstruction(Register destination, Register baseAddress, int offsetValue) {
+		destReg   = destination;
+		sourceReg = baseAddress;
+		offset   = offsetValue;
+	}
 
 	@Override
 	protected String _getCode() {

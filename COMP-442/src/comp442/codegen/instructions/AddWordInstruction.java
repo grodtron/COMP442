@@ -15,6 +15,12 @@ public class AddWordInstruction extends Instruction {
 		b    = bVal.getRegister();
 	}
 
+	public AddWordInstruction(Register destVal, Register aVal, Register bVal) {
+		dest = destVal;
+		a    = aVal;
+		b    = bVal;
+	}
+
 	@Override
 	protected String _getCode() {
 		return "add" + '\t' + dest.registerName + ", " + a.registerName + ", " + b.registerName;
