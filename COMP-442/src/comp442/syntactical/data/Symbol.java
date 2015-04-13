@@ -7,6 +7,7 @@ import java.util.Set;
 import comp442.lexical.token.Token;
 import comp442.semantic.SemanticAction;
 import comp442.semantic.expressions.actions.EndAdditionExpressionAction;
+import comp442.semantic.expressions.actions.EndBlockAction;
 import comp442.semantic.expressions.actions.EndMultiplicationExpressionAction;
 import comp442.semantic.expressions.actions.FinishVariableAction;
 import comp442.semantic.expressions.actions.PushAdditionOperationAction;
@@ -16,6 +17,8 @@ import comp442.semantic.expressions.actions.PushIntLiteralAction;
 import comp442.semantic.expressions.actions.PushMultiplicationOperationAction;
 import comp442.semantic.expressions.actions.StartAdditionExpressionAction;
 import comp442.semantic.expressions.actions.StartAssignmentStatementAction;
+import comp442.semantic.expressions.actions.StartBlockAction;
+import comp442.semantic.expressions.actions.StartIfStatementAction;
 import comp442.semantic.expressions.actions.StartMultiplicationExpressionAction;
 import comp442.semantic.symboltable.actions.AddFunctionParameterAction;
 import comp442.semantic.symboltable.actions.CreateClassAction;
@@ -173,6 +176,10 @@ public enum Symbol {
 	sem_PushAdditionOperation(new PushAdditionOperationAction()),
 	sem_PushMultiplicationOperation(new PushMultiplicationOperationAction()),
 	
+	sem_StartIfStatement(new StartIfStatementAction()),
+	
+	sem_StartBlock(new StartBlockAction()),
+	sem_EndBlock(new EndBlockAction()),
 	;
 
 	public static enum Type {

@@ -6,20 +6,33 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import comp442.codegen.instructions.EntryInstruction;
 import comp442.codegen.instructions.Instruction;
 import comp442.error.InternalCompilerError;
 
 public class CodeGenerationContext {
 
+	private static int uniqueLebelId;
+	
+	static {  uniqueLebelId = 0;  }
+	
 	private Set<Register> temporaryRegisters;
 	private List<Instruction> instructions;
+	private String nextLabel;
 	
+	public int getUniqueLabelId(){
+		return ++uniqueLebelId;
+	}
 	
 	public CodeGenerationContext(){
 		temporaryRegisters = new HashSet<Register>();
 		temporaryRegisters.addAll(Register.unallocatedRegisters);
 		
 		instructions = new ArrayList<Instruction>();
+		
+		nextLabel = null;
+		
+		instructions.add(new EntryInstruction());
 	}
 	
 	public Register getTemporaryRegister() {
@@ -39,12 +52,20 @@ public class CodeGenerationContext {
 
 	public void appendInstruction(Instruction instr) {
 		instructions.add(instr);
+		if(nextLabel != null){
+			instr.setLabel(nextLabel);
+			nextLabel = null;
+		}
 	}
 
 	public void printCode(PrintStream out) {
 		for(Instruction i : instructions){
 			out.println(i.getCode());
 		}
+	}
+
+	public void labelNext(String label) {
+		nextLabel = label;
 	}
 
 }

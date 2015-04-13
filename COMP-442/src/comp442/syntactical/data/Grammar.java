@@ -119,7 +119,7 @@ public class Grammar {
 		});
 		p.put(controlStat, new Symbol[][] {
 			new Symbol[] {
-				tok_if, tok_open_paren, expr, tok_close_paren, tok_then, statBlock, tok_else, statBlock, tok_semicolon
+				tok_if, sem_StartIfStatement, tok_open_paren, expr, tok_close_paren, tok_then, statBlock, tok_else, statBlock, tok_semicolon
 			}, new Symbol[] {
 				tok_for, tok_open_paren, type, sym_StoreType, tok_id, sym_StoreId, sym_CreateVariable, sem_PushVariableName, sem_FinishVariable, assignOp, expr, tok_semicolon, relExpr, tok_semicolon, variable, assignExpr, tok_close_paren, statBlock, tok_semicolon
 			}, new Symbol[] {
@@ -142,23 +142,23 @@ public class Grammar {
 		});
 		p.put(statBlock, new Symbol[][] {
 			new Symbol[] {
-				tok_open_brace, statBlockStmts,
+				tok_open_brace, sem_StartBlock, statBlockStmts,
 			}, new Symbol[] {
-				variable, assignStat,
+				sem_StartBlock, sem_StartAssignmentStatment, variable, assignStat, sem_EndBlock
 			}, new Symbol[] {
-				controlStat,
+				sem_StartBlock, controlStat, sem_EndBlock
 			}, new Symbol[] {
-				EPSILON
+				EPSILON, sem_StartBlock, sem_EndBlock
 			}
 		});
 		p.put(statBlockStmts, new Symbol[][] {
 			new Symbol[] {
-				variable, assignStat, statBlockStmts,
+				sem_StartAssignmentStatment, variable, assignStat, statBlockStmts,
 			},
 			new Symbol[] {
 				controlStat, statBlockStmts,
 			}, new Symbol[] {
-				tok_close_brace
+				tok_close_brace, sem_EndBlock
 			}
 		});
 		p.put(expr, new Symbol[][] {

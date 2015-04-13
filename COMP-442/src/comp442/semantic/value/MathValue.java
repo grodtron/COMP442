@@ -19,8 +19,6 @@ public class MathValue extends DynamicValue {
 		this.operator = operator;
 		this.a = a;
 		this.b = b;
-		
-		System.out.println("New MathValue: " + this);
 	}
 
 	@Override

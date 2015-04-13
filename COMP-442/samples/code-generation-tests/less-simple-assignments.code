@@ -12,6 +12,6 @@ program {
 	int y;
 	x = 1;
 	y = 1;
-	objArray[x + 1][x*x + 2].x = objArray[y+2][intArray[1][x + 2][3]*2].y;
-		
+	//objArray[x + 1][x*x + 2].x = objArray[y+2][intArray[1][x + 2][3]*2].y;
+	y = y*(x + 1) + 3*(x + y + 2);
 };

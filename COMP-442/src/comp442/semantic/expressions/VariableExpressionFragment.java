@@ -58,7 +58,6 @@ public class VariableExpressionFragment extends ExpressionElement {
 		}else
 		if(e instanceof AdditionExpressionFragment){
 			if(currentType instanceof ArrayType){
-				System.err.println("creating IndexingExpressionFragment and giving it AdditionExpressionFragment");
 				IndexingExpressionFragment child = new IndexingExpressionFragment((ArrayType)currentType);
 				context.pushChild(child);
 				child.acceptSubElement(e);
@@ -66,25 +65,10 @@ public class VariableExpressionFragment extends ExpressionElement {
 				throw new CompilerError("Cannot index non-array type " + currentType);
 			}
 		}else{
-			try{
-				super.acceptSubElement(e);
-			}catch(Exception ex){
-				System.err.println(e);
-			}
+			super.acceptSubElement(e);
 		}
 	}
-	/*
-	@Override
-	public void pushIndex(String index) throws CompilerError{
-		if(currentType instanceof ArrayType){
-			IndexingExpressionFragment child = new IndexingExpressionFragment((ArrayType)currentType);
-			context.pushChild(child);
-			child.pushIndex(index);
-		}else{
-			throw new CompilerError("Cannot index non-array type " + currentType);
-		}
-	}*/
-	
+
 	@Override
 	public Value getValue() {
 		return new StoredValue(new RegisterValue(Register.STACK_POINTER), offset);

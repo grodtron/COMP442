@@ -1,0 +1,23 @@
+class A {
+	int x;
+	int y;
+};
+
+program {
+
+	A objArray[3][3];
+	int intArray[1][2][3];
+	
+	int x;
+	int y;
+	int xOrY;
+	x = 1;
+	y = 0;
+	
+	
+	if(x or y) then{
+		xOrY = 1;
+	}else{
+		xOrY = 0;
+	};
+};

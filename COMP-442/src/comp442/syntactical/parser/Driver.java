@@ -1,12 +1,16 @@
 package comp442.syntactical.parser;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.util.Properties;
 
 import comp442.codegen.CodeGenerationContext;
+import comp442.codegen.instructions.HaltInstruction;
 import comp442.error.CompilerError;
 import comp442.semantic.statement.Statement;
 import comp442.semantic.symboltable.SymbolContext;
@@ -14,7 +18,7 @@ import comp442.semantic.symboltable.entries.FunctionEntry;
 
 public class Driver {
 
-	public static void main(String[] args) throws CompilerError {
+	public static void main(String[] args) throws CompilerError, Exception {
 		Properties properties = new Properties();
 		
 		String settingsFile = "settings.txt";
@@ -46,8 +50,27 @@ public class Driver {
 			s.generateCode(c);
 		}
 		
-		c.printCode(System.out);
-
+		c.appendInstruction(new HaltInstruction());
+		c.printCode(new PrintStream(new File("output.m")));
+		
+		moonRun("output.m");
+	}
+	
+	public static void moonRun(String filename) throws Exception{
+		ProcessBuilder moon = new ProcessBuilder("Moon.exe", filename);
+		
+		Process moonProc = moon.start();
+		
+		moonProc.waitFor();
+		
+		BufferedReader r = new BufferedReader(new InputStreamReader(moonProc.getInputStream()));
+		
+		
+		System.out.println("===== Moon Output =====");
+		while(r.ready()){
+			System.out.println(r.readLine());			
+		}
+		
 	}
 
 }

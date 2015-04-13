@@ -50,7 +50,7 @@ public class Parser {
 		
 		// The actual ASM file
 		Log.masm       = new PrintStream(new File(baseName + ".masm"));
-		
+				
 		nErrors = 0;
 		
 		SymbolContext.reset();

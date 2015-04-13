@@ -21,7 +21,6 @@ public class ExpressionContext {
 	
 	
 	public void pushChild(ExpressionElement child){
-		System.out.println("push child " + child);
 		expressionStack.push(child);
 	}
 	
@@ -35,7 +34,6 @@ public class ExpressionContext {
 			child = expressionStack.pop();
 		}
 		
-		System.out.print("Finish top element: " + child);
 		if( expressionStack.isEmpty() ){
 			if(child instanceof Statement){
 				currentFunction.appendStatement((Statement)child);
@@ -49,19 +47,15 @@ public class ExpressionContext {
 	}
 
 	public ExpressionElement getCurrent() throws InternalCompilerError {
-		System.out.print("getCurrent ");
 		if(expressionStack.isEmpty()){
-			System.out.println(" -> NULL");
 			return null;
 		}else{
-			System.out.println(" -> " + expressionStack.peek());
 			return expressionStack.peek();
 		}
 	}
 
 
 	public void popChild() {
-		System.out.println("pop child " + expressionStack.peek());
 		expressionStack.pop();
 	}
 

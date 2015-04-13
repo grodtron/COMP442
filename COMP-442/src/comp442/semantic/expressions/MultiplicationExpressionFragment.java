@@ -29,7 +29,8 @@ public class MultiplicationExpressionFragment extends ExpressionElement {
 	public void acceptSubElement(ExpressionElement e) throws CompilerError {
 		
 		if(e instanceof MultiplicationExpressionFragment
-		|| e instanceof VariableExpressionFragment){
+		|| e instanceof VariableExpressionFragment
+		|| e instanceof AdditionExpressionFragment){
 			
 			switch(state){
 			case INIT_FIRST:

@@ -14,7 +14,6 @@ public class EndMultiplicationExpressionAction extends ExpressionAction {
 		ExpressionElement top = context.getCurrent();
 		if(top instanceof MultiplicationExpressionFragment){
 			context.finishTopElement();
-			System.err.println("END MULT EXPR ELEMENT");
 		}else{
 			throw new InternalCompilerError("Expected " + MultiplicationExpressionFragment.class.getName() + " but was " + top.getClass().getName());
 		}

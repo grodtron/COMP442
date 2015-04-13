@@ -14,11 +14,12 @@ public abstract class Instruction {
 	protected abstract String _getCode();
 	
 	public String getCode(){
-		return label + "\t" + _getCode() + "\t; " + comment;
+		return label + "\t" + _getCode() + "\t% " + comment;
 	}
 
-	public void setLabel(String label) {
+	public Instruction setLabel(String label) {
 		this.label = label;
+		return this;
 	}
 
 	public Instruction setComment(String comment) {
