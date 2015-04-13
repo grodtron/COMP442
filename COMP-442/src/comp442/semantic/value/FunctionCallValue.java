@@ -56,12 +56,15 @@ public class FunctionCallValue extends DynamicValue implements Value {
 		// Pass the parameters
 		int offset = 0;
 		for(Value arg : arguments){
+			c.commentNext("storing argument");
 			c.appendInstruction(new StoreWordInstruction(Register.STACK_POINTER, offset, arg.getRegisterValue(c).getRegister()));
 			offset += 4;
 		}
 		
-		c.appendInstruction(new AddWordImmediateInstruction(Register.STACK_POINTER, Register.STACK_POINTER, scopeSize));
-		c.appendInstruction(new JumpAndLinkInstruction(Register.RETURN_ADDRESS, callingLabel));
+		c.appendInstruction(new AddWordImmediateInstruction(Register.STACK_POINTER, Register.STACK_POINTER, scopeSize)
+				.setComment("set up new stack pointer"));
+		c.appendInstruction(new JumpAndLinkInstruction(Register.RETURN_ADDRESS, callingLabel)
+				.setComment("jump, storing return address in " + Register.RETURN_ADDRESS.registerName));
 		
 		return new RegisterValue(Register.RETURN_VALUE);
 	}

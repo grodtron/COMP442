@@ -81,32 +81,25 @@ public class ForStatement extends ExpressionElement implements Statement {
 	
 	@Override
 	public void generateCode(CodeGenerationContext c) throws CompilerError {
-		/*
-		 * for loop
-
-            **initializer
-loop_top    **condition
-            bz loop_end
-            **loop_body
-            **increment
-            j loop_top
-loop_end    nop
-		 */
 
 		int labelId = c.getUniqueLabelId();
 		String loopTopLabel = "loop_top_" + labelId;
 		String loopEndLabel = "loop_end_" + labelId;
 		
+		c.commentNext("for loop initializer");
 		initializer.generateCode(c);
 		
 		c.labelNext(loopTopLabel);
 		
+		c.commentNext("evaluate condition");
 		Register r = condition.getValue().getRegisterValue(c).getRegister();
-		c.appendInstruction(new BranchOnZeroInstruction(r, loopEndLabel));
+		c.appendInstruction(new BranchOnZeroInstruction(r, loopEndLabel)
+				.setComment("break out of loop"));
 		if(!r.reserved) c.freeTemporaryRegister(r);
 		
 		statements.generateCode(c);
 		
+		c.commentNext("for loop incrementation");
 		increment.generateCode(c);
 		
 		c.appendInstruction(new JumpInstruction(loopTopLabel));

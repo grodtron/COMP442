@@ -53,17 +53,18 @@ public class CodeGenerator {
 			
 		String stackLabel = "stack";
 		
-		c.appendInstruction(new EntryInstruction());
+		c.appendInstruction(new EntryInstruction().setComment("==== Program Begin ===="));
 		c.appendInstruction(new AddWordImmediateInstruction(Register.STACK_POINTER, Register.ZERO, stackLabel));
-		c.appendInstruction(new AddWordImmediateInstruction(Register.STACK_POINTER, Register.STACK_POINTER, program.getScope().getSize()));
+		c.appendInstruction(new AddWordImmediateInstruction(Register.STACK_POINTER, Register.STACK_POINTER, program.getScope().getSize()).setComment("init stack pointer"));
 		
 		for(Statement s : program.getStatements()){
+			c.commentNext(s.getClass().getSimpleName());
 			s.generateCode(c);
 		}
 		
-		c.appendInstruction(new HaltInstruction());
+		c.appendInstruction(new HaltInstruction().setComment("==== Program End ===="));
 		
-		c.appendInstruction(new AlignInstruction().setLabel(stackLabel));
+		c.appendInstruction(new AlignInstruction().setLabel(stackLabel).setComment("start of stack"));
 		c.printCode(output);
 	}
 	
@@ -71,24 +72,27 @@ public class CodeGenerator {
 		CodeGenerationContext c = new CodeGenerationContext();
 		SymbolTable s = func.getScope();
 		
-		int returnAddrMemOffset = s.find(SpecialValues.RETURN_ADDRESS_PARAMETER_NAME).getOffset();
+		int returnAddrMemOffset =  -s.getSize() + s.find(SpecialValues.RETURN_ADDRESS_PARAMETER_NAME).getOffset();
 		
 		c.labelNext(func.getLabel());
+		c.commentNext(func.toString());
 		
-		// store the return address properly
-		c.appendInstruction(new StoreWordInstruction(Register.STACK_POINTER, returnAddrMemOffset, Register.RETURN_ADDRESS));
+		c.appendInstruction(new StoreWordInstruction(Register.STACK_POINTER, returnAddrMemOffset, Register.RETURN_ADDRESS)
+				.setComment("Store return address"));
 		
 		for(Statement stat : func.getStatements()){
+			c.commentNext(stat.getClass().getSimpleName());
 			stat.generateCode(c);
 		}
-		
-		// TODO - return statement!!! needs to store result into RETURN_VALUE and then never touch it again
-		
+				
 		Register pcRegister = c.getTemporaryRegister();
-		c.appendInstruction(new LoadWordInstruction(pcRegister, Register.STACK_POINTER, returnAddrMemOffset));
+		c.appendInstruction(new LoadWordInstruction(pcRegister, Register.STACK_POINTER, returnAddrMemOffset)
+				.setComment("get return address"));
 		// reset the stackPointer!!
-		c.appendInstruction(new AddWordImmediateInstruction(Register.STACK_POINTER, Register.STACK_POINTER, -1 * s.getSize()));
-		c.appendInstruction(new JumpRegisterInstruction(pcRegister));
+		c.appendInstruction(new AddWordImmediateInstruction(Register.STACK_POINTER, Register.STACK_POINTER, -1 * s.getSize())
+			.setComment("reset stack pointer"));
+		c.appendInstruction(new JumpRegisterInstruction(pcRegister)
+				.setComment("return"));
 		
 		c.printCode(output);
 		

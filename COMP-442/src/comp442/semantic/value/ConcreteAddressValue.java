@@ -27,8 +27,7 @@ public class ConcreteAddressValue extends DynamicValue {
 	public Value getUseableValue(CodeGenerationContext c) throws InternalCompilerError {
 		RegisterValue tempReg = new RegisterValue(c.getTemporaryRegister(baseAddr.getRegister()));
 		
-		c.appendInstruction(new LoadWordInstruction(tempReg, baseAddr, offset)
-				.setComment(toString()));
+		c.appendInstruction(new LoadWordInstruction(tempReg, baseAddr, offset));
 		
 		return tempReg;
 	}

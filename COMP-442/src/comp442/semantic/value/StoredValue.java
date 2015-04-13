@@ -59,8 +59,7 @@ public class StoredValue extends DynamicValue {
 
 			RegisterValue tempReg = new RegisterValue(c.getTemporaryRegister(baseAddrReg.getRegister()));
 			
-			c.appendInstruction(new AddWordInstruction(tempReg, baseAddrReg, (RegisterValue)useableOffset)
-					.setComment(toString()));
+			c.appendInstruction(new AddWordInstruction(tempReg, baseAddrReg, (RegisterValue)useableOffset));
 
 			Register useableOffsetRegister = ((RegisterValue) useableOffset).getRegister();
 			if( ! useableOffsetRegister.reserved){

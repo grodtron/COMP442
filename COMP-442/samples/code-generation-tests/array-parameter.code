@@ -1,16 +1,36 @@
 program {
 	int buff[256];
-	int x;
+	int length;
 	
-	x = 2;
-	x = test(x, buff);
+	buff[1] = 12344;
 	
-	for(int i = 1; buff[i] <> 0; i = i + 1){
+	length = create_message(buff);
+	length = indirectly_create_message(buff);
+	
+	for(int i = 1; i < length; i = i + 1){
 		put(buff[i]);
 	};
 };
 
-int test(int n, int buff[256]){
+int indirectly_create_message(int buffer[256]){
+	int minibuff[256];
+	int length;
+	
+	length = (create_message(minibuff));
+
+	length = copy_buffers(length, buffer, minibuff);
+	
+	return (length);
+};
+
+int copy_buffers(int length, int to[256], int from[256]){
+	for(int i = 1; i < length; i = i + 1){
+		to[i] = from[i];
+	};	
+	return (length);
+};
+
+int create_message(int buff[256]){
 
 	int i;
 	i = 1;
@@ -41,8 +61,6 @@ int test(int n, int buff[256]){
 	buff[i] = (100);i=i+1;
 	buff[i] = (33);i=i+1;
 	buff[i] = (10);i=i+1;
-	buff[i] = (0);i=i+1;
 
-	return (n);
-
+	return (i);
 };

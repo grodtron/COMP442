@@ -31,6 +31,8 @@ public class VariableExpressionFragment extends TypedExpressionElement {
 	
 	SymbolTableEntryType currentType;
 	
+	private boolean isReference;
+	
 	public VariableExpressionFragment(String id) throws CompilerError{
 		this.currentScope  = SymbolContext.getCurrentScope();
 		this.enclosingScope = currentScope;
@@ -49,10 +51,12 @@ public class VariableExpressionFragment extends TypedExpressionElement {
 		};
 		
 		if(e instanceof VariableEntry || e.getType() instanceof PrimitiveType){
+			isReference = false;
 			baseAddr     = new RegisterValue(Register.STACK_POINTER);
 			offset       = offsetValue;
 		}else
 		if(e instanceof ParameterEntry){
+			isReference = true;
 			baseAddr	= new StoredValue(new RegisterValue(Register.STACK_POINTER), offsetValue);
 			offset      = new StaticIntValue(0);
 		}else{
@@ -86,6 +90,8 @@ public class VariableExpressionFragment extends TypedExpressionElement {
 		offset       = new MathValue(MathOperation.ADD, offset, new StaticIntValue(e.getOffset()));
 		currentType  = e.getType();
 		currentScope = currentType.getScope();
+		
+		isReference = false;
 	}
 	
 	@Override
@@ -115,8 +121,13 @@ public class VariableExpressionFragment extends TypedExpressionElement {
 		if(getType() instanceof PrimitiveType){
 			return new StoredValue(baseAddr, offset);
 		}else{
-			return new IndirectValue(new MathValue( MathOperation.ADD, baseAddr, offset));
+			if(isReference){
+				return baseAddr;
+			}else{
+				return new IndirectValue(new MathValue( MathOperation.ADD, baseAddr, offset));				
+			}
 		}
+		
 	}
 
 	@Override

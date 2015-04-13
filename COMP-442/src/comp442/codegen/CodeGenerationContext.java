@@ -18,6 +18,7 @@ public class CodeGenerationContext {
 	private Set<Register> temporaryRegisters;
 	private List<Instruction> instructions;
 	private String nextLabel;
+	private String nextComment;
 	
 	public int getUniqueLabelId(){
 		return ++uniqueLebelId;
@@ -66,6 +67,10 @@ public class CodeGenerationContext {
 			instr.setLabel(nextLabel);
 			nextLabel = null;
 		}
+		if(nextComment != null){
+			instr.setComment(nextComment);
+			nextComment = null;
+		}
 	}
 
 	public void printCode(PrintStream out) {
@@ -76,6 +81,10 @@ public class CodeGenerationContext {
 
 	public void labelNext(String label) {
 		nextLabel = label;
+	}
+
+	public void commentNext(String comment) {
+		nextComment = comment;
 	}
 
 }

@@ -5,7 +5,7 @@ import comp442.error.CompilerError;
 import comp442.lexical.token.Token;
 import comp442.semantic.expressions.ExpressionContext;
 import comp442.semantic.symboltable.SymbolAction;
-import comp442.semantic.symboltable.entries.ParameterEntry;
+import comp442.semantic.symboltable.entries.VariableEntry;
 import comp442.semantic.symboltable.entries.types.PrimitiveType;
 
 public class CreateFunctionAction extends SymbolAction {
@@ -21,7 +21,7 @@ public class CreateFunctionAction extends SymbolAction {
 			// Adding these pseudo-parameters ensures that all stack-frame offsets will make sense.
 			//
 			// '@' sign guarantees no name collisions
-			ParameterEntry returnPcAddr    = new ParameterEntry(SpecialValues.RETURN_ADDRESS_PARAMETER_NAME, new PrimitiveType("int"));
+			VariableEntry returnPcAddr    = new VariableEntry(SpecialValues.RETURN_ADDRESS_PARAMETER_NAME, new PrimitiveType("int"));
 
 			//table.add(returnValueAddr);
 			context.currentSymbolTable.add(returnPcAddr);

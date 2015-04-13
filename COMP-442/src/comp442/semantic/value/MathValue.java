@@ -55,8 +55,7 @@ public class MathValue extends DynamicValue {
 		Register aReg = uA.getRegister();
 		Register temp = c.getTemporaryRegister(aReg);
 		
-		c.appendInstruction(new ImmediateMathOperationInstruction(operator.immediateOpcode, temp, aReg, uB.intValue())
-			.setComment(toString()));
+		c.appendInstruction(new ImmediateMathOperationInstruction(operator.immediateOpcode, temp, aReg, uB.intValue()));
 
 		return new RegisterValue(temp);
 	}
@@ -83,8 +82,7 @@ public class MathValue extends DynamicValue {
 			}
 		}
 		
-		c.appendInstruction(new MathOperationInstruction(operator.opcode, temp, aReg, bReg)
-				.setComment(toString()));
+		c.appendInstruction(new MathOperationInstruction(operator.opcode, temp, aReg, bReg));
 		
 		if(free){
 			c.freeTemporaryRegister(bReg);

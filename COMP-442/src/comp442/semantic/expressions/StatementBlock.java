@@ -29,6 +29,7 @@ public class StatementBlock extends ExpressionElement implements Statement {
 	@Override
 	public void generateCode(CodeGenerationContext c) throws CompilerError {
 		for(Statement s : statements){
+			c.commentNext(s.getClass().getSimpleName());
 			s.generateCode(c);
 		}
 	}
