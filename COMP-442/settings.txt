@@ -1,2 +1,2 @@
-input  = samples/code-generation-tests/function-call.code
+input  = samples/code-generation-tests/recursive-function.code
 output = samples/hello-world.tokens

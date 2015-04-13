@@ -1,0 +1,17 @@
+program {
+
+	int answer;
+	
+	answer = fibonnacci(10, 1, 0);
+
+};
+
+int fibonnacci(int n, int a, int b){
+
+	if(n)then{
+		return ( fibonnacci(n-1, a+b, a) );
+	}else{
+		return (b);
+	};
+
+};
