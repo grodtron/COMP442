@@ -35,7 +35,7 @@ public class IfStatement extends ExpressionElement implements Statement {
 	public void acceptSubElement(ExpressionElement e) throws CompilerError {
 		switch(state){
 			case CONDITION:
-				if(e instanceof AdditionExpressionFragment) {// TODO - relExpr
+				if(e instanceof RelationExpressionFragment) {
 					condition = e;
 					state = State.THEN_BLOCK;
 				}else{

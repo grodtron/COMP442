@@ -51,14 +51,9 @@ public class MathValue extends DynamicValue {
 		return new StaticIntValue(operator.operate(uA.intValue(), uB.intValue()));
 	}
 
-	private Value _getUseableValue(RegisterValue uA, StaticValue uB, CodeGenerationContext c) {
+	private Value _getUseableValue(RegisterValue uA, StaticValue uB, CodeGenerationContext c) throws CompilerError {
 		Register aReg = uA.getRegister();
-		Register temp;
-		if(aReg.reserved){
-			temp = c.getTemporaryRegister();
-		}else{
-			temp = aReg;
-		}
+		Register temp = c.getTemporaryRegister(aReg);
 		
 		c.appendInstruction(new ImmediateMathOperationInstruction(operator.immediateOpcode, temp, aReg, uB.intValue())
 			.setComment(toString()));
@@ -80,11 +75,7 @@ public class MathValue extends DynamicValue {
 		Register temp;
 		boolean free = false;
 		if(aReg.reserved){
-			if(bReg.reserved){
-				temp = c.getTemporaryRegister();
-			}else{
-				temp = bReg;
-			}
+			temp = c.getTemporaryRegister(bReg);
 		}else{
 			temp = aReg;
 			if(! bReg.reserved){

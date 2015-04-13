@@ -13,8 +13,8 @@ program {
 	x = 1;
 	y = 0;
 	
-	for(int i = size; i <> 0; i = i - 1){
-		intArray[17 - i] = x;
+	for(int i = 1; i+1 <= size+1; i = i + 1){
+		intArray[i] = x;
 		temp = x;
 		x = x + y;
 		y = temp;

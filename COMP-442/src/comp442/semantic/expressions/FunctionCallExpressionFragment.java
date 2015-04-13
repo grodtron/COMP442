@@ -17,21 +17,21 @@ public class FunctionCallExpressionFragment extends ExpressionElement {
 
 	String id;
 	
-	List<AdditionExpressionFragment> expressions;
+	List<RelationExpressionFragment> expressions;
 	
 	SymbolTable surroundingScope;
 	
 	public FunctionCallExpressionFragment(String id){
 		this.id = id;
-		this.expressions = new ArrayList<AdditionExpressionFragment>();
+		this.expressions = new ArrayList<RelationExpressionFragment>();
 		this.surroundingScope = SymbolContext.getCurrentScope();
 	}
 	
 	@Override
 	public void acceptSubElement(ExpressionElement e) throws CompilerError {
 		
-		if(e instanceof AdditionExpressionFragment){
-			expressions.add((AdditionExpressionFragment) e);
+		if(e instanceof RelationExpressionFragment){
+			expressions.add((RelationExpressionFragment) e);
 		}else{
 			super.acceptSubElement(e);			
 		}		

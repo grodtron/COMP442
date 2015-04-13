@@ -31,7 +31,7 @@ public class ReturnStatement extends ExpressionElement implements Statement {
 
 	@Override
 	public void acceptSubElement(ExpressionElement e) throws CompilerError {
-		if(e instanceof AdditionExpressionFragment){
+		if(e instanceof RelationExpressionFragment){
 			returnValue = e.getValue();
 			context.finishTopElement();
 		}else{

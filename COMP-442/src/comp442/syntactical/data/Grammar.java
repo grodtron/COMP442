@@ -123,9 +123,9 @@ public class Grammar {
 			}, new Symbol[] {
 				tok_for, sem_StartForStatement, tok_open_paren, type, sym_StoreType, sem_StartAssignmentStatment, tok_id, sym_StoreId, sym_CreateVariable, sem_PushVariableName, sem_FinishVariable, assignOp, expr, tok_semicolon, relExpr, tok_semicolon, sem_StartAssignmentStatment, variable, assignExpr, tok_close_paren, statBlock, tok_semicolon
 			}, new Symbol[] {
-				tok_get, tok_open_paren, variable, tok_close_paren, tok_semicolon
+				tok_get, sem_StartGetStatement, tok_open_paren, variable, tok_close_paren, tok_semicolon
 			}, new Symbol[] {
-				tok_put, tok_open_paren, expr, tok_close_paren, tok_semicolon
+				tok_put, sem_StartPutStatement, tok_open_paren, expr, tok_close_paren, tok_semicolon
 			}, new Symbol[] {
 				tok_return, sem_StartReturnStatement, tok_open_paren, expr, tok_close_paren, tok_semicolon
 			}
@@ -163,23 +163,20 @@ public class Grammar {
 		});
 		p.put(expr, new Symbol[][] {
 			new Symbol[] {
-					sem_StartAdditionExpression, term, exprPrime
+					sem_StartRelationExpression, arithExpr, exprPrime
 			}
 		});
 		p.put(exprPrime, new Symbol[][] {
 			new Symbol[] {
-				sem_EndAdditionExpression, relOp, expr
+				relOp, sem_PushRelationOperation, sem_StartRelationExpression, arithExpr, exprPrime
 			},
 			new Symbol[] {
-				addOp, sem_PushAdditionOperation, expr
-			},
-			new Symbol[] {
-				EPSILON, sem_EndAdditionExpression,
+				EPSILON, sem_EndRelationExpression
 			},
 		});
 		p.put(relExpr, new Symbol[][] {
 			new Symbol[] {
-				arithExpr, relOp, arithExpr,
+				sem_StartRelationExpression, arithExpr, relOp, sem_PushRelationOperation, arithExpr, sem_EndRelationExpression,
 			}
 		});
 		p.put(arithExpr, new Symbol[][] {

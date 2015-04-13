@@ -10,19 +10,24 @@ import comp442.semantic.expressions.actions.EndAdditionExpressionAction;
 import comp442.semantic.expressions.actions.EndBlockAction;
 import comp442.semantic.expressions.actions.EndFunctionCallAction;
 import comp442.semantic.expressions.actions.EndMultiplicationExpressionAction;
+import comp442.semantic.expressions.actions.EndRelationExpressionAction;
 import comp442.semantic.expressions.actions.FinishVariableAction;
 import comp442.semantic.expressions.actions.PushAdditionOperationAction;
 import comp442.semantic.expressions.actions.PushFloatLiteralAction;
 import comp442.semantic.expressions.actions.PushIntLiteralAction;
 import comp442.semantic.expressions.actions.PushMultiplicationOperationAction;
+import comp442.semantic.expressions.actions.PushRelationOperationAction;
 import comp442.semantic.expressions.actions.PushVariableNameAction;
 import comp442.semantic.expressions.actions.StartAdditionExpressionAction;
 import comp442.semantic.expressions.actions.StartAssignmentStatementAction;
 import comp442.semantic.expressions.actions.StartBlockAction;
 import comp442.semantic.expressions.actions.StartForStatementAction;
 import comp442.semantic.expressions.actions.StartFunctionCallAction;
+import comp442.semantic.expressions.actions.StartGetStatementAction;
 import comp442.semantic.expressions.actions.StartIfStatementAction;
 import comp442.semantic.expressions.actions.StartMultiplicationExpressionAction;
+import comp442.semantic.expressions.actions.StartPutStatementAction;
+import comp442.semantic.expressions.actions.StartRelationExpressionAction;
 import comp442.semantic.expressions.actions.StartReturnStatementAction;
 import comp442.semantic.symboltable.actions.AddFunctionParameterAction;
 import comp442.semantic.symboltable.actions.CreateClassAction;
@@ -167,6 +172,10 @@ public enum Symbol {
 	
 	sem_StartAssignmentStatment(new StartAssignmentStatementAction()),
 	
+	sem_StartRelationExpression(new StartRelationExpressionAction()),
+	sem_EndRelationExpression(new EndRelationExpressionAction()),
+	sem_PushRelationOperation(new PushRelationOperationAction()),
+	
 	sem_StartAdditionExpression(new StartAdditionExpressionAction()),
 	sem_EndAdditionExpression(new EndAdditionExpressionAction()),
 	
@@ -190,6 +199,9 @@ public enum Symbol {
 	sem_EndFunctionCall(new EndFunctionCallAction()),
 	
 	sem_StartReturnStatement(new StartReturnStatementAction()),
+	
+	sem_StartGetStatement(new StartGetStatementAction()),
+	sem_StartPutStatement(new StartPutStatementAction()),
 	;
 
 	public static enum Type {

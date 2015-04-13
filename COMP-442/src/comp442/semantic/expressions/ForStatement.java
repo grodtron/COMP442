@@ -46,7 +46,7 @@ public class ForStatement extends ExpressionElement implements Statement {
 			}
 			break;
 		case CONDITION:
-			if(e instanceof AdditionExpressionFragment){ // TODO relExpr
+			if(e instanceof RelationExpressionFragment){
 				state = State.INCREMENT;
 				condition = e;
 			}else{

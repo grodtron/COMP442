@@ -1,5 +1,8 @@
 package comp442.codegen;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import comp442.error.CompilerError;
 
 public enum MathOperation {
@@ -41,7 +44,51 @@ public enum MathOperation {
 			return a & b;
 		}
 	},
+	
+	EQUALS("==", "ceq", "ceqi", true){
+		@Override
+		public int operate(int a, int b) {
+			return a == b ? SpecialValues.TRUE : SpecialValues.FALSE;
+		}
+	},
+	
+	NOT_EQUALS("<>", "cne", "cnei", true){
+		@Override
+		public int operate(int a, int b) {
+			return a != b ? SpecialValues.TRUE : SpecialValues.FALSE;
+		}
+	},
+	
+	LESS_THAN("<", "clt", "clti", false){
+		@Override
+		public int operate(int a, int b) {
+			return a < b ? SpecialValues.TRUE : SpecialValues.FALSE;
+		}
+	},
+	
+	LESS_THAN_EQUALS("<=", "cle", "clei", false){
+		@Override
+		public int operate(int a, int b) {
+			return a <= b ? SpecialValues.TRUE : SpecialValues.FALSE;
+		}
+	},
+	
+	GREATER_THAN(">", "cgt", "cgti", false){
+		@Override
+		public int operate(int a, int b) {
+			return a > b ? SpecialValues.TRUE : SpecialValues.FALSE;
+		}
+	},
 
+	GREATER_THAN_EQUALS(">=", "cge", "cgei", false){
+		@Override
+		public int operate(int a, int b) {
+			return a >= b ? SpecialValues.TRUE : SpecialValues.FALSE;
+		}
+	},
+	
+	
+	
 	;
 	
 	public final String symbol;
@@ -58,13 +105,22 @@ public enum MathOperation {
 		this.immediateOpcode = immediateOpcode;
 	}
 	
-	public static MathOperation fromToken(String token) throws CompilerError{
+	private final static Map<String, MathOperation> operators;
+	
+	static {
+		operators = new HashMap<String, MathOperation>(values().length);
 		for(MathOperation op : values()){
-			if(op.symbol.equals(token)){
-				return op;
-			}
+			operators.put(op.symbol, op);
 		}
-		throw new CompilerError("Unknown addition operator '" + token + "'");
+	}
+	
+	public static MathOperation fromToken(String token) throws CompilerError{
+		MathOperation op = operators.get(token);
+		if(op != null){
+			return op;
+		}else{
+			throw new CompilerError("Unknown addition operator '" + token + "'");
+		}
 	}
 	
 }

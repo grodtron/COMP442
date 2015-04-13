@@ -9,7 +9,7 @@ import comp442.codegen.instructions.AddWordImmediateInstruction;
 import comp442.codegen.instructions.JumpAndLinkInstruction;
 import comp442.codegen.instructions.StoreWordInstruction;
 import comp442.error.CompilerError;
-import comp442.semantic.expressions.AdditionExpressionFragment;
+import comp442.semantic.expressions.RelationExpressionFragment;
 import comp442.semantic.symboltable.entries.FunctionEntry;
 import comp442.semantic.symboltable.entries.types.FunctionType;
 import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
@@ -21,7 +21,7 @@ public class FunctionCallValue extends DynamicValue implements Value {
 	
 	private String callingLabel;
 	
-	public FunctionCallValue(FunctionEntry entry, List<AdditionExpressionFragment> expressions) throws CompilerError {
+	public FunctionCallValue(FunctionEntry entry, List<RelationExpressionFragment> expressions) throws CompilerError {
 		int nArgs = expressions.size();
 		List<SymbolTableEntryType> argTypes = ((FunctionType)entry.getType()).getArgumentTypes();
 		
@@ -31,7 +31,7 @@ public class FunctionCallValue extends DynamicValue implements Value {
 		
 		arguments = new ArrayList<Value>(expressions.size());
 		
-		for(AdditionExpressionFragment exp : expressions){
+		for(RelationExpressionFragment exp : expressions){
 			Value arg = exp.getValue();
 			// TODO - type checking!!!
 			arguments.add(arg);

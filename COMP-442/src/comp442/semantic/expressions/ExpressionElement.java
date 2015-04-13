@@ -34,5 +34,9 @@ public abstract class ExpressionElement {
 	public void pushMultiplicationOperator(MathOperation operator) throws CompilerError {
 		throw new InternalCompilerError("Unexpected multiplication operation " + operator + " inside " + this.getClass().getSimpleName());				
 	}
+
+	public void pushRelationOperator(MathOperation operator) throws CompilerError {
+		throw new InternalCompilerError("Unexpected relation operation " + operator + " inside " + this.getClass().getSimpleName());				
+	}
 	
 }

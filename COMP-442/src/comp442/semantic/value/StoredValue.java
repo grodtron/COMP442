@@ -57,12 +57,7 @@ public class StoredValue extends DynamicValue {
 		}else
 		if(useableOffset instanceof RegisterValue){
 
-			RegisterValue tempReg;
-			if(baseAddress.getRegister().reserved){
-				tempReg = new RegisterValue(c.getTemporaryRegister());
-			}else{
-				tempReg = baseAddress;
-			}
+			RegisterValue tempReg = new RegisterValue(c.getTemporaryRegister(baseAddress.getRegister()));
 			
 			c.appendInstruction(new AddWordInstruction(tempReg, baseAddress, (RegisterValue)useableOffset)
 					.setComment(toString()));
@@ -71,7 +66,6 @@ public class StoredValue extends DynamicValue {
 			if( ! useableOffsetRegister.reserved){
 				c.freeTemporaryRegister(useableOffsetRegister);				
 			}
-
 			
 			return new ConcreteAddressValue(tempReg, new StaticIntValue(0));
 						

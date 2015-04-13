@@ -1,0 +1,66 @@
+
+
+program {
+
+	int getVal;
+	
+	getVal = 1;
+	
+	put(69);
+	put(110);
+	put(116);
+	put(101);
+	put(114);
+	put(32);
+	put(116);
+	put(104);
+	put(101);
+	put(32);
+	put(99);
+	put(104);
+	put(97);
+	put(114);
+	put(97);
+	put(99);
+	put(116);
+	put(101);
+	put(114);
+	put(32);
+	put(39);
+	put(65);
+	put(39);
+	
+	for(int i = 0; getVal <> 0; i = 0){
+		get(getVal);
+		put(to_upper_caps(getVal));
+	};
+
+};
+
+int to_upper_caps(int c){
+
+	int greater;
+	int lesser;
+	
+	if(c >= 97)
+	then{
+		greater = 1;
+	}else{
+		greater = 0;
+	};
+	
+	if(c <= 122)
+	then{
+		lesser = 1;
+	}else{
+		lesser = 0;
+	};
+	
+	if(lesser and greater)
+	then{
+		return(c - 32);
+	}else{
+		return(c);
+	};
+
+};

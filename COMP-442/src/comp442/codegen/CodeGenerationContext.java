@@ -32,15 +32,27 @@ public class CodeGenerationContext {
 		nextLabel = null;
 		
 	}
-	
+
 	public Register getTemporaryRegister() {
 		Register temp = temporaryRegisters.iterator().next();
 		temporaryRegisters.remove(temp);
+		return temp;
+	}
+	
+	public Register getTemporaryRegister(Register temp) {
+		
+		if(temp.reserved){
+			temp = getTemporaryRegister();
+		}
 		
 		return temp;
 	}
 	
 	public void freeTemporaryRegister(Register temp) throws InternalCompilerError{
+		if(temp.reserved){
+			return;
+		}
+		
 		boolean alreadyExisted = ! temporaryRegisters.add(temp);
 		
 		if(alreadyExisted){
