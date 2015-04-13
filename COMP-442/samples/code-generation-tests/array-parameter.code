@@ -2,25 +2,35 @@ program {
 	int buff[256];
 	int length;
 	
+	int levelOfIndirection;
+	
+	levelOfIndirection = 10;
+	
 	buff[1] = 12344;
 	
 	length = create_message(buff);
-	length = indirectly_create_message(buff);
+	length = indirectly_create_message(10, buff);
 	
 	for(int i = 1; i < length; i = i + 1){
 		put(buff[i]);
 	};
 };
 
-int indirectly_create_message(int buffer[256]){
+int indirectly_create_message(int levelOfIndirection, int buffer[256]){
 	int minibuff[256];
 	int length;
 	
-	length = (create_message(minibuff));
-
-	length = copy_buffers(length, buffer, minibuff);
+	if(levelOfIndirection == 0) then {
+		length = (create_message(minibuff));
 	
-	return (length);
+		length = copy_buffers(length, buffer, minibuff);
+		
+		return (length);
+	
+	}else{
+		return ( indirectly_create_message(levelOfIndirection - 1, buffer ) );	
+	};
+	
 };
 
 int copy_buffers(int length, int to[256], int from[256]){
