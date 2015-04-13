@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import comp442.codegen.instructions.EntryInstruction;
 import comp442.codegen.instructions.Instruction;
 import comp442.error.InternalCompilerError;
 
@@ -32,7 +31,6 @@ public class CodeGenerationContext {
 		
 		nextLabel = null;
 		
-		instructions.add(new EntryInstruction());
 	}
 	
 	public Register getTemporaryRegister() {

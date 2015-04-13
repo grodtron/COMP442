@@ -121,7 +121,7 @@ public class Grammar {
 			new Symbol[] {
 				tok_if, sem_StartIfStatement, tok_open_paren, expr, tok_close_paren, tok_then, statBlock, tok_else, statBlock, tok_semicolon
 			}, new Symbol[] {
-				tok_for, tok_open_paren, type, sym_StoreType, tok_id, sym_StoreId, sym_CreateVariable, sem_PushVariableName, sem_FinishVariable, assignOp, expr, tok_semicolon, relExpr, tok_semicolon, variable, assignExpr, tok_close_paren, statBlock, tok_semicolon
+				tok_for, sem_StartForStatement, tok_open_paren, type, sym_StoreType, sem_StartAssignmentStatment, tok_id, sym_StoreId, sym_CreateVariable, sem_PushVariableName, sem_FinishVariable, assignOp, expr, tok_semicolon, relExpr, tok_semicolon, sem_StartAssignmentStatment, variable, assignExpr, tok_close_paren, statBlock, tok_semicolon
 			}, new Symbol[] {
 				tok_get, tok_open_paren, variable, tok_close_paren, tok_semicolon
 			}, new Symbol[] {

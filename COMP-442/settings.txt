@@ -1,2 +1,2 @@
-input  = samples/code-generation-tests/if-statement.code
+input  = samples/code-generation-tests/for-statement.code
 output = samples/hello-world.tokens

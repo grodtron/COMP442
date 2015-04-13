@@ -18,6 +18,7 @@ import comp442.semantic.expressions.actions.PushMultiplicationOperationAction;
 import comp442.semantic.expressions.actions.StartAdditionExpressionAction;
 import comp442.semantic.expressions.actions.StartAssignmentStatementAction;
 import comp442.semantic.expressions.actions.StartBlockAction;
+import comp442.semantic.expressions.actions.StartForStatementAction;
 import comp442.semantic.expressions.actions.StartIfStatementAction;
 import comp442.semantic.expressions.actions.StartMultiplicationExpressionAction;
 import comp442.semantic.symboltable.actions.AddFunctionParameterAction;
@@ -177,6 +178,8 @@ public enum Symbol {
 	sem_PushMultiplicationOperation(new PushMultiplicationOperationAction()),
 	
 	sem_StartIfStatement(new StartIfStatementAction()),
+	
+	sem_StartForStatement(new StartForStatementAction()),
 	
 	sem_StartBlock(new StartBlockAction()),
 	sem_EndBlock(new EndBlockAction()),

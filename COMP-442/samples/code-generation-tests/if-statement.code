@@ -11,13 +11,19 @@ program {
 	int x;
 	int y;
 	int xOrY;
+	
+	int whoDatWhoDat;
+	
+	
 	x = 1;
 	y = 0;
 	
 	
 	if(x or y) then{
 		xOrY = 1;
+		whoDatWhoDat = 3;
 	}else{
 		xOrY = 0;
+		whoDatWhoDat = 20;
 	};
 };
