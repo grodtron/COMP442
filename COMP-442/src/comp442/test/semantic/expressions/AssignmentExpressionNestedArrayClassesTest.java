@@ -45,7 +45,7 @@ public class AssignmentExpressionNestedArrayClassesTest {
 			+ "	C c[3];\n"	// offset 0
 			+ "	int id;\n"	// offset 3*(48 + 4) = 156
 			+ "};\n"
-			+ "program {\n"
+			+ "program {\n" // size 160*3 + 4 = 484
 			+ "	D d[3];\n"	// offset 0
 			+ "	int x;\n"	// offset 160*3
 			+ "	%s;\n"
@@ -55,6 +55,8 @@ public class AssignmentExpressionNestedArrayClassesTest {
 	private final static int Csize = 52;
 	private final static int Bsize = 16;
 	private final static int Asize = 4;
+	
+	private final static int programSize = 484;
 	
 	private static class Var {
 		public final String code;
@@ -84,21 +86,25 @@ public class AssignmentExpressionNestedArrayClassesTest {
 			vars.add(new Var( D+C+B+A + "id", new StoredValue(new RegisterValue(Register.STACK_POINTER),
 					new StaticIntValue( 0 // d offset
 							+ (d*Dsize) + (c*Csize) + (b*Bsize) + (a*Asize) + (Asize - 4)
+							- programSize
 							)) ));
 			if(a == 0){
 				vars.add(new Var( D+C+B + "id", new StoredValue(new RegisterValue(Register.STACK_POINTER),
 						new StaticIntValue( 0 // d offset
 								+ (d*Dsize) + (c*Csize) + (b*Bsize) + (Bsize - 4)
+								- programSize
 								)) ));
 				if(b == 0){
 					vars.add(new Var( D+C + "id", new StoredValue(new RegisterValue(Register.STACK_POINTER),
 							new StaticIntValue( 0 // d offset
 									+ (d*Dsize) + (c*Csize) + (Csize - 4)
+									- programSize
 									)) ));
 					if(c == 0){
 						vars.add(new Var( D + "id", new StoredValue(new RegisterValue(Register.STACK_POINTER),
 								new StaticIntValue( 0 // d offset
 										+ (d*Dsize) + (Dsize - 4)
+										- programSize
 										)) ));
 					}
 				}
@@ -118,7 +124,7 @@ public class AssignmentExpressionNestedArrayClassesTest {
 //			returnVal.add(new Object[]{ assignmentExpression, String.format(skeleton, assignmentExpression), lhs, rhs });
 //		}
 		
-		Var x = new Var("x", new StoredValue(new RegisterValue(Register.STACK_POINTER), new StaticIntValue(160*3)));
+		Var x = new Var("x", new StoredValue(new RegisterValue(Register.STACK_POINTER), new StaticIntValue(160*3 - programSize)));
 		
 		for(Var v : vars){
 			{

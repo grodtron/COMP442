@@ -30,15 +30,15 @@ import comp442.syntactical.parser.Parser;
 public class AssignmentExpression3DarrayTest {
 
 	private final static String skeleton = ""
-			+ "class Inner {\n"
+			+ "class Inner {\n"					// size 8
 			+ "	int x;\n"						// offset 0
 			+ "	int y;\n"						// offset 4
 			+ "};\n"
-			+ "class Outer {\n"
+			+ "class Outer {\n"					// size 12
 			+ "	int id;\n"						// offset 0
 			+ "	Inner inner;\n"					// offset 4
 			+ "};\n"
-			+ "program {\n"
+			+ "program {\n"						// size 348 + 12*(3*3*3) = 672
 			+ "	int x;\n"						// offset 0
 			+ "	int arr[3][3][3];\n"			// offset 4
 			+ "	Inner inner;\n"					// offset 4 + 4*(3*3*3) = 112
@@ -71,19 +71,19 @@ public class AssignmentExpression3DarrayTest {
 			String indices = "[" + (a+1) + "][" + (b+1) + "][" + (c+1) + "]";
 			
 			vars.add(new Var( "outerArr"+indices+".inner.x", new StoredValue(new RegisterValue(Register.STACK_POINTER),
-					new StaticIntValue( 348 + (a*12) + (3*12*b) + (3*3*c*12) + 4 + 0 )) ));
+					new StaticIntValue( -672 + 348 + (a*12) + (3*12*b) + (3*3*c*12) + 4 + 0 )) ));
 
 			vars.add(new Var( "outerArr"+indices+".inner.y", new StoredValue(new RegisterValue(Register.STACK_POINTER),
-					new StaticIntValue( 348 + (a*12) + (3*12*b) + (3*3*c*12) + 4 + 4 )) ));
+					new StaticIntValue( -672 + 348 + (a*12) + (3*12*b) + (3*3*c*12) + 4 + 4 )) ));
 			
 			vars.add(new Var( "outerArr"+indices+".id", new StoredValue(new RegisterValue(Register.STACK_POINTER),
-					new StaticIntValue( 348 + (a*12) + (3*12*b) + (3*3*c*12) + 0 )) ));
+					new StaticIntValue( -672 + 348 + (a*12) + (3*12*b) + (3*3*c*12) + 0 )) ));
 			
 			vars.add(new Var( "innerArr"+indices+".x", new StoredValue(new RegisterValue(Register.STACK_POINTER),
-					new StaticIntValue( 132 + (a*8) + (3*8*b) + (3*3*c*8) + 0 )) ));
+					new StaticIntValue( -672 + 132 + (a*8) + (3*8*b) + (3*3*c*8) + 0 )) ));
 
 			vars.add(new Var( "innerArr"+indices+".y", new StoredValue(new RegisterValue(Register.STACK_POINTER),
-					new StaticIntValue( 132 + (a*8) + (3*8*b) + (3*3*c*8) + 4 )) ));
+					new StaticIntValue( -672 + 132 + (a*8) + (3*8*b) + (3*3*c*8) + 4 )) ));
 			
 		}
 		
@@ -99,7 +99,7 @@ public class AssignmentExpression3DarrayTest {
 //			returnVal.add(new Object[]{ assignmentExpression, String.format(skeleton, assignmentExpression), lhs, rhs });
 //		}
 		
-		Var x = new Var("x", new StoredValue(new RegisterValue(Register.STACK_POINTER), new StaticIntValue(0)));
+		Var x = new Var("x", new StoredValue(new RegisterValue(Register.STACK_POINTER), new StaticIntValue( -672 + 0)));
 		
 		for(Var v : vars){
 			{

@@ -48,6 +48,10 @@ public class SymbolTable {
 		currentOffset += entry.getSize();
 	}
 
+	public int getSize(){
+		return currentOffset;
+	}
+	
 	public SymbolTable getParent() {
 		return parent;
 	}

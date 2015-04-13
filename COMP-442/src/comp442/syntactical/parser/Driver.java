@@ -54,6 +54,7 @@ public class Driver {
 		
 		c.appendInstruction(new EntryInstruction());
 		c.appendInstruction(new AddWordImmediateInstruction(Register.STACK_POINTER, Register.ZERO, stackLabel));
+		c.appendInstruction(new AddWordImmediateInstruction(Register.STACK_POINTER, Register.STACK_POINTER, program.getScope().getSize()));
 		
 		for(Statement s : program.getStatements()){
 			s.generateCode(c);
