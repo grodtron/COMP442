@@ -8,17 +8,19 @@ import comp442.lexical.token.Token;
 import comp442.semantic.SemanticAction;
 import comp442.semantic.expressions.actions.EndAdditionExpressionAction;
 import comp442.semantic.expressions.actions.EndBlockAction;
+import comp442.semantic.expressions.actions.EndFunctionCallAction;
 import comp442.semantic.expressions.actions.EndMultiplicationExpressionAction;
 import comp442.semantic.expressions.actions.FinishVariableAction;
 import comp442.semantic.expressions.actions.PushAdditionOperationAction;
 import comp442.semantic.expressions.actions.PushFloatLiteralAction;
-import comp442.semantic.expressions.actions.PushIdentifierAction;
 import comp442.semantic.expressions.actions.PushIntLiteralAction;
 import comp442.semantic.expressions.actions.PushMultiplicationOperationAction;
+import comp442.semantic.expressions.actions.PushVariableNameAction;
 import comp442.semantic.expressions.actions.StartAdditionExpressionAction;
 import comp442.semantic.expressions.actions.StartAssignmentStatementAction;
 import comp442.semantic.expressions.actions.StartBlockAction;
 import comp442.semantic.expressions.actions.StartForStatementAction;
+import comp442.semantic.expressions.actions.StartFunctionCallAction;
 import comp442.semantic.expressions.actions.StartIfStatementAction;
 import comp442.semantic.expressions.actions.StartMultiplicationExpressionAction;
 import comp442.semantic.symboltable.actions.AddFunctionParameterAction;
@@ -159,8 +161,7 @@ public enum Symbol {
 	sym_CreateVariable(new CreateVariableAction()),
 	sym_EndScope(new EndScopeAction()),
 	
-	sem_PushVariableName(new PushIdentifierAction()),
-	//sem_PushVariableIndex(new PushIndexAction()),
+	sem_PushVariableName(new PushVariableNameAction()),
 	sem_FinishVariable(new FinishVariableAction()),
 	
 	sem_StartAssignmentStatment(new StartAssignmentStatementAction()),
@@ -183,6 +184,9 @@ public enum Symbol {
 	
 	sem_StartBlock(new StartBlockAction()),
 	sem_EndBlock(new EndBlockAction()),
+	
+	sem_StartFunctionCall(new StartFunctionCallAction()),
+	sem_EndFunctionCall(new EndFunctionCallAction()),
 	;
 
 	public static enum Type {

@@ -230,14 +230,14 @@ public class Grammar {
 		});
 		p.put(factorIdNest, new Symbol[][] {
 			new Symbol[] {
-				tok_id, sem_PushVariableName, factorIdNestPrime,
+				tok_id, factorIdNestPrime,
 			}
 		});
 		p.put(factorIdNestPrime, new Symbol[][] {
 			new Symbol[] {
-				indices, factorIdNestPrimePrime,
+				sem_PushVariableName, indices, factorIdNestPrimePrime,
 			}, new Symbol[] {
-				tok_open_paren, aParams, tok_close_paren
+				sem_StartFunctionCall, tok_open_paren, aParams, tok_close_paren, sem_EndFunctionCall,
 			}
 		});
 		p.put(factorIdNestPrimePrime, new Symbol[][] {

@@ -1,0 +1,27 @@
+program {
+
+	int intArray[16];
+	int size;
+	
+	int x;
+	int y;
+	
+	int temp;
+	
+	size = 16;
+	
+	x = 1;
+	y = 0;
+	
+	for(int i = size; i <> 0; i = i - 1){
+		intArray[17 - i] = x;
+		temp = x;
+		x = special_add(x, y);
+		y = temp;
+		
+	}; 
+};
+
+int special_add(int a, int b){
+	return (a + b);
+};

@@ -30,7 +30,8 @@ public class MultiplicationExpressionFragment extends ExpressionElement {
 		
 		if(e instanceof MultiplicationExpressionFragment
 		|| e instanceof VariableExpressionFragment
-		|| e instanceof AdditionExpressionFragment){
+		|| e instanceof AdditionExpressionFragment
+		|| e instanceof FunctionCallExpressionFragment){
 			
 			switch(state){
 			case INIT_FIRST:
