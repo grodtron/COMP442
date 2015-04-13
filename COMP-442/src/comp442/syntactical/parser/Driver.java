@@ -1,12 +1,12 @@
 package comp442.syntactical.parser;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.util.Properties;
 
 import comp442.codegen.CodeGenerator;
@@ -49,15 +49,35 @@ public class Driver {
 		
 		Process moonProc = moon.start();
 		
-		moonProc.waitFor();
 		
-		BufferedReader r = new BufferedReader(new InputStreamReader(moonProc.getInputStream()));
+		InputStream moonOut = moonProc.getInputStream();
+		InputStream console = System.in;
 		
+		PrintWriter moonIn  = new PrintWriter(moonProc.getOutputStream());
 		
 		System.out.println("===== Moon Output =====");
-		while(r.ready()){
-			System.out.println(r.readLine());			
+
+		byte buff[] = new byte[256];
+
+		while(true){
+			moonOut.read(buff);
+			
+			System.out.println(new String(buff));			
+		
+			console.read(buff);
+			
+			moonIn.println(new String(buff));
+			
+			Thread.sleep(10);
+			
+			try{
+				moonProc.exitValue();
+			}catch(IllegalThreadStateException e){
+				break;
+			}
 		}
+
+		moonProc.waitFor();
 		
 	}
 

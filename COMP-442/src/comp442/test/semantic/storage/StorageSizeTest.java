@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+import comp442.error.CompilerError;
 import comp442.semantic.symboltable.SymbolContext;
 import comp442.semantic.symboltable.SymbolTable;
 import comp442.semantic.symboltable.entries.SymbolTableEntry;
@@ -120,7 +121,7 @@ public class StorageSizeTest {
 	}
 	
 	@Test
-	public void test(){
+	public void test() throws CompilerError{
 		p.parse();
 		
 		SymbolTable scope = SymbolContext.getCurrentScope();

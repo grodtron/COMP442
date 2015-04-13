@@ -18,7 +18,7 @@ public class IndexingExpressionFragment extends ExpressionElement {
 	private List<Integer> dimensions;
 	
 	
-	public IndexingExpressionFragment(ArrayType t){
+	public IndexingExpressionFragment(ArrayType t) throws CompilerError{
 		dimensions = t.getDimensions();
 		currentIndex = 0;
 		nextOffsetSize = t.getType().getSize();

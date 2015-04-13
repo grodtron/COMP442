@@ -1,0 +1,48 @@
+program {
+	int buff[256];
+	int x;
+	
+	x = 2;
+	x = test(x, buff);
+	
+	for(int i = 1; buff[i] <> 0; i = i + 1){
+		put(buff[i]);
+	};
+};
+
+int test(int n, int buff[256]){
+
+	int i;
+	i = 1;
+
+	buff[i] = (10);i=i+1;
+	buff[i] = (72);i=i+1;
+	buff[i] = (101);i=i+1;
+	buff[i] = (108);i=i+1;
+	buff[i] = (108);i=i+1;
+	buff[i] = (111);i=i+1;
+	buff[i] = (32);i=i+1;
+	buff[i] = (115);i=i+1;
+	buff[i] = (105);i=i+1;
+	buff[i] = (100);i=i+1;
+	buff[i] = (101);i=i+1;
+	buff[i] = (45);i=i+1;
+	buff[i] = (101);i=i+1;
+	buff[i] = (102);i=i+1;
+	buff[i] = (102);i=i+1;
+	buff[i] = (101);i=i+1;
+	buff[i] = (99);i=i+1;
+	buff[i] = (116);i=i+1;
+	buff[i] = (32);i=i+1;
+	buff[i] = (119);i=i+1;
+	buff[i] = (111);i=i+1;
+	buff[i] = (114);i=i+1;
+	buff[i] = (108);i=i+1;
+	buff[i] = (100);i=i+1;
+	buff[i] = (33);i=i+1;
+	buff[i] = (10);i=i+1;
+	buff[i] = (0);i=i+1;
+
+	return (n);
+
+};

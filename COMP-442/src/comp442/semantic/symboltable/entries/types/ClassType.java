@@ -1,5 +1,6 @@
 package comp442.semantic.symboltable.entries.types;
 
+import comp442.error.CompilerError;
 import comp442.semantic.symboltable.SymbolTable;
 import comp442.semantic.symboltable.entries.ClassEntry;
 
@@ -12,7 +13,7 @@ public class ClassType implements SymbolTableEntryType {
 	}
 	
 	@Override
-	public int getSize() {
+	public int getSize() throws CompilerError {
 		return classEntry.getSize();
 	}
 	

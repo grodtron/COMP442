@@ -31,9 +31,17 @@ public class FunctionCallValue extends DynamicValue implements Value {
 		
 		arguments = new ArrayList<Value>(expressions.size());
 		
-		for(RelationExpressionFragment exp : expressions){
+		for(int i = 0; i < expressions.size(); ++i){
+			RelationExpressionFragment exp    = expressions.get(i);
+			SymbolTableEntryType expectedType = argTypes.get(i);
+			SymbolTableEntryType type = exp.getType();
+			
+			if(! type.equals( expectedType )){
+				throw new CompilerError("Argument type mismatch for argument " + (i+1) + " for call to '" + entry.getName() + "' expected '" + expectedType + "' but got '" + type + "'");
+			}
+			
 			Value arg = exp.getValue();
-			// TODO - type checking!!!
+
 			arguments.add(arg);
 		}
 		

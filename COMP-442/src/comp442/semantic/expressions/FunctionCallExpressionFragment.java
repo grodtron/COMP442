@@ -8,12 +8,15 @@ import comp442.semantic.symboltable.SymbolContext;
 import comp442.semantic.symboltable.SymbolTable;
 import comp442.semantic.symboltable.entries.FunctionEntry;
 import comp442.semantic.symboltable.entries.SymbolTableEntry;
+import comp442.semantic.symboltable.entries.types.FunctionType;
+import comp442.semantic.symboltable.entries.types.LateBindingType;
+import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
 import comp442.semantic.value.DynamicValue;
 import comp442.semantic.value.FunctionCallValue;
 import comp442.semantic.value.LateBindingDynamicValue;
 import comp442.semantic.value.Value;
 
-public class FunctionCallExpressionFragment extends ExpressionElement {
+public class FunctionCallExpressionFragment extends TypedExpressionElement {
 
 	String id;
 	
@@ -50,6 +53,23 @@ public class FunctionCallExpressionFragment extends ExpressionElement {
 				}else{
 					throw new CompilerError("Could not find function " + id);
 				}
+			}
+		};
+	}
+
+	@Override
+	public SymbolTableEntryType getType() {
+		return new LateBindingType(){
+			@Override
+			public SymbolTableEntryType get() throws CompilerError {
+				SymbolTableEntry entry = surroundingScope.find(id);
+				
+				if(entry instanceof FunctionEntry){
+					return ((FunctionType)((FunctionEntry) entry).getType()).getReturnType();
+				}else{
+					throw new CompilerError("Could not find function " + id);
+				}
+
 			}
 		};
 	}

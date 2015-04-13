@@ -1,5 +1,6 @@
 package comp442.semantic.symboltable.entries;
 
+import comp442.error.CompilerError;
 import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
 
 public class VariableEntry extends SymbolTableEntry {
@@ -9,7 +10,7 @@ public class VariableEntry extends SymbolTableEntry {
 	}
 
 	@Override
-	protected int calculateSize() {
+	protected int calculateSize() throws CompilerError {
 		return getType().getSize();
 	}
 	

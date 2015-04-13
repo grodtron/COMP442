@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import comp442.error.CompilerError;
 import comp442.semantic.symboltable.entries.SymbolTableEntry;
 
 public class SymbolTable {
@@ -40,7 +41,7 @@ public class SymbolTable {
 		}
 	}
 
-	public void add(SymbolTableEntry entry) {
+	public void add(SymbolTableEntry entry) throws CompilerError {
 		// Note that for functions, parameters are added in order
 		entries.put(entry.getName(), entry);
 		

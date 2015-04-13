@@ -3,6 +3,7 @@ package comp442.semantic.symboltable.entries.types;
 import java.util.Collections;
 import java.util.List;
 
+import comp442.error.CompilerError;
 import comp442.semantic.symboltable.SymbolTable;
 
 public class ArrayType implements SymbolTableEntryType {
@@ -51,7 +52,7 @@ public class ArrayType implements SymbolTableEntryType {
 			if(getType().equals(o.getType())){
 				if(dimensions.size() == o.dimensions.size()){
 					for(int i = 0; i < dimensions.size(); ++i){
-						if(dimensions.get(i) != o.dimensions.get(i)){
+						if(! dimensions.get(i).equals(o.dimensions.get(i))){
 							return false;
 						}
 					}
@@ -68,7 +69,7 @@ public class ArrayType implements SymbolTableEntryType {
 	}
 
 	@Override
-	public int getSize() {
+	public int getSize() throws CompilerError {
 		// The size to store an array is equal to the size of the base type, times
 		// the product of all of the dimensions!
 		int size = getType().getSize();

@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+import comp442.error.CompilerError;
 import comp442.semantic.symboltable.SymbolContext;
 import comp442.semantic.symboltable.SymbolTable;
 import comp442.semantic.symboltable.entries.ClassEntry;
@@ -34,7 +35,7 @@ public class ParameterTest {
 	}
 	
 	@Parameters(name="{0}")
-	public static Collection<Object[]> data(){
+	public static Collection<Object[]> data() throws CompilerError{
 		
 		List<Object[]> values = new ArrayList<Object[]>();
 		

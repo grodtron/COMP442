@@ -3,25 +3,31 @@ package comp442.semantic.expressions;
 import comp442.codegen.MathOperation;
 import comp442.codegen.Register;
 import comp442.error.CompilerError;
+import comp442.error.InternalCompilerError;
 import comp442.semantic.symboltable.SymbolContext;
 import comp442.semantic.symboltable.SymbolTable;
+import comp442.semantic.symboltable.entries.ParameterEntry;
 import comp442.semantic.symboltable.entries.SymbolTableEntry;
+import comp442.semantic.symboltable.entries.VariableEntry;
 import comp442.semantic.symboltable.entries.types.ArrayType;
+import comp442.semantic.symboltable.entries.types.PrimitiveType;
 import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
-import comp442.semantic.value.LateBindingStaticValue;
+import comp442.semantic.value.DynamicValue;
+import comp442.semantic.value.IndirectValue;
+import comp442.semantic.value.LateBindingDynamicValue;
 import comp442.semantic.value.MathValue;
 import comp442.semantic.value.RegisterValue;
 import comp442.semantic.value.StaticIntValue;
-import comp442.semantic.value.StaticValue;
 import comp442.semantic.value.StoredValue;
 import comp442.semantic.value.Value;
 
-public class VariableExpressionFragment extends ExpressionElement {
+public class VariableExpressionFragment extends TypedExpressionElement {
 	
 	private final SymbolTable enclosingScope;
 	private SymbolTable currentScope;
 
 	private Value offset;
+	private Value baseAddr;
 	
 	SymbolTableEntryType currentType;
 	
@@ -30,16 +36,35 @@ public class VariableExpressionFragment extends ExpressionElement {
 		this.enclosingScope = currentScope;
 		// Stack pointer is always at the top of the stack frame, offsets are
 		// stored as offset from the bottom of the frame.
-		this.offset = new StaticIntValue( 0 );
 		
 		this.currentType = null;
 		
-		pushIdentifier(id);
+		final SymbolTableEntry e = getEntry(id);
+
+		Value offsetValue = new  LateBindingDynamicValue() {			
+			@Override
+			public DynamicValue get() throws CompilerError {
+				 return new MathValue(MathOperation.SUBTRACT, new StaticIntValue(e.getOffset()), new StaticIntValue(enclosingScope.getSize()));
+			}
+		};
+		
+		if(e instanceof VariableEntry || e.getType() instanceof PrimitiveType){
+			baseAddr     = new RegisterValue(Register.STACK_POINTER);
+			offset       = offsetValue;
+		}else
+		if(e instanceof ParameterEntry){
+			baseAddr	= new StoredValue(new RegisterValue(Register.STACK_POINTER), offsetValue);
+			offset      = new StaticIntValue(0);
+		}else{
+			throw new InternalCompilerError("Something went wrong, entry is not VariableEntry, type is not PrimitiveType *AND* it's not ParameterEntry");
+		}
+		
+		currentType  = e.getType();
+		currentScope = currentType.getScope();
+		
 	}
 	
-	@Override
-	public void pushIdentifier(String id) throws CompilerError {
-		
+	private SymbolTableEntry getEntry(String id) throws CompilerError{
 		if(currentScope == null){
 			throw new CompilerError("Cannot access property " + id + " of non-class type " + currentType);
 		}
@@ -48,11 +73,19 @@ public class VariableExpressionFragment extends ExpressionElement {
 		
 		if(e == null){
 			throw new CompilerError("Id " + id + " not found in current scope");
-		}else{
-			offset       = new MathValue(MathOperation.ADD, offset, new StaticIntValue(e.getOffset()));
-			currentType  = e.getType();
-			currentScope        = currentType.getScope();			
 		}
+		
+		return e;
+	}
+	
+	@Override
+	public void pushIdentifier(String id) throws CompilerError {
+		
+		SymbolTableEntry e = getEntry(id);
+	
+		offset       = new MathValue(MathOperation.ADD, offset, new StaticIntValue(e.getOffset()));
+		currentType  = e.getType();
+		currentScope = currentType.getScope();
 	}
 	
 	@Override
@@ -78,14 +111,17 @@ public class VariableExpressionFragment extends ExpressionElement {
 
 	@Override
 	public Value getValue() {
-		return new StoredValue(new RegisterValue(Register.STACK_POINTER), new MathValue(MathOperation.SUBTRACT, offset, new LateBindingStaticValue(){
-			@Override
-			public StaticValue get() {
-				// We want to grab this value only on the second (code-generating) pass. At this point the scope is still being
-				// defined and may change.
-				return new StaticIntValue(enclosingScope.getSize());
-			}
-		}));
+		
+		if(getType() instanceof PrimitiveType){
+			return new StoredValue(baseAddr, offset);
+		}else{
+			return new IndirectValue(new MathValue( MathOperation.ADD, baseAddr, offset));
+		}
+	}
+
+	@Override
+	public SymbolTableEntryType getType() {
+		return currentType;
 	}
 	
 }

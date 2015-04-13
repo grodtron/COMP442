@@ -2,10 +2,11 @@ package comp442.semantic.expressions;
 
 import comp442.codegen.MathOperation;
 import comp442.error.CompilerError;
+import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
 import comp442.semantic.value.MathValue;
 import comp442.semantic.value.Value;
 
-public class RelationExpressionFragment extends ExpressionElement {
+public class RelationExpressionFragment extends TypedExpressionElement {
 
 	private static enum State {
 		WAITING_FOR_FIRST,
@@ -15,8 +16,8 @@ public class RelationExpressionFragment extends ExpressionElement {
 	};
 
 	private State state;
-	private ExpressionElement first;
-	private ExpressionElement second;
+	private TypedExpressionElement first;
+	private TypedExpressionElement second;
 	private MathOperation operator;
 
 	public RelationExpressionFragment(){
@@ -38,11 +39,19 @@ public class RelationExpressionFragment extends ExpressionElement {
 		|| e instanceof AdditionExpressionFragment){
 			switch(state){
 			case WAITING_FOR_FIRST:
-				first = e;
+				first = (TypedExpressionElement) e;
 				state = State.WAITING_FOR_OP;
 				break;
 			case WAITING_FOR_SECOND:
-				second = e;
+				second = (TypedExpressionElement) e;
+				
+				SymbolTableEntryType firstType  = first.getType();
+				SymbolTableEntryType secondType = second.getType();
+				
+				if( ! firstType.equals(secondType) ){
+					throw new CompilerError("Type mismatch: " + firstType + " is not compatible with " + secondType + " for operator '" + operator.symbol + "'");	
+				}
+				
 				state = State.DONE;
 				context.finishTopElement();
 				break;
@@ -64,6 +73,11 @@ public class RelationExpressionFragment extends ExpressionElement {
 		}else{
 			return new MathValue(operator, first.getValue(), second.getValue());			
 		}
+	}
+
+	@Override
+	public SymbolTableEntryType getType() {
+		return first.getType();
 	}
 	
 

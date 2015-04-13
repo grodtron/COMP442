@@ -9,10 +9,10 @@ import comp442.error.InternalCompilerError;
 public class StoredValue extends DynamicValue {
 
 	private final Value offset;
-	private final RegisterValue baseAddress;
+	private final Value baseAddress;
 
-	public StoredValue(RegisterValue baseAddress, Value offset){
-		this.baseAddress = baseAddress;
+	public StoredValue(Value baseAddr, Value offset){
+		this.baseAddress = baseAddr;
 		this.offset      = offset;
 	}
 
@@ -48,18 +48,18 @@ public class StoredValue extends DynamicValue {
 	
 	public ConcreteAddressValue	getConcreteAddress(CodeGenerationContext c) throws CompilerError{
 		Value useableOffset = offset.getUseableValue(c);
-
+		RegisterValue baseAddrReg = baseAddress.getRegisterValue(c);
 
 		if(useableOffset instanceof StaticValue){
 			
-			return new ConcreteAddressValue(baseAddress, (StaticValue) useableOffset);
+			return new ConcreteAddressValue(baseAddrReg, (StaticValue) useableOffset);
 			
 		}else
 		if(useableOffset instanceof RegisterValue){
 
-			RegisterValue tempReg = new RegisterValue(c.getTemporaryRegister(baseAddress.getRegister()));
+			RegisterValue tempReg = new RegisterValue(c.getTemporaryRegister(baseAddrReg.getRegister()));
 			
-			c.appendInstruction(new AddWordInstruction(tempReg, baseAddress, (RegisterValue)useableOffset)
+			c.appendInstruction(new AddWordInstruction(tempReg, baseAddrReg, (RegisterValue)useableOffset)
 					.setComment(toString()));
 
 			Register useableOffsetRegister = ((RegisterValue) useableOffset).getRegister();

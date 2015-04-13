@@ -1,5 +1,6 @@
 package comp442.semantic.symboltable.entries;
 
+import comp442.error.CompilerError;
 import comp442.semantic.symboltable.SymbolTable;
 import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
 
@@ -39,10 +40,11 @@ public abstract class SymbolTableEntry {
 	 * For a function, this is the amount of space required for the function's stack frame
 	 * 
 	 * @return the calculated size as described above in units of bytes.
+	 * @throws CompilerError 
 	 */
-	protected abstract int calculateSize();
+	protected abstract int calculateSize() throws CompilerError;
 	
-	public final int getSize(){
+	public final int getSize() throws CompilerError{
 		return calculateSize(); // TODO - make lazy in calculating size
 	}
 	
