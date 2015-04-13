@@ -1,2 +1,2 @@
-input  = samples/code-generation-tests/array-parameter.code
+input  = samples/code-generation-tests/class-array-parameter.code
 output = samples/hello-world.tokens

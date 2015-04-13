@@ -1,0 +1,104 @@
+class Buffer {
+	int buffer[256];
+	int length;
+};
+
+program {
+	Buffer buff;
+	int status;
+	
+	int levelOfIndirection;
+	
+	levelOfIndirection = 10;
+		
+	status = create_message(buff);
+	status = indirectly_create_message(10, buff);
+	
+	for(int i = 1; i < buff.length; i = i + 1){
+		put(buff.buffer[i]);
+	};
+};
+
+int indirectly_create_message(int levelOfIndirection, Buffer buff){
+	Buffer minibuff;
+	int status;
+	
+	if(levelOfIndirection == 0) then {
+		status = (create_message(minibuff));
+	
+		status = copy_buffers(buff, minibuff);
+		
+		return (1);
+	
+	}else{
+		return ( indirectly_create_message(levelOfIndirection - 1, buff ) );	
+	};
+	
+};
+
+int copy_buffers(Buffer to, Buffer from){
+	for(int i = 1; i < from.length; i = i + 1){
+		to.buffer[i] = from.buffer[i];
+	};
+	to.length = from.length;
+	
+	return (1);
+};
+
+int create_message(Buffer buff){
+
+	int i;
+	i = 1;
+
+	buff.buffer[i] = (10);i=i+1;
+	buff.buffer[i] = (72);i=i+1;
+	buff.buffer[i] = (101);i=i+1;
+	buff.buffer[i] = (108);i=i+1;
+	buff.buffer[i] = (108);i=i+1;
+	buff.buffer[i] = (111);i=i+1;
+	buff.buffer[i] = (32);i=i+1;
+	buff.buffer[i] = (105);i=i+1;
+	buff.buffer[i] = (110);i=i+1;
+	buff.buffer[i] = (100);i=i+1;
+	buff.buffer[i] = (105);i=i+1;
+	buff.buffer[i] = (114);i=i+1;
+	buff.buffer[i] = (101);i=i+1;
+	buff.buffer[i] = (99);i=i+1;
+	buff.buffer[i] = (116);i=i+1;
+	buff.buffer[i] = (32);i=i+1;
+	buff.buffer[i] = (99);i=i+1;
+	buff.buffer[i] = (108);i=i+1;
+	buff.buffer[i] = (97);i=i+1;
+	buff.buffer[i] = (115);i=i+1;
+	buff.buffer[i] = (115);i=i+1;
+	buff.buffer[i] = (45);i=i+1;
+	buff.buffer[i] = (98);i=i+1;
+	buff.buffer[i] = (97);i=i+1;
+	buff.buffer[i] = (115);i=i+1;
+	buff.buffer[i] = (101);i=i+1;
+	buff.buffer[i] = (100);i=i+1;
+	buff.buffer[i] = (32);i=i+1;
+	buff.buffer[i] = (115);i=i+1;
+	buff.buffer[i] = (105);i=i+1;
+	buff.buffer[i] = (100);i=i+1;
+	buff.buffer[i] = (101);i=i+1;
+	buff.buffer[i] = (45);i=i+1;
+	buff.buffer[i] = (101);i=i+1;
+	buff.buffer[i] = (102);i=i+1;
+	buff.buffer[i] = (102);i=i+1;
+	buff.buffer[i] = (101);i=i+1;
+	buff.buffer[i] = (99);i=i+1;
+	buff.buffer[i] = (116);i=i+1;
+	buff.buffer[i] = (32);i=i+1;
+	buff.buffer[i] = (119);i=i+1;
+	buff.buffer[i] = (111);i=i+1;
+	buff.buffer[i] = (114);i=i+1;
+	buff.buffer[i] = (108);i=i+1;
+	buff.buffer[i] = (100);i=i+1;
+	buff.buffer[i] = (33);i=i+1;
+	buff.buffer[i] = (10);i=i+1;
+
+	buff.length = i;
+
+	return (1);
+};
