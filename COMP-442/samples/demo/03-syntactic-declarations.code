@@ -1,0 +1,38 @@
+class Test {
+	int x;
+	float y;
+	// Test t; <-- creates an infinitely sized class, cannot be done
+	
+	int xArr[1][1];
+	float fArr[1];
+	// Test tArr[4][3]; 
+
+
+	int test_i(){
+		return(40);
+	};
+	
+	float test_f(int arrayparam[2][3][4]){
+		return (3.1415);
+	};
+};
+
+program {
+	int x;
+	float y;
+	Test t;
+	
+	int xArr[2][2];
+	float fArr[4];
+	Test tArr[3][3];
+};
+
+int test(){
+	int x;
+	float y;
+	Test t;
+	
+	int xArr[3][6][2];
+	float fArr[10];
+	Test tArr[3][3];
+};

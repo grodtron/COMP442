@@ -2,8 +2,10 @@ package comp442.semantic.expressions;
 
 import comp442.codegen.MathOperation;
 import comp442.error.CompilerError;
+import comp442.semantic.symboltable.entries.types.PrimitiveType;
 import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
 import comp442.semantic.value.MathValue;
+import comp442.semantic.value.StaticIntValue;
 import comp442.semantic.value.Value;
 
 public class MultiplicationExpressionFragment extends TypedExpressionElement {
@@ -112,16 +114,24 @@ public class MultiplicationExpressionFragment extends TypedExpressionElement {
 	
 	@Override
 	public Value getValue() throws CompilerError {
-		if(state == State.WAITING_FOR_OP){
-			return first.getValue();
-		}else{
-			return new MathValue(operator, first.getValue(), second.getValue());
+		try{
+			if(state == State.WAITING_FOR_OP){
+				return first.getValue();
+			}else{
+				return new MathValue(operator, first.getValue(), second.getValue());
+			}
+		}catch(Throwable e){
+			return new StaticIntValue(0);
 		}
 	}
 
 	@Override
 	public SymbolTableEntryType getType() {
-		return first.getType();
+		try{
+			return first.getType();
+		}catch(Throwable e){
+			return new PrimitiveType("int");
+		}
 	}
 
 }

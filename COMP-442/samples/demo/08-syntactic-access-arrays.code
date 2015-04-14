@@ -1,0 +1,33 @@
+program {
+
+	int array[10][10][10];
+
+	int singleArray[10];
+
+	int a;
+	int b;
+	int c;
+	
+	int dummy;
+	
+	dummy = singleArray[3];
+	dummy = singleArray[7];
+
+	dummy = array[1][2][3];	
+	dummy = array[4][5][6];	
+
+	dummy = singleArray[a+b*c];
+	dummy = singleArray[7*(a/b) + 25];
+
+	dummy = array[a][b][c];
+	dummy = array[a+b][b*c][(a+b+c)*(a-b)/((a+b)*(a-2*b))];	
+
+	dummy = array[array[array[a][b][singleArray[2]]][b][c]][b][c];
+
+
+};
+
+
+// This program demonstrates various permutations of array accesses
+//
+// expected output includes a runtime divide by zero error because variables are not initialized

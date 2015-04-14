@@ -1,0 +1,13 @@
+class Test {
+	int x;
+	float !@#$%^&y;
+};
+
+program {
+	
+	Téest x;
+
+};
+
+// The only thing considered a lexical error is an invalid character
+// This sample demonstrates that they are simply skipped, generating a warning

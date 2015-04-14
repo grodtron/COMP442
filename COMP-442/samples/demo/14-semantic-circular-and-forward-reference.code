@@ -1,0 +1,26 @@
+program {
+	int dummy;
+	
+	dummy = recursive(10);
+};
+
+
+int recursive(int n) {
+	if (n == 0) then {
+		return (referencer(1));
+	} else {
+		return (recursive (n - 1));
+	};
+};
+
+int referencer(int n){
+	return ( forward_references(n) );
+};
+
+int forward_references(int n){
+	return (n * 2);
+};
+
+// This example demonstrates a second compiler pass which is able to resolve forward and circular references
+//
+//

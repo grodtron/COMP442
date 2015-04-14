@@ -60,6 +60,7 @@ public class Parser {
 	private void nextToken(){
 		previousToken = token;
 		token         = scanner.getNext();
+		Log.getTokens().println(token);
 		symbol        = Symbol.fromToken(token);	
 	}
 	

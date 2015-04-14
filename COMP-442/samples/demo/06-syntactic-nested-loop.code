@@ -1,0 +1,32 @@
+program {
+
+	int x;
+	int y;
+	int z;
+
+	int r;
+
+	for(int i1 = 1; i1 < 10; i1 = i1 + 1){
+		for(int i2 = 1; i2 < 10; i2 = i2 + 1){
+			for(int i3 = 1; i3 < 10; i3 = i3 + 1){
+				x = x + y;
+			};
+			y = y + z;
+		};
+		z = z + i1;
+	};
+
+	for(int i4 = 1; i4 < 10; i4 = i4 + 1)
+		for(int i5 = 1; i5 < 10; i5 = i5 + 1)
+			for(int i6 = 1; i6 < 10; i6 = i6 + 1)
+				x = x + y;
+			;
+		;
+	;
+
+
+};
+
+// Demonstrates nested if statements with and without braces
+//
+//

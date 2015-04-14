@@ -1,0 +1,8 @@
+program {
+
+	int y;
+	
+	y = somefunc(2,3);
+};
+
+// This program demonstrates the error given for an undefined function

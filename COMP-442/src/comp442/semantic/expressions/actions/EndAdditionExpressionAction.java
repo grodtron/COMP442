@@ -1,7 +1,6 @@
 package comp442.semantic.expressions.actions;
 
 import comp442.error.CompilerError;
-import comp442.error.InternalCompilerError;
 import comp442.lexical.token.Token;
 import comp442.semantic.expressions.AdditionExpressionFragment;
 import comp442.semantic.expressions.ExpressionAction;
@@ -15,7 +14,7 @@ public class EndAdditionExpressionAction extends ExpressionAction {
 		if(top instanceof AdditionExpressionFragment){
 			context.finishTopElement();
 		}else{
-			throw new InternalCompilerError("Expected " + AdditionExpressionFragment.class.getName() + " but was " + top.getClass().getName());
+			// throw new InternalCompilerError("Expected " + AdditionExpressionFragment.class.getName() + " but was " + top.getClass().getName());
 		}
 	}
 

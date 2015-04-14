@@ -1,0 +1,63 @@
+class Randomizer {
+	int i;
+	float f;
+	
+	/**
+	 *  get a random number
+	 */
+	int get_random_integer(){
+		return (4);
+		// determined by random dice roll, guaranteed to be random
+	};
+	
+	/**
+	 * TODO - documentation
+	 */
+	float get_random_float(){
+		return (498.2439/*.11840972843*/); // seems random to me
+	};
+};
+
+
+program {
+
+	Randomizer r;
+	
+	int i;
+	float f;
+	
+	r.i = r.get_random_integer();
+	
+	r.f = r.get_random_float();
+	
+	i = r.i * 42;
+	
+	f = r.f * 3.14159;
+	
+	i = i + do_something();
+
+};
+
+
+int do_something(){
+	// /*
+	int x;
+	// */
+	
+	x = 2;
+	
+	/*
+	x = 3;
+	// */
+	
+	return(x);
+};
+
+
+/* This program is intended simply to demonstrate that tokenizing works properly.
+   It includes:
+	- a variety of comments in different styles
+	- floating point and integer literals
+	- this unending comment
+	
+	

@@ -6,6 +6,7 @@ import java.io.InputStream;
 import comp442.lexical.state.Start;
 import comp442.lexical.state.State;
 import comp442.lexical.token.Token;
+import comp442.logging.Log;
 
 public class Scanner {
 
@@ -36,7 +37,7 @@ public class Scanner {
 			try {
 				state = state.process(input);
 			} catch (InvalidCharacterException e) {
-				System.err.println("Invalid character '" + e.character + "' encountered on line " + e.lineNumber);
+				Log.logError("Line: " + e.lineNumber + " Warning: Invalid character '" + e.character + "' encountered");
 				continue;
 			} catch (IOException e) {
 				System.err.println("Error while scanning input (" + e + ")");

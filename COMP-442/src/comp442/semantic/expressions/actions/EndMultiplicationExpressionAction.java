@@ -15,7 +15,7 @@ public class EndMultiplicationExpressionAction extends ExpressionAction {
 		if(top instanceof MultiplicationExpressionFragment){
 			context.finishTopElement();
 		}else{
-			throw new InternalCompilerError("Expected " + MultiplicationExpressionFragment.class.getName() + " but was " + top.getClass().getName());
+			//throw new InternalCompilerError("Expected " + MultiplicationExpressionFragment.class.getName() + " but was " + top.getClass().getName());
 		}
 	}
 

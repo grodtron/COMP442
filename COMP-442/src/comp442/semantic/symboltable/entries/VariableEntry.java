@@ -11,7 +11,11 @@ public class VariableEntry extends SymbolTableEntry {
 
 	@Override
 	protected int calculateSize() throws CompilerError {
-		return getType().getSize();
+		try{
+			return getType().getSize();
+		}catch(Throwable e){
+			return 0;
+		}
 	}
 	
 	

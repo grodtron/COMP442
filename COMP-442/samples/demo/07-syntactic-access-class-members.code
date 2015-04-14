@@ -1,0 +1,61 @@
+class C {
+
+	int arr[3];
+	int id;
+
+};
+
+
+class B {
+
+	C c;
+	C cArr[3];
+	int id;
+
+};
+
+class A {
+
+	B b;
+	B bArr[3];
+	int id;
+
+};
+
+
+program {
+
+	A aArr[3];
+
+	A a;
+	B b;
+	C c;
+	
+	int dummy;
+	
+	dummy = a.b.c.id;
+	dummy = a.b.c.arr[1];
+	dummy = a.b.cArr[2].id;
+	dummy = a.b.cArr[2].arr[1];
+
+	dummy = a.bArr[3].c.id;
+	dummy = a.bArr[3].c.arr[1];
+	dummy = a.bArr[3].cArr[2].id;
+	dummy = a.bArr[3].cArr[2].arr[1];
+
+	dummy = aArr[1].b.c.id;
+	dummy = aArr[1].b.c.arr[1];
+	dummy = aArr[1].b.cArr[2].id;
+	dummy = aArr[1].b.cArr[2].arr[1];
+
+	dummy = aArr[1].bArr[3].c.id;
+	dummy = aArr[1].bArr[3].c.arr[1];
+	dummy = aArr[1].bArr[3].cArr[2].id;
+	dummy = aArr[1].bArr[3].cArr[2].arr[1];
+
+};
+
+
+// This program demonstrates various permutations of nested array and class member accesses
+//
+//

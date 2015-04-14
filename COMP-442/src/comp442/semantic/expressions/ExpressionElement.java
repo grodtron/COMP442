@@ -24,7 +24,8 @@ public abstract class ExpressionElement {
 	}
 
 	public void pushFloatLiteral(float f) throws CompilerError {
-		throw new InternalCompilerError("Unexpected float literal " + f + " inside " + this.getClass().getSimpleName());		
+		pushIntLiteral((int)f); // for now we just cast them
+		//throw new InternalCompilerError("Unexpected float literal " + f + " inside " + this.getClass().getSimpleName());		
 	}
 
 	public void pushAdditionOperator(MathOperation operator) throws CompilerError {

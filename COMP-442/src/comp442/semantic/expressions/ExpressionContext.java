@@ -38,7 +38,7 @@ public class ExpressionContext {
 			if(child instanceof Statement){
 				currentFunction.appendStatement((Statement)child);
 			}else{
-				throw new InternalCompilerError("Emptied stack with non-" + Statement.class.getSimpleName() + " element: " + child);
+				// TODO - this is not an error, more a warning throw new InternalCompilerError("Emptied stack with non-" + Statement.class.getSimpleName() + " element: " + child);
 			}
 		}else{
 			expressionStack.peek().acceptSubElement(child);

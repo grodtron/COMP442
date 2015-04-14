@@ -1,1 +1,1 @@
-input  = samples/code-generation-tests/array-parameter.code
+input = samples/demo/14-semantic-circular-and-forward-reference.code

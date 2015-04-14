@@ -8,6 +8,7 @@ public class Log {
 
 	private static PrintStream error;
 	private static PrintStream output;
+	private static PrintStream tokens;
 	private static PrintStream derivation;
 	private static PrintStream symbols;
 	private static PrintStream masm;
@@ -17,6 +18,7 @@ public class Log {
 		error      = System.err;
 		output     = System.out;
 		derivation = System.out;
+		tokens     = System.out;
 		symbols    = System.out;
 		
 		masm       = System.out;
@@ -33,6 +35,7 @@ public class Log {
 		Log.error      = new PrintStream(new File(folder + "/generated/" + baseName + ".error"));
 		Log.output     = new PrintStream(new File(folder + "/generated/" + baseName + ".output"));
 		Log.derivation = new PrintStream(new File(folder + "/generated/" + baseName + ".derivation"));
+		Log.tokens     = new PrintStream(new File(folder + "/generated/" + baseName + ".tokens"));
 		Log.symbols    = new PrintStream(new File(folder + "/generated/" + baseName + ".symbols"));
 		
 		Log.masmFile   = new File(folder + "/" + baseName + ".m");
@@ -45,6 +48,7 @@ public class Log {
 		Log.error.close();
 		Log.output.close();
 		Log.derivation.close();
+		Log.tokens.close();
 		Log.symbols.close();
 		Log.masm.close();
 		
@@ -67,6 +71,10 @@ public class Log {
 
 	public static PrintStream getDerivation() {
 		return Log.derivation;
+	}
+
+	public static PrintStream getTokens() {
+		return Log.tokens;
 	}
 
 	public static PrintStream getSymbols() {

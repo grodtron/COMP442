@@ -1,0 +1,7 @@
+program {
+
+	x = 1;
+	
+};
+
+// This program demonstrates the error given for an undefined id

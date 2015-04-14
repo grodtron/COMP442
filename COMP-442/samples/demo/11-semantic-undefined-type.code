@@ -1,0 +1,6 @@
+program {
+
+	SomeClass c;
+};
+
+// This program demonstrates the error given for an undefined Class type

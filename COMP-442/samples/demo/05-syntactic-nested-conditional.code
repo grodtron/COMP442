@@ -1,0 +1,31 @@
+program {
+
+	int x;
+	int y;
+	int z;
+
+	int r;
+
+	if (x == y) then {
+		if (x == z) then 
+			if (x == r) then 
+				r = 1;
+			else 
+				r = 2;
+			;
+		else 
+			r = 2;
+		;
+	} else {
+		if (y == z) then {
+			r = 3;
+		} else {
+			r = 4;
+		};	
+	};
+
+};
+
+// Demonstrates nested if statements with and without braces
+//
+//

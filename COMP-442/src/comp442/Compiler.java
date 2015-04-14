@@ -60,7 +60,6 @@ public class Compiler {
 		
 		moonRun(Log.getMasmFile());
 		
-		
 		Log.close();
 	}
 	
