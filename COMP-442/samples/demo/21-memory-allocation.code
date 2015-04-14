@@ -1,0 +1,40 @@
+class SomeClass {
+	int x;
+	float y;
+};
+
+program {
+
+	int x;
+	
+	x = allocate_int();
+	x = allocate_float();
+	x = allocate_array();
+	x = allocate_class();
+
+};
+
+int allocate_int(){
+	int x;
+	
+	x = 2;
+};
+
+int allocate_float(){
+	float x;
+	
+	x = 2.0;
+};
+
+int allocate_array(){
+	int array[3][3][3];
+	
+	array[1][1][1] = 3;
+};
+
+int allocate_class(){
+	SomeClass s;
+	
+	s.x = 1;
+	s.y = 3.14159;
+};

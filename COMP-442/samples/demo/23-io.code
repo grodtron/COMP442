@@ -1,0 +1,6 @@
+program {
+	for(int i = 0; 1 == 1; i = 0){
+		get(i);
+		put(i);
+	};
+};

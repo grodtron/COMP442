@@ -1,0 +1,34 @@
+program {
+
+};
+
+int addition(int x, int y, int z){
+	z = x + y;
+	z = x - y;
+	z = x or y;
+};
+
+int multiplication(int x, int y, int z){
+	z = x * y;
+	z = x / y;
+	z = x and y;
+};
+
+int logic(int x, int y, int z){
+	z = x <> y;
+	z = x == y;
+	z = x > y;
+	z = x >= y;
+	z = x < y;
+	z = x <= y;
+};
+
+int complex_intermediates(int x, int y, int z){
+
+	z = (x+y) * (x-y);
+	
+	z = x*(x + y + z) / 3 + x/y == 52;
+	
+	z = (x or y) and (1 or 2 or 4 or 8);
+
+};

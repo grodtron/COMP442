@@ -1,0 +1,42 @@
+class SomeClass {
+	int x;
+
+	int goFooYourself(){};
+};
+
+program {
+
+	SomeClass s;
+	
+	int array[3][3];
+	
+	int dummy;
+	
+	
+	dummy = fooAnInt(array[1][1]);
+	
+	dummy = fooManyInts(1,2,3);
+	
+	dummy = fooAnArray(array);
+	
+	dummy = fooSomeClass(s);
+	
+	dummy = s.goFooYourself();
+
+};
+
+int fooSomeClass(SomeClass s){
+
+};
+
+int fooAnArray(int array[3][3]){
+
+};
+
+int fooAnInt(int x){
+
+};
+
+int fooManyInts(int x, int y, int z){
+
+};

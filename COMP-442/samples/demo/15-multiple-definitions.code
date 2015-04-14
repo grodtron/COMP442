@@ -1,0 +1,26 @@
+class A {
+
+};
+
+class A {
+
+};
+
+program {
+
+	int x;
+	int x;
+
+};
+
+int foo(){
+
+};
+
+int foo(){
+
+};
+
+
+// This program demonstrates the detection of duplicate definitions
+

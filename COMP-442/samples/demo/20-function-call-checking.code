@@ -1,0 +1,48 @@
+program {
+
+};
+
+int a(){
+	return ( one_int() );
+};
+
+int b(){
+	float f;
+	return ( one_int(f) );
+};
+
+int c(){
+	int i;
+	return ( one_int(i, i) );
+};
+
+int d(){
+	int i;
+	float f;
+	return (two_int(i, f));
+};
+int e(){
+	int i;
+	float f;
+	return (two_int(f, i));
+};
+int dd(){
+	int i;
+	float f;
+	return (two_float(i, f));
+};
+int ee(){
+	int i;
+	float f;
+	return (two_float(f, i));
+};
+int f(){
+	int i;
+	float f;
+	return (two_int(i,i,i));
+};
+
+int one_int(int n){};
+int two_int(int n, int m){};
+
+int two_float(float n, float m){};

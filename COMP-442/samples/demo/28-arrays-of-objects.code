@@ -1,0 +1,27 @@
+class Test {
+	int x;
+	int array[3];
+};
+
+program {
+
+	Test array[3];
+	
+	int dummy;
+	
+	dummy = array[1].x;
+	
+	dummy = array[1].array[1];
+	
+	dummy = fooAnArray(array[2].array);
+	
+	dummy = fooAnObject(array[3]);
+};
+
+int fooAnArray(int array[3]){
+
+};
+
+int fooAnObject(Test obj){
+
+};

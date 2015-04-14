@@ -1,0 +1,15 @@
+program {
+
+	put(10);
+	
+	for(int i = 65; i < (65 + 26); i = i+1){
+		if ( i and 1 == 0 ) then {
+			put(i);	
+		} else {
+			put(i + 32);
+		};
+	};
+	
+	put(10);
+
+};

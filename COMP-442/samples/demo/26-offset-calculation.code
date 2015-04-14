@@ -1,0 +1,20 @@
+program {
+
+	int array1d[3];
+	int array3d[3][3][3];
+
+	int x;
+	int y;
+	int z;
+	
+	int dummy;
+	
+	x = 1;
+	y = 1;
+	z = 1;
+	
+	dummy = array1d[x];
+	
+	dummy = array3d[x][y][z];
+
+};

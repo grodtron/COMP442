@@ -1,0 +1,12 @@
+program {
+
+	int array[2][2];
+
+	int dummy;
+	
+	dummy = array[1];
+
+	dummy = array[1][1];
+	
+	dummy = array[1][1][1];
+};

@@ -1,1 +1,1 @@
-input = samples/demo/14-semantic-circular-and-forward-reference.code
+input = samples/demo/28-arrays-of-objects.code

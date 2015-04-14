@@ -47,19 +47,19 @@ public class CodeGenerator {
 	}
 	
 	private void generate(SymbolTable s) {
-		try{
 			for(SymbolTableEntry e : s.getEntries()){
 				if(e instanceof FunctionEntry && e.getName() != "program"){
-					generateFunction((FunctionEntry) e);
+					try{
+						generateFunction((FunctionEntry) e);
+					}catch(CompilerError x){
+						Log.logError(x.getMessage()); // TODO - line numbers on these errors! and report multiple per scope!!
+						++nErrors;
+					}
 				}
 				if(e instanceof ClassEntry){
 					generate(e.getScope());
 				}
 			}
-		}catch(CompilerError x){
-			Log.logError(x.getMessage());
-			++nErrors;
-		}
 	}
 	
 	private void generateProgram(FunctionEntry program) throws CompilerError{
