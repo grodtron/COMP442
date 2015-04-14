@@ -18,15 +18,15 @@ import comp442.semantic.value.Value;
 
 public class FunctionCallExpressionFragment extends TypedExpressionElement {
 
-	String id;
+	private String id;
 	
-	List<RelationExpressionFragment> expressions;
+	private List<TypedExpressionElement> expressions;
 	
-	SymbolTable surroundingScope;
+	private SymbolTable surroundingScope;
 	
 	public FunctionCallExpressionFragment(String id){
 		this.id = id;
-		this.expressions = new ArrayList<RelationExpressionFragment>();
+		this.expressions = new ArrayList<TypedExpressionElement>();
 		this.surroundingScope = SymbolContext.getCurrentScope();
 	}
 	
@@ -72,6 +72,14 @@ public class FunctionCallExpressionFragment extends TypedExpressionElement {
 
 			}
 		};
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public List<TypedExpressionElement> getExpressions() {
+		return expressions;
 	}
 
 }

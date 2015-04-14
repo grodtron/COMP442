@@ -26,6 +26,10 @@ public abstract class SymbolTableEntry {
 		this.type  = type;
 		this.scope = scope;
 		
+		if(scope != null){
+			scope.setEnclosingEntry(this);
+		}
+		
 		this.offset = -1;
 	}
 

@@ -18,6 +18,8 @@ public class SymbolTable {
 	
 	private final SymbolTable parent;
 	
+	private SymbolTableEntry enclosingEntry;
+	
 	public SymbolTable(SymbolTable parent){
 		this.parent = parent;
 		this.entries = new HashMap<String, SymbolTableEntry>();
@@ -92,6 +94,14 @@ public class SymbolTable {
 
 	public Collection<SymbolTableEntry> getEntries() {
 		return Collections.unmodifiableCollection(entries.values());
+	}
+
+	public SymbolTableEntry getEnclosingEntry() {
+		return enclosingEntry;
+	}
+
+	public void setEnclosingEntry(SymbolTableEntry enclosingEntry) {
+		this.enclosingEntry = enclosingEntry;
 	}
 
 }

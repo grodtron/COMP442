@@ -15,6 +15,8 @@ public class EndRelationExpressionAction extends ExpressionAction {
 		if(top instanceof RelationExpressionFragment){
 			context.finishTopElement();
 		}else{
+			// TODO - this throws a lot ...
+			// after the 'condition' part of the for loop
 			throw new InternalCompilerError("Expected " + RelationExpressionFragment.class.getName() + " but was " + top.getClass().getName());
 		}
 	}

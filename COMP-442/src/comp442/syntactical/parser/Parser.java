@@ -115,6 +115,7 @@ public class Parser {
 								child.action.execute(previousToken);
 							} catch (CompilerError e) {
 								logError(e);
+								e.printStackTrace(System.err);
 							}
 						}else{
 							ParseTree childTree = new ParseTree(child);
@@ -143,6 +144,7 @@ public class Parser {
 							s.action.execute(previousToken);
 						}catch(CompilerError e){
 							logError(e);
+							e.printStackTrace(System.err);
 						}
 					}
 				}

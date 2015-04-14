@@ -1,0 +1,29 @@
+class MemberTest {
+
+	int x;
+	
+	int init(){
+		x = 65;
+	};
+	
+	int nextValue(){
+		int y;
+		y = x;
+		x = x+1;
+		return(y);
+	};
+
+};
+
+program {
+
+	MemberTest xMan;
+	int dummy;
+			
+	dummy = xMan.init();		
+	
+	for(int i = 0; i < 26; i = i + 1){
+		put( xMan.nextValue() );
+	};
+
+};

@@ -53,7 +53,7 @@ public class Grammar {
 		});
 		p.put(classBodyFunc, new Symbol[][] {
 			new Symbol[] {
-				tok_open_paren, sym_StartFunction, fParams, tok_close_paren, sym_CreateFunction, funcBody, tok_semicolon, classBodyFuncPrime,
+				tok_open_paren, sym_StartMemberFunction, fParams, tok_close_paren, sym_CreateFunction, funcBody, tok_semicolon, classBodyFuncPrime,
 			}
 		});
 		p.put(classBodyFuncPrime, new Symbol[][] {

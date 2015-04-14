@@ -37,6 +37,7 @@ import comp442.semantic.symboltable.actions.CreateVariableAction;
 import comp442.semantic.symboltable.actions.EndScopeAction;
 import comp442.semantic.symboltable.actions.NullAction;
 import comp442.semantic.symboltable.actions.StartFunctionAction;
+import comp442.semantic.symboltable.actions.StartMemberFunctionAction;
 import comp442.semantic.symboltable.actions.StoreDimensionAction;
 import comp442.semantic.symboltable.actions.StoreIdAction;
 import comp442.semantic.symboltable.actions.StoreTypeAction;
@@ -159,6 +160,7 @@ public enum Symbol {
 	sym_CreateProgram(new CreateProgramAction()),
 	sym_CreateClassScope(new CreateClassAction()),
 	sym_StartFunction(new StartFunctionAction()),
+	sym_StartMemberFunction(new StartMemberFunctionAction()),
 	sym_AddFunctionParameter(new AddFunctionParameterAction()),
 	sym_CreateFunction(new CreateFunctionAction()),
 	sym_StoreType(new StoreTypeAction()),

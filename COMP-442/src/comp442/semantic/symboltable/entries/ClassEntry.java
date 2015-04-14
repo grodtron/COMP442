@@ -2,6 +2,8 @@ package comp442.semantic.symboltable.entries;
 
 import comp442.error.CompilerError;
 import comp442.semantic.symboltable.SymbolTable;
+import comp442.semantic.symboltable.entries.types.ClassType;
+import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
 
 public class ClassEntry extends SymbolTableEntry {
 
@@ -20,4 +22,9 @@ public class ClassEntry extends SymbolTableEntry {
 		return size;
 	}
 
+	
+	@Override
+	public SymbolTableEntryType getType() {
+		return new ClassType(this);
+	}
 }
