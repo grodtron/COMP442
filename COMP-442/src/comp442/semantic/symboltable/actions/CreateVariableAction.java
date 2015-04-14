@@ -11,7 +11,7 @@ public class CreateVariableAction extends SymbolAction {
 	@Override
 	public void execute(Token token) throws CompilerError {
 		if(context.currentSymbolTable.exists(context.storedId)){
-			throw new CompilerError("Duplicate function declaration: " + context.storedId);
+			throw new CompilerError("Duplicate variable declaration: " + context.storedId);
 		}else{
 			SymbolTableEntry entry = new VariableEntry(context.storedId, context.storedType);
 			context.currentSymbolTable.add(entry);
