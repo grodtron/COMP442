@@ -14,7 +14,6 @@ public class EndScopeAction extends SymbolAction {
 			SymbolTable parent = context.currentSymbolTable.getParent();
 			if(parent != null){
 				context.currentSymbolTable = parent;
-				System.out.println("Ended current scope");
 			}else{
 				throw new RuntimeException("Tried to close global scope");
 			}

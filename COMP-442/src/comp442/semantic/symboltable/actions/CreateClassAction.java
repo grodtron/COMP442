@@ -36,7 +36,6 @@ public class CreateClassAction extends SymbolAction {
 			// Set the new table as the current table
 			context.currentSymbolTable = table;
 			
-			System.out.println("Created new scope for class " + name);
 		}else{
 			context.skipNextCloseScope = true;
 			throw new CompilerError("Duplicate class declaration: " + name);

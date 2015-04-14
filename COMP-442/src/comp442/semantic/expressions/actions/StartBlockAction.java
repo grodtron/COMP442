@@ -11,7 +11,6 @@ public class StartBlockAction extends ExpressionAction {
 	@Override
 	public void execute(Token precedingToken) throws CompilerError {
 		ExpressionElement e = new StatementBlock();
-		System.out.println("pushing new block");
 		context.pushChild(e);
 	}
 

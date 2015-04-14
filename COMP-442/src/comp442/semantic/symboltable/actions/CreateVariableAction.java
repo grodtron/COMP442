@@ -15,7 +15,6 @@ public class CreateVariableAction extends SymbolAction {
 		}else{
 			SymbolTableEntry entry = new VariableEntry(context.storedId, context.storedType);
 			context.currentSymbolTable.add(entry);
-			System.out.println(" Added entry: " + entry);			
 		}
 	}
 

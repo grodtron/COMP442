@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.io.PrintStream;
 import java.util.Set;
 
 import comp442.error.CompilerError;
@@ -39,17 +38,6 @@ public class Parser {
 	
 	public Parser(File input) throws FileNotFoundException{
 		this.scanner = new Scanner(new FileInputStream(input));
-		
-		String baseName = input.getPath();
-		baseName = baseName.substring(0, baseName.lastIndexOf('.'));
-		
-		Log.error      = new PrintStream(new File(baseName + ".error"));
-		Log.output     = new PrintStream(new File(baseName + ".output"));
-		Log.derivation = new PrintStream(new File(baseName + ".derivation"));
-		Log.symbols    = new PrintStream(new File(baseName + ".symbols"));
-		
-		// The actual ASM file
-		Log.masm       = new PrintStream(new File(baseName + ".masm"));
 				
 		nErrors = 0;
 		
@@ -63,15 +51,10 @@ public class Parser {
 		nextToken();
 		parse(tree);
 		
-		tree.printSelf(Log.derivation);
-		tree.printParsedCode(Log.output);
+		tree.printSelf(Log.getDerivation());
+		tree.printParsedCode(Log.getOutput());
 		
-		Log.symbols.print(SymbolContext.printableString());
-		
-		Log.error.close();
-		Log.output.close();
-		Log.derivation.close();
-		Log.symbols.close();
+		Log.getSymbols().print(SymbolContext.printableString());
 	}
 	
 	private void nextToken(){
@@ -115,7 +98,6 @@ public class Parser {
 								child.action.execute(previousToken);
 							} catch (CompilerError e) {
 								logError(e);
-								e.printStackTrace(System.err);
 							}
 						}else{
 							ParseTree childTree = new ParseTree(child);
@@ -144,7 +126,6 @@ public class Parser {
 							s.action.execute(previousToken);
 						}catch(CompilerError e){
 							logError(e);
-							e.printStackTrace(System.err);
 						}
 					}
 				}
@@ -159,9 +140,9 @@ public class Parser {
 
 	private void logError(CompilerError e){
 		if(token != null){
-			Log.error.println("line " + token.lineno + ": " + e.getMessage());
+			Log.logError("line " + token.lineno + ": " + e.getMessage());
 		}else{
-			Log.error.println("line EOF: " + e.getMessage());			
+			Log.logError("line EOF: " + e.getMessage());			
 		}
 		++nErrors;
 	}

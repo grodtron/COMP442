@@ -10,6 +10,7 @@ import comp442.codegen.instructions.JumpRegisterInstruction;
 import comp442.codegen.instructions.LoadWordInstruction;
 import comp442.codegen.instructions.StoreWordInstruction;
 import comp442.error.CompilerError;
+import comp442.logging.Log;
 import comp442.semantic.statement.Statement;
 import comp442.semantic.symboltable.SymbolContext;
 import comp442.semantic.symboltable.SymbolTable;
@@ -21,12 +22,14 @@ public class CodeGenerator {
 	
 	private PrintStream output;
 	
+	private int nErrors;
+	
 	public CodeGenerator(PrintStream output){
 		this.output = output;
+		nErrors = 0;
 	}
 	
-	public void generate() throws CompilerError{
-		System.out.println("=== beginning code generation ===");
+	public void generate() {
 		
 		SymbolTable s = SymbolContext.getCurrentScope();
 		
@@ -34,19 +37,29 @@ public class CodeGenerator {
 		
 		SymbolTableEntry program = s.find("program");
 		
-		generateProgram((FunctionEntry) program);
+		try{
+			generateProgram((FunctionEntry) program);
+		}catch(CompilerError x){
+			Log.logError(x.getMessage());
+			++nErrors;
+		}
 		
 	}
 	
-	private void generate(SymbolTable s) throws CompilerError{
-		for(SymbolTableEntry e : s.getEntries()){
-			if(e instanceof FunctionEntry && e.getName() != "program"){
-				generateFunction((FunctionEntry) e);
+	private void generate(SymbolTable s) {
+		try{
+			for(SymbolTableEntry e : s.getEntries()){
+				if(e instanceof FunctionEntry && e.getName() != "program"){
+					generateFunction((FunctionEntry) e);
+				}
+				if(e instanceof ClassEntry){
+					generate(e.getScope());
+				}
 			}
-			if(e instanceof ClassEntry){
-				generate(e.getScope());
-			}
-		}		
+		}catch(CompilerError x){
+			Log.logError(x.getMessage());
+			++nErrors;
+		}
 	}
 	
 	private void generateProgram(FunctionEntry program) throws CompilerError{
@@ -98,6 +111,10 @@ public class CodeGenerator {
 		
 		c.printCode(output);
 		
+	}
+
+	public int getNumErrors() {
+		return nErrors;
 	}
 	
 }

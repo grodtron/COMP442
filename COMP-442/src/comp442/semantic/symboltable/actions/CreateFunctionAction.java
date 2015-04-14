@@ -27,8 +27,6 @@ public class CreateFunctionAction extends SymbolAction {
 			context.currentSymbolTable.add(returnPcAddr);
 
 			ExpressionContext.setCurrentFunction(context.storedFunction);
-			
-			System.out.println("Adding function " + context.storedFunction);
 		}
 	}
 }

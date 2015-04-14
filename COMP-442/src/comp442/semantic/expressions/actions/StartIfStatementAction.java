@@ -11,7 +11,6 @@ public class StartIfStatementAction extends ExpressionAction {
 	@Override
 	public void execute(Token precedingToken) throws CompilerError {		
 		ExpressionElement e = new IfStatement();
-		System.out.println("pushing new if statement");
 		context.pushChild(e);
 	}
 

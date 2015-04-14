@@ -13,7 +13,6 @@ public class EndBlockAction extends ExpressionAction {
 	public void execute(Token precedingToken) throws CompilerError {
 		ExpressionElement top = context.getCurrent();
 		if(top instanceof StatementBlock){
-			System.out.println("popping block from top");
 			context.finishTopElement();
 		}else{
 			throw new InternalCompilerError("Expected " + StatementBlock.class.getName() + " but was " + top.getClass().getName());

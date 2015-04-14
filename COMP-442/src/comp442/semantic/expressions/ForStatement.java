@@ -33,7 +33,6 @@ public class ForStatement extends ExpressionElement implements Statement {
 	
 	@Override
 	public void acceptSubElement(ExpressionElement e) throws CompilerError {
-		System.out.println("ForStatement accept sub element in state " + state);
 		
 		try{
 		switch(state){
