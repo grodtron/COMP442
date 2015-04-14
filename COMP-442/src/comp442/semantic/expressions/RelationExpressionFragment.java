@@ -49,7 +49,7 @@ public class RelationExpressionFragment extends TypedExpressionElement {
 				SymbolTableEntryType secondType = second.getType();
 				
 				if( ! firstType.equals(secondType) ){
-					throw new CompilerError("Type mismatch: " + firstType + " is not compatible with " + secondType + " for operator '" + operator.symbol + "'");	
+					// TODO - late binding types!! // throw new CompilerError("Type mismatch: " + firstType + " is not compatible with " + secondType + " for operator '" + operator.symbol + "'");	
 				}
 				
 				state = State.DONE;

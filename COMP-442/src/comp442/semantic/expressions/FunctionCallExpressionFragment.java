@@ -3,10 +3,12 @@ package comp442.semantic.expressions;
 import java.util.ArrayList;
 import java.util.List;
 
+import comp442.codegen.SpecialValues;
 import comp442.error.CompilerError;
 import comp442.semantic.symboltable.SymbolContext;
 import comp442.semantic.symboltable.SymbolTable;
 import comp442.semantic.symboltable.entries.FunctionEntry;
+import comp442.semantic.symboltable.entries.MemberFunctionEntry;
 import comp442.semantic.symboltable.entries.SymbolTableEntry;
 import comp442.semantic.symboltable.entries.types.FunctionType;
 import comp442.semantic.symboltable.entries.types.LateBindingType;
@@ -47,8 +49,15 @@ public class FunctionCallExpressionFragment extends TypedExpressionElement {
 			@Override
 			public DynamicValue get() throws CompilerError {
 				SymbolTableEntry entry = surroundingScope.find(id);
-				
-				if(entry instanceof FunctionEntry){
+				SymbolTable outerScope = surroundingScope.getParent();
+				if(entry instanceof MemberFunctionEntry){
+					if(outerScope.exists(id)){
+						expressions.add(0, new VariableExpressionFragment(SpecialValues.THIS_POINTER_NAME, surroundingScope));
+						return new FunctionCallValue((FunctionEntry) entry, expressions);
+					}else{
+						throw new CompilerError("Can not find member function " + id);
+					}
+				}if(entry instanceof FunctionEntry){
 					return new FunctionCallValue((FunctionEntry) entry, expressions);
 				}else{
 					throw new CompilerError("Could not find function " + id);

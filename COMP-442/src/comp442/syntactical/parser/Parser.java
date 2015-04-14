@@ -158,7 +158,11 @@ public class Parser {
 	}
 
 	private void logError(CompilerError e){
-		Log.error.println("line " + token.lineno + ": " + e.getMessage());
+		if(token != null){
+			Log.error.println("line " + token.lineno + ": " + e.getMessage());
+		}else{
+			Log.error.println("line EOF: " + e.getMessage());			
+		}
 		++nErrors;
 	}
 	

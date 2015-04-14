@@ -26,6 +26,8 @@ public class CodeGenerator {
 	}
 	
 	public void generate() throws CompilerError{
+		System.out.println("=== beginning code generation ===");
+		
 		SymbolTable s = SymbolContext.getCurrentScope();
 		
 		generate(s);

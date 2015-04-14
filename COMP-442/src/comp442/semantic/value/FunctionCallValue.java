@@ -37,7 +37,7 @@ public class FunctionCallValue extends DynamicValue implements Value {
 			SymbolTableEntryType type = exp.getType();
 			
 			if(! type.equals( expectedType )){
-				throw new CompilerError("Argument type mismatch for argument " + (i+1) + " for call to '" + entry.getName() + "' expected '" + expectedType + "' but got '" + type + "'");
+				throw new CompilerError("Argument type mismatch for argument " + (i+1) + " for call to '" + entry.getName() + "' expected '" + expectedType + "' but got '" + type + "' (" + exp + ")");
 			}
 			
 			Value arg = exp.getValue();

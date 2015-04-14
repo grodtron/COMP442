@@ -1,0 +1,107 @@
+class Fibonacci {
+
+	int n;
+	int next;
+
+	int a;
+	int b;
+
+	int init(int N){
+		next = N;
+		n    = N;
+		a    = 1;
+		b    = 0;
+		return(N);
+	};
+	
+	int getnext(){
+		int temp;
+		
+		if(n == 0) then {
+			temp = b;
+			next = init(next + 1);
+			return (temp);
+		}else{
+			temp = b;
+			b = a;
+			a = a + temp;
+			n = n - 1;
+			return(getnext());
+		};
+	};
+};
+
+class String {
+
+	int buffer[256];
+	int length;
+	
+	int from_integer(int n){
+	
+		for(int i = 1; n > 0; i = i + 1){
+			buffer[i] = 48 /* <-- ord('0') */ + modulo(n, 10);
+			n = n / 10;
+		};
+		
+		length = i - 1;
+		
+		i = reverse();
+		
+		length = length + 1;
+		
+		buffer[length] = 10; // newline
+		
+		return(length);
+	};
+	
+	int reverse(){
+		int temp;
+		int j;
+		
+		j = length;
+		for(int i = 1; i < j; i = i + 1){
+			
+			temp      = buffer[i];
+			buffer[i] = buffer[j];
+			buffer[j] = temp;
+			
+			j = j - 1;
+		};
+		
+		return(length);
+	};
+	
+
+};
+
+program {
+
+	Fibonacci f;
+	String s;
+	int dummy;
+	
+	dummy = f.init(1);
+	
+	for(int i = 0; i < 20; i = i + 1){
+		dummy = f.getnext();
+		dummy = s.from_integer(dummy); // problems when doing s.from_integer(f.getnext())
+		dummy = print_string(s);
+	};
+
+};
+
+int print_string(String s){
+	for(int i = 1; i <= s.length; i = i + 1){
+		put(s.buffer[i]);
+	};
+	return(s.length);
+};
+
+int modulo(int n, int mod){
+
+	for(int i = 0; n >= mod; i=0){
+		n = n - mod;
+	};
+	return(n);
+};
+

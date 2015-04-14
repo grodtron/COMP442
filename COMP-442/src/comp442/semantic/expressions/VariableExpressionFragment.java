@@ -15,7 +15,6 @@ import comp442.semantic.symboltable.entries.SymbolTableEntry;
 import comp442.semantic.symboltable.entries.VariableEntry;
 import comp442.semantic.symboltable.entries.types.ArrayType;
 import comp442.semantic.symboltable.entries.types.ClassType;
-import comp442.semantic.symboltable.entries.types.FunctionType;
 import comp442.semantic.symboltable.entries.types.PrimitiveType;
 import comp442.semantic.symboltable.entries.types.SymbolTableEntryType;
 import comp442.semantic.value.DynamicValue;
@@ -38,17 +37,25 @@ public class VariableExpressionFragment extends TypedExpressionElement {
 	
 	private Value memberFunctionCallValue;
 	
-	SymbolTableEntryType currentType;
+	private SymbolTableEntryType currentType;
 	
 	private boolean isReference;
+	private boolean functionCall;
+	
 	
 	public VariableExpressionFragment(String id) throws CompilerError{
-		this.currentScope  = SymbolContext.getCurrentScope();
+		this(id, SymbolContext.getCurrentScope());
+	}
+		
+	public VariableExpressionFragment(String id, SymbolTable scope) throws CompilerError{
+		this.currentScope  = scope;
 		this.enclosingScope = currentScope;
 		// Stack pointer is always at the top of the stack frame, offsets are
 		// stored as offset from the bottom of the frame.
 		
 		this.currentType = null;
+		
+		this.functionCall = false;
 		
 		final SymbolTableEntry e = getEntry(id);
 
@@ -161,7 +168,8 @@ public class VariableExpressionFragment extends TypedExpressionElement {
 						// as long as we do not update our type and stuff till *after* this then we should be safe (Y)
 						memberFunctionCallValue = new FunctionCallValue(function, expressions);
 
-						currentType = function.getType();
+						functionCall = true;
+						currentType = function.getType();//((FunctionType)function.getType()).getReturnType();
 						context.finishTopElement();
 					}else{
 						throw new CompilerError("Cannot call non-function member " + f.getId() + " of class " + currentClass);
@@ -182,7 +190,7 @@ public class VariableExpressionFragment extends TypedExpressionElement {
 		
 		if(getType() instanceof PrimitiveType){
 			return new StoredValue(baseAddr, offset);
-		}if(getType() instanceof FunctionType){
+		}if(functionCall){
 			return memberFunctionCallValue;
 		}else{
 			if(isReference){
