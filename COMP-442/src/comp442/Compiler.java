@@ -52,8 +52,6 @@ public class Compiler {
 			System.exit(2);
 		}
 		
-		Log.getMasm().println("this is a test");
-		
 		Log.closeMasm();
 		
 		System.out.println("~================<    Moon Output   >================~");
