@@ -1,1 +1,1 @@
-input = samples/demo/28-arrays-of-objects.code
+input = samples/demo/02-syntactic-errors.code

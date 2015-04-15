@@ -346,5 +346,4 @@ public enum Symbol {
 	public boolean isSemanticAction() {
 		return symbolType == Type.SemanticAction;
 	}
-
 }

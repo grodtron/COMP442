@@ -1,0 +1,31 @@
+public class FooBar {
+	int x;
+	int y  =2;
+	
+	FooBar ( ){
+		x = 0;
+		y = 0;
+	};
+};
+
+program
+{
+   int first, second, add, subtract, multiply;
+   float divide;
+  
+   add        = first + second;
+   subtract = first - second;
+   multiply = first * second;
+   divide     = first / (float)second;   //typecasting
+ 
+ 
+   return 0;
+};
+
+int foo(int x, int y ){
+	float q = 31.3f;
+	
+	q *= 20;
+	
+	return q;
+};

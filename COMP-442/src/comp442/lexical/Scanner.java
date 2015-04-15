@@ -37,7 +37,7 @@ public class Scanner {
 			try {
 				state = state.process(input);
 			} catch (InvalidCharacterException e) {
-				Log.logError("Line: " + e.lineNumber + " Warning: Invalid character '" + e.character + "' encountered");
+				Log.logError("line " + e.lineNumber + ": Warning: Invalid character '" + e.character + "' encountered");
 				continue;
 			} catch (IOException e) {
 				System.err.println("Error while scanning input (" + e + ")");

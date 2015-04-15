@@ -132,7 +132,7 @@ public class Parser {
 				}
 				return true;
 			}else{
-				logError(new CompilerError("No rule matches! Current symbol is " + tree.symbol + " looking for " + symbol));
+				//logError(new CompilerError("No rule matches! Current symbol is " + tree.symbol + " looking for " + symbol));
 				
 				return false;
 			}
@@ -143,7 +143,7 @@ public class Parser {
 		if(token != null){
 			Log.logError("line " + token.lineno + ": " + e.getMessage());
 		}else{
-			Log.logError("line EOF: " + e.getMessage());			
+			Log.logError("EOF: " + e.getMessage());			
 		}
 		++nErrors;
 	}
@@ -159,10 +159,15 @@ public class Parser {
 		// If this symbol is nullable, we don't care
 		if (first.contains(EPSILON)) return;
 		
+		boolean firstError = true;
+		
 		// Skip any token that cannot follow the current token
 		while( ! first.contains(symbol) && token != null){
 			// TODO
-			logError(new CompilerError("ERROR: unexpected token '" + symbol + "', expecting any of " + first));
+			if(firstError){
+				logError(new CompilerError("Unexpected token " + symbol + " ('" + token.lexeme + "'), expecting any of " + first));
+				firstError = false;
+			}
 			nextToken();
 		}
 		
