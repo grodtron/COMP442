@@ -46,7 +46,7 @@ public class Start extends State {
 		
 		int c = input.read();
 		
-		if(Character.isAlphabetic(c)){
+		if(Character.isLetter(c)){
 			input.unread(c);
 			
 			for(String word : new String[]{

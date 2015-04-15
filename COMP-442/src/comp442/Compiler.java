@@ -64,7 +64,8 @@ public class Compiler {
 	}
 	
 	public static void moonRun(File f) throws IOException{
-		ProcessBuilder moon = new ProcessBuilder("Moon.exe", f.getPath());
+
+		ProcessBuilder moon = new ProcessBuilder("./moon", f.getPath());
 		
 		Process moonProc = moon.start();
 		
